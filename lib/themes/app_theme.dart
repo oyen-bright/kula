@@ -3,12 +3,13 @@
   Make use of the colors and text styles already defined.
  */
 
-import 'package:emr_005/config/app_constants.dart';
-import 'package:emr_005/themes/app_colors.dart';
-import 'package:emr_005/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kula/config/app_constants.dart';
+
+import 'app_colors.dart';
+import 'app_text_styles.dart';
 
 class AppTheme {
   AppTheme._();
@@ -21,7 +22,7 @@ class AppTheme {
         appBarTheme: appBarTheme,
         tabBarTheme: tabBarTheme,
         dividerTheme: dividerThemeData,
-        textTheme: GoogleFonts.poppinsTextTheme(),
+        textTheme: GoogleFonts.dmSansTextTheme(),
         elevatedButtonTheme: elevatedButtonThemeData,
         bannerTheme: materialBannerTheme,
         // scrollbarTheme: _scrollbarThemeData,
@@ -47,8 +48,7 @@ class AppTheme {
         primary: AppColors.primaryColor,
         onPrimary: Colors.white,
         secondary: AppColors.secondaryColor,
-        tertiary: Color(0xFF8EB7FF),
-        onSecondary: Colors.white,
+        onSecondary: Colors.black,
         error: Colors.red,
         onError: Colors.white,
         background: Colors.white,

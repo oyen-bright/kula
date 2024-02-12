@@ -16,7 +16,6 @@ class AppConfig {
   static Future<void> init() async {
     Hive.registerAdapter(AppConfigModelAdapter());
     await Hive.openBox<AppConfigModel>(AppConfigModel.boxName);
-    resetUserLocation();
     log("App configuration initialized");
   }
 
@@ -53,41 +52,5 @@ class AppConfig {
   static bool get finishedOnboarding {
     final appConfigInfo = AppConfig._appConfigInfo ?? AppConfigModel();
     return appConfigInfo.finishedOnboarding ?? false;
-  }
-
-  static Future<void> setFinishedHomeOnBoarding(
-      bool finishedHomeOnboarding) async {
-    final appConfigInfo = AppConfig._appConfigInfo ?? AppConfigModel();
-    appConfigInfo.finishedHomeOnboarding = finishedHomeOnboarding;
-    await AppConfig._save(appConfigInfo);
-  }
-
-  // get finished onboarding
-  static bool get finishedHomeOnboarding {
-    final appConfigInfo = AppConfig._appConfigInfo ?? AppConfigModel();
-    return appConfigInfo.finishedHomeOnboarding ?? false;
-  }
-
-  static Future<void> setUserLocation(
-      {required String? long, required String? lat}) async {
-    final appConfigInfo = AppConfig._appConfigInfo ?? AppConfigModel();
-    appConfigInfo.userLocation =
-        (long == null || lat == null) ? null : {'lat': lat, 'long': long};
-    await AppConfig._save(appConfigInfo);
-  }
-
-  static Future<void> resetUserLocation() async {
-    final appConfigInfo = AppConfig._appConfigInfo ?? AppConfigModel();
-    appConfigInfo.userLocation = null;
-    await AppConfig._save(appConfigInfo);
-  }
-
-  // get users location
-  static ({String long, String lat})? get getUserLocation {
-    final appConfigInfo = AppConfig._appConfigInfo ?? AppConfigModel();
-    final usersLocation = appConfigInfo.userLocation;
-    return usersLocation != null
-        ? (lat: usersLocation['lat'] ?? "", long: usersLocation['long'] ?? "")
-        : null;
   }
 }
