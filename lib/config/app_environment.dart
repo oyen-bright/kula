@@ -11,16 +11,14 @@ import 'package:kula/utils/enums.dart';
 class AppEnvironment {
   AppEnvironment._();
 
-  static late bool isWalletConnectModal;
-
   static bool get isDevelopment => environmentConfig == Environment.development;
 
   static late Environment? environmentConfig;
 
-  static init(Environment arg, {bool useWalletConnectModal = true}) async {
+  static init(Environment arg) async {
     await dotenv.load(fileName: ".env");
     environmentConfig = arg;
-    isWalletConnectModal = useWalletConnectModal;
+
     log("Initialized", name: "Environment Config");
   }
 
