@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/extensions/context.dart';
 
@@ -52,8 +53,7 @@ class LoadingOverlay extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppConstants.borderRadius),
         ),
         child: const CircularProgressIndicator(),
-      )
-      // ).animate().fadeIn(),
+      ).animate().fadeIn(),
     ];
 
     if (message != null) {

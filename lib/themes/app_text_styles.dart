@@ -19,7 +19,7 @@ class AppTextStyles {
 
   static const TextStyle authSectionHeaderTextStyle = TextStyle(
     fontSize: 30,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w700,
   );
   static const TextStyle authSectionHeader2TextStyle = TextStyle(
     fontSize: 23,

@@ -1,6 +1,7 @@
 library app_bottom_navigator;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';

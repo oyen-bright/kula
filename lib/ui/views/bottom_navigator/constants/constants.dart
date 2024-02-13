@@ -6,4 +6,6 @@ class Constants {
 
   static const double bottomNavBarHeight = 64;
   static const Size iconSize = Size(24, 24);
+
+  static Duration splashScreenDelay = 1.seconds;
 }

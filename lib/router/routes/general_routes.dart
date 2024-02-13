@@ -7,23 +7,27 @@ class General {
       path: AppRoutes.splash,
       pageBuilder: (context, state) {
         return AppRouter.setupPage(
-          child: const Center(child: Text("splash")),
+          child: const SplashView(),
           state: state,
         );
       },
     ),
+
+    //Authentication routes
     GoRoute(
       parentNavigatorKey: AppRouter.parentNavigatorKey,
-      path: AppRoutes.onBoarding,
+      path: AppRoutes.login,
       redirect: (_, state) {
-        if (AppConfig.finishedOnboarding) {
-          return AppRoutes.login;
-        }
         return null;
+
+        // if (AppConfig.finishedOnboarding) {
+        //   return AppRoutes.login;
+        // }
+        // return null;
       },
       pageBuilder: (context, state) {
         return AppRouter.setupPage(
-          child: const Center(child: Text("Onboarding")),
+          child: const LoginView(),
           state: state,
         );
       },

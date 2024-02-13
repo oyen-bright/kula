@@ -23,3 +23,7 @@ enum HapticFeedbackType {
   selection,
   vibrate,
 }
+
+enum WrapperBackgroundImage { one, two }
+
+enum WrapperBackgroundImageSize { small, large }
