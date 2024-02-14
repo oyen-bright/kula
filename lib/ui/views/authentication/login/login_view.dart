@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_images.dart';
+import 'package:kula/ui/components/buttons/elevated_button.dart';
+import 'package:kula/ui/components/inputs/text_field_input.dart';
 import 'package:kula/ui/components/wrappers/authentication_wrapper.dart';
 import 'package:kula/utils/enums.dart';
 
@@ -44,6 +46,17 @@ class LoginView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: context.textTheme.titleMedium
                     ?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
+              ),
+              AppTextField(
+                fieldTitle: "Email",
+                hintText: "example@example.com",
+              ),
+              AppTextField(
+                fieldTitle: "Password",
+              ),
+              const AppElevatedButton(
+                elevation: 0,
+                title: "signIn",
               )
             ],
           ),

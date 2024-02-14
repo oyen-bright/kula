@@ -27,7 +27,7 @@ class AppConstants {
 
   static const double fabPadding = 20.0;
 
-  static const double borderRadiusLarge = 15.0;
+  static const double borderRadiusLarge = 16.0;
   static const double borderRadius = 10.0;
   static const double borderRadiusSmall = 5.0;
   static const double borderRadiusMedium = 8.0;
