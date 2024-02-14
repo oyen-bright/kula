@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kula/config/app_routes.dart';
 import 'package:kula/ui/views/authentication/login/login_view.dart';
+import 'package:kula/ui/views/authentication/login/login_welcome_view.dart';
 import 'package:kula/ui/views/bottom_navigator/bottom_navigator.dart';
 import 'package:kula/ui/views/splash/splash_view.dart';
+import 'package:kula/utils/subpart_route_util.dart';
 
 part './routes/cart_routes.dart';
 part './routes/general_routes.dart';

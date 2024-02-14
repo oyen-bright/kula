@@ -1,18 +1,31 @@
+library login_view;
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kula/config/app_routes.dart';
 import 'package:kula/extensions/context.dart';
+import 'package:kula/router/app_router.dart';
+import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
 import 'package:kula/ui/components/inputs/text_field_input.dart';
 import 'package:kula/ui/components/wrappers/authentication_wrapper.dart';
 import 'package:kula/utils/enums.dart';
 
+part 'constants/strings.dart';
+
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    void signUp() {
+      //TODO:navigate to signup
+    }
+
     return AuthenticationWrapper(
+      wrapperBackgroundImage: WrapperBackgroundImage.two,
       wrapperBackgroundImageSize: WrapperBackgroundImageSize.large,
       body: SingleChildScrollView(
         child: SafeArea(
@@ -33,7 +46,7 @@ class LoginView extends StatelessWidget {
                 height: 40,
               ),
               Text(
-                "Welcome Back!",
+                Strings.welcomeBack,
                 textAlign: TextAlign.center,
                 style: context.textTheme.titleLarge
                     ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
@@ -42,21 +55,40 @@ class LoginView extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                "Convenient food delivery",
+                Strings.convenientDelivery,
                 textAlign: TextAlign.center,
                 style: context.textTheme.titleMedium
                     ?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
               ),
               AppTextField(
-                fieldTitle: "Email",
-                hintText: "example@example.com",
+                fieldTitle: Strings.email,
+                hintText: Strings.emailHint,
               ),
               AppTextField(
-                fieldTitle: "Password",
+                fieldTitle: Strings.password,
+                hintText: Strings.passwordHint,
               ),
-              const AppElevatedButton(
+              AppElevatedButton(
                 elevation: 0,
-                title: "signIn",
+                onPressed: () => AppRouter.router.push(AppRoutes.loginWelcome),
+                title: Strings.signInButton,
+              ),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: Strings.signUpText,
+                  style: const TextStyle(color: Colors.black, fontSize: 13),
+                  children: [
+                    TextSpan(
+                      text: Strings.signUpLink,
+                      style: const TextStyle(
+                          color: AppColors.hyperLinkColor,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold),
+                      recognizer: TapGestureRecognizer()..onTap = signUp,
+                    ),
+                  ],
+                ),
               )
             ],
           ),

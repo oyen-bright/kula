@@ -17,4 +17,6 @@ class AppColors {
   static const inputFieldStrokeColor = Color(0xFFD0D5DD);
   static const inputFieldHintTextColor = Color(0xFFD1D6DE);
   static const disabledColor = Color(0xFFC6C6C6);
+
+  static const hyperLinkColor = Color(0xFF36ABD0);
 }
