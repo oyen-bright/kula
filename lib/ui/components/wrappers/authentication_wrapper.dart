@@ -59,7 +59,11 @@ class AuthenticationWrapper extends StatelessWidget {
                     scale: 1.5,
                   )).animate().fadeIn(duration: 500.milliseconds)
           },
-          Positioned.fill(child: body)
+          Positioned.fill(
+              child: SafeArea(
+            bottom: true,
+            child: body,
+          ))
         ],
       ),
     );

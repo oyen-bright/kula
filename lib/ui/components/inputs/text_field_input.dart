@@ -7,7 +7,7 @@ import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_text_styles.dart';
 
-class AppTextField extends StatelessWidget {
+class AppTextField extends StatefulWidget {
   final TextEditingController? controller;
   final TextCapitalization? textCapitalization;
   final Object? fieldTitle;
@@ -58,64 +58,51 @@ class AppTextField extends StatelessWidget {
     this.onTap,
   }) : _showObscureIcon = showObscureIcon;
 
-  factory AppTextField({
-    String? Function(String?)? validator,
-    TextEditingController? controller,
-    TextInputType? keyboardType,
-    bool readOnly = false,
-    int? maxLines = 1,
-    String? fieldTitle,
-    bool showObscureTextIcon = false,
-    List<TextInputFormatter>? inputFormatters,
-    void Function()? onTap,
-    Iterable<String>? autofillHints,
-    TextInputAction? textInputAction,
-    void Function(String)? onFieldSubmitted,
-    String? hintText,
-  }) {
+  factory AppTextField(
+      {String? Function(String?)? validator,
+      TextEditingController? controller,
+      TextInputType? keyboardType,
+      bool readOnly = false,
+      int? maxLines = 1,
+      String? prefixText,
+      Widget? prefixIcon,
+      String? fieldTitle,
+      String? initialValue,
+      Color? backgroundColor,
+      void Function(String)? onChanged,
+      String? suffixText,
+      Widget? suffixIcon,
+      bool showObscureTextIcon = false,
+      List<TextInputFormatter>? inputFormatters,
+      void Function()? onTap,
+      Iterable<String>? autofillHints,
+      String? labelText,
+      TextInputAction? textInputAction,
+      TextCapitalization? textCapitalization,
+      void Function(String)? onFieldSubmitted,
+      String? hintText,
+      InputBorder? errorBorder}) {
     return AppTextField._internal(
       controller: controller,
       keyboardType: keyboardType,
       readOnly: readOnly,
       inputFormatters: inputFormatters,
       onTap: onTap,
+      prefixText: prefixText,
+      errorBorder: errorBorder,
       autofillHints: autofillHints,
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,
       fieldTitle: fieldTitle,
+      initialValue: initialValue,
+      textCapitalization: textCapitalization,
+      backgroundColor: backgroundColor,
       maxLines: maxLines,
-      hintText: hintText,
-      validator: validator,
-    );
-  }
-
-  factory AppTextField.otp({
-    String? Function(String?)? validator,
-    TextEditingController? controller,
-    TextInputType? keyboardType,
-    bool readOnly = false,
-    String? fieldTitle,
-    void Function(String)? onChanged,
-    List<TextInputFormatter>? inputFormatters,
-    void Function()? onTap,
-    Iterable<String>? autofillHints,
-    TextInputAction? textInputAction,
-    void Function(String)? onFieldSubmitted,
-    String? hintText,
-  }) {
-    return AppTextField._internal(
-      controller: controller,
-      keyboardType: keyboardType,
-      readOnly: readOnly,
-      inputFormatters: [
-        FilteringTextInputFormatter.deny(RegExp(r' ')),
-      ],
+      labelText: labelText,
       onChanged: onChanged,
-      onTap: onTap,
-      autofillHints: autofillHints,
-      textInputAction: textInputAction,
-      onFieldSubmitted: onFieldSubmitted,
-      fieldTitle: fieldTitle,
+      prefixIcon: prefixIcon,
+      suffixIcon: suffixIcon,
+      suffixText: suffixText,
       hintText: hintText,
       validator: validator,
     );
@@ -152,134 +139,75 @@ class AppTextField extends StatelessWidget {
     );
   }
 
-  factory AppTextField.withColor({
-    TextEditingController? controller,
-    String? Function(String?)? validator,
-    TextInputAction? textInputAction,
-    void Function(String)? onFieldSubmitted,
-    TextInputType? keyboardType,
-    String? fieldTitle,
-    Widget? suffixIcon,
-    void Function()? onTap,
-    String? labelText,
-    InputBorder? errorBorder,
-    final Color? backgroundColor,
-    Iterable<String>? autofillHints,
-    bool readOnly = false,
-    bool showObscureTextIcon = false,
-    String? hintText,
-  }) {
-    return AppTextField._internal(
-      controller: controller,
-      labelText: labelText,
-      autofillHints: autofillHints,
-      readOnly: readOnly,
-      errorBorder: errorBorder,
-      onTap: onTap,
-      textInputAction: textInputAction,
-      keyboardType: keyboardType,
-      hintText: hintText,
-      suffixIcon: suffixIcon,
-      onFieldSubmitted: onFieldSubmitted,
-      fieldTitle: fieldTitle,
-      validator: validator,
-      backgroundColor: backgroundColor,
-      showObscureIcon: showObscureTextIcon,
-    );
-  }
+  @override
+  State<AppTextField> createState() => _AppTextFieldState();
+}
 
-  factory AppTextField.withLabel({
-    TextEditingController? controller,
-    TextCapitalization? textCapitalization,
-    String? Function(String?)? validator,
-    TextInputAction? textInputAction,
-    Widget? suffixIcon,
-    Widget? prefixIcon,
-    String? initialValue,
-    void Function(String)? onFieldSubmitted,
-    void Function(String)? onChanged,
-    TextInputType? keyboardType,
-    String? fieldTitle,
-    final Color? backgroundColor,
-    Iterable<String>? autofillHints,
-    bool readOnly = false,
-    void Function()? onTap,
-    bool showObscureTextIcon = false,
-    String? hintText,
-    String? labelText,
-    int? maxLines,
-    String? suffixText,
-    String? prefixText,
-  }) {
-    return AppTextField._internal(
-        controller: controller,
-        autofillHints: autofillHints,
-        readOnly: readOnly,
-        initialValue: initialValue,
-        textInputAction: textInputAction,
-        keyboardType: keyboardType,
-        hintText: hintText,
-        textCapitalization: textCapitalization,
-        onFieldSubmitted: onFieldSubmitted,
-        onChanged: onChanged,
-        maxLines: maxLines,
-        onTap: onTap,
-        fieldTitle: fieldTitle,
-        validator: validator,
-        backgroundColor: backgroundColor,
-        showObscureIcon: showObscureTextIcon,
-        labelText: labelText,
-        suffixIcon: suffixIcon,
-        suffixText: suffixText,
-        prefixIcon: prefixIcon,
-        prefixText: prefixText);
+class _AppTextFieldState extends State<AppTextField> {
+  bool obscureText = false;
+  bool isFilled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    obscureText = widget._showObscureIcon ? true : false;
+    isFilled = widget.controller?.text.isNotEmpty ?? false;
   }
 
   @override
   Widget build(BuildContext context) {
-    final obscureText = _showObscureIcon ? true : false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (fieldTitle != null)
+        if (widget.fieldTitle != null)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: fieldTitle is Widget
-                ? fieldTitle as Widget
+            child: widget.fieldTitle is Widget
+                ? widget.fieldTitle as Widget
                 : Text(
-                    fieldTitle! as String,
+                    widget.fieldTitle! as String,
                     style: const TextStyle(
                         fontWeight: FontWeight.w500, fontSize: 16),
                   ),
           ),
         TextFormField(
-          autofillHints: autofillHints,
-          onFieldSubmitted: onFieldSubmitted,
-          maxLines: _showObscureIcon ? 1 : maxLines,
-          onChanged: onChanged,
-          textInputAction: textInputAction,
-          readOnly: readOnly,
-          inputFormatters: inputFormatters,
-          validator: validator,
-          obscureText: _showObscureIcon ? obscureText : false,
-          controller: controller,
-          onTap: onTap,
+          autofillHints: widget.autofillHints,
+          onFieldSubmitted: widget.onFieldSubmitted,
+          maxLines: widget._showObscureIcon ? 1 : widget.maxLines,
+          onChanged: (value) {
+            if (widget.onChanged != null) {
+              widget.onChanged!(value);
+            }
+
+            setState(() {
+              isFilled = value.isNotEmpty;
+            });
+          },
+          textInputAction: widget.textInputAction,
+          readOnly: widget.readOnly,
+          inputFormatters: widget.inputFormatters,
+          validator: widget.validator,
+          obscureText: widget._showObscureIcon ? obscureText : false,
+          controller: widget.controller,
+          onTap: widget.onTap,
           textAlign: TextAlign.left,
-          initialValue: initialValue,
+          initialValue: widget.initialValue,
           style: AppTextStyles.inputTextStyle,
-          keyboardType: keyboardType,
+          keyboardType: widget.keyboardType,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: 18),
             filled: true,
-            suffixText: suffixText,
-            prefixText: prefixText,
-            fillColor: AppColors.inputFieldFillColor,
-            hintText: hintText,
-            labelText: labelText,
+            suffixText: widget.suffixText,
+            prefixText: widget.prefixText,
+            fillColor: isFilled
+                ? AppColors.inputFieldFillColor
+                : AppColors.emptyInputFieldFillColor,
+            hintText: widget.hintText,
+            labelText: widget.labelText,
             hintStyle:
                 const TextStyle(color: AppColors.inputFieldHintTextColor),
-            errorBorder: errorBorder ??
+            errorBorder: widget.errorBorder ??
                 OutlineInputBorder(
                     borderRadius:
                         BorderRadius.circular(AppConstants.borderRadiusLarge)),
@@ -299,7 +227,7 @@ class AppTextField extends StatelessWidget {
                 borderRadius:
                     BorderRadius.circular(AppConstants.borderRadiusLarge),
                 borderSide: BorderSide(color: context.colorScheme.primary)),
-            suffixIcon: suffixIcon,
+            suffixIcon: widget.suffixIcon,
           ),
         ),
       ],
