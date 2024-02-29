@@ -4,6 +4,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class AppConstants {
   AppConstants._();
@@ -33,4 +34,5 @@ class AppConstants {
   static const double borderRadiusMedium = 8.0;
 
   static const Size designSize = Size(393, 852);
+  static Duration welcomeDelay = 1.seconds;
 }

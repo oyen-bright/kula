@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:kula/config/app_constants.dart';
+import 'package:kula/config/app_routes.dart';
 import 'package:kula/extensions/context.dart';
+import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_images.dart';
 
 class LoginWelcomeView extends StatefulWidget {
@@ -14,8 +17,8 @@ class _LoginWelcomeViewState extends State<LoginWelcomeView> {
   @override
   void initState() {
     super.initState();
-    // Future.delayed(Constants.splashScreenDelay,
-    //     () => AppRouter.router.pushReplacement(AppRoutes.login));
+    Future.delayed(
+        AppConstants.welcomeDelay, () => AppRouter.router.go(AppRoutes.home));
   }
 
   @override

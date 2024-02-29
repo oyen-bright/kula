@@ -180,8 +180,8 @@ class ViewAppBar extends StatelessWidget implements PreferredSizeWidget {
     } else if (title is String) {
       return Text(
         title as String,
-        style:
-            context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
+        style: context.textTheme.titleMedium
+            ?.copyWith(fontWeight: FontWeight.w500, fontSize: 20),
       );
     } else {
       return null;

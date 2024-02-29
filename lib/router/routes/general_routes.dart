@@ -12,7 +12,16 @@ class General {
         );
       },
     ),
-
+    GoRoute(
+      parentNavigatorKey: AppRouter.parentNavigatorKey,
+      path: AppRoutes.addAddress,
+      pageBuilder: (context, state) {
+        return AppRouter.setupPage(
+          child: const AddAddress(),
+          state: state,
+        );
+      },
+    ),
     //Authentication routes
     GoRoute(
         parentNavigatorKey: AppRouter.parentNavigatorKey,

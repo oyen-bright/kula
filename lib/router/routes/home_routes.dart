@@ -7,7 +7,7 @@ class Home {
       path: AppRoutes.home,
       pageBuilder: (context, state) {
         return AppRouter.setupPage(
-          child: const Center(child: Text("Home")),
+          child: const HomeView(),
           state: state,
         );
       },

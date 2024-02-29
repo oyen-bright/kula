@@ -17,10 +17,12 @@ class AppTextField extends StatefulWidget {
   final Widget? prefixIcon;
   final String? prefixText;
   final String? hintText;
+  final Color? hintColor;
   final int? maxLines;
   final String? initialValue;
   final bool _showObscureIcon;
   final bool readOnly;
+  final EdgeInsetsGeometry? contentPadding;
   final List<TextInputFormatter>? inputFormatters;
   final Iterable<String>? autofillHints;
   final String? Function(String?)? validator;
@@ -37,6 +39,7 @@ class AppTextField extends StatefulWidget {
     this.keyboardType,
     this.validator,
     this.prefixText,
+    this.contentPadding,
     this.prefixIcon,
     this.maxLines,
     this.suffixText,
@@ -44,6 +47,7 @@ class AppTextField extends StatefulWidget {
     this.readOnly = false,
     this.hintText,
     this.initialValue,
+    this.hintColor,
     this.autofillHints,
     this.backgroundColor,
     this.onFieldSubmitted,
@@ -65,8 +69,10 @@ class AppTextField extends StatefulWidget {
       bool readOnly = false,
       int? maxLines = 1,
       String? prefixText,
+      EdgeInsetsGeometry? contentPadding,
       Widget? prefixIcon,
       String? fieldTitle,
+      Color? hintColor,
       String? initialValue,
       Color? backgroundColor,
       void Function(String)? onChanged,
@@ -90,11 +96,13 @@ class AppTextField extends StatefulWidget {
       onTap: onTap,
       prefixText: prefixText,
       errorBorder: errorBorder,
+      contentPadding: contentPadding,
       autofillHints: autofillHints,
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,
       fieldTitle: fieldTitle,
       initialValue: initialValue,
+      hintColor: hintColor,
       textCapitalization: textCapitalization,
       backgroundColor: backgroundColor,
       maxLines: maxLines,
@@ -196,7 +204,8 @@ class _AppTextFieldState extends State<AppTextField> {
           style: AppTextStyles.inputTextStyle,
           keyboardType: widget.keyboardType,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+            contentPadding: widget.contentPadding ??
+                const EdgeInsets.symmetric(horizontal: 18),
             filled: true,
             suffixText: widget.suffixText,
             prefixText: widget.prefixText,
@@ -205,8 +214,8 @@ class _AppTextFieldState extends State<AppTextField> {
                 : AppColors.emptyInputFieldFillColor,
             hintText: widget.hintText,
             labelText: widget.labelText,
-            hintStyle:
-                const TextStyle(color: AppColors.inputFieldHintTextColor),
+            hintStyle: TextStyle(
+                color: widget.hintColor ?? AppColors.inputFieldHintTextColor),
             errorBorder: widget.errorBorder ??
                 OutlineInputBorder(
                     borderRadius:

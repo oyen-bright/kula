@@ -72,7 +72,7 @@ class AppTheme {
     return const BottomNavigationBarThemeData(
         selectedItemColor: AppColors.primaryColor,
         unselectedItemColor: AppColors.inActiveBottomNavigationColor,
-        backgroundColor: AppColors.secondaryColor,
+        backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: true,
         enableFeedback: true,
