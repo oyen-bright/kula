@@ -210,8 +210,8 @@ class _AppTextFieldState extends State<AppTextField> {
             suffixText: widget.suffixText,
             prefixText: widget.prefixText,
             fillColor: isFilled
-                ? AppColors.inputFieldFillColor
-                : AppColors.emptyInputFieldFillColor,
+                ? widget.backgroundColor ?? AppColors.inputFieldFillColor
+                : widget.backgroundColor ?? AppColors.emptyInputFieldFillColor,
             hintText: widget.hintText,
             labelText: widget.labelText,
             hintStyle: TextStyle(

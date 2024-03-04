@@ -7,7 +7,7 @@ class Orders {
       path: AppRoutes.orders,
       pageBuilder: (context, state) {
         return AppRouter.setupPage(
-          child: const Center(child: Text("Orders")),
+          child: const OrdersView(),
           state: state,
         );
       },

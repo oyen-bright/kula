@@ -31,4 +31,8 @@ class AppColors {
   static const slateGrey = Color(0xFF8C919E);
   static const goldenrodColor = Color(0xFFD4AD20);
   static const babyBlue = Color(0xFFE7F4F7);
+  static const lightGreyColor = Color(0xFFDEDEDE);
+
+  static const lightGray = Color(0xFFA8A8A8);
+  static const offWhiteColor = Color(0xFFF2F3F5);
 }

@@ -96,10 +96,18 @@ class AppTheme {
 
   static TabBarTheme get tabBarTheme {
     return TabBarTheme(
-      unselectedLabelColor: colorScheme.background,
-      labelColor: colorScheme.primary,
+      unselectedLabelColor: AppColors.greyTextColor,
+      labelColor: Colors.black,
+      unselectedLabelStyle: AppTextStyles.tabBarLabelTextStyle,
       labelStyle: AppTextStyles.tabBarLabelTextStyle,
-      indicator: const BoxDecoration(color: Colors.red),
+      indicator: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: colorScheme.primary,
+            width: 2.0,
+          ),
+        ),
+      ),
       indicatorColor: Colors.yellow,
     );
   }

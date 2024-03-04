@@ -38,5 +38,5 @@ class AppTextStyles {
       TextStyle(fontWeight: FontWeight.w300, fontSize: 14);
 
   static const TextStyle tabBarLabelTextStyle =
-      TextStyle(fontWeight: FontWeight.w700, fontSize: 17);
+      TextStyle(fontWeight: FontWeight.w600, fontSize: 15);
 }

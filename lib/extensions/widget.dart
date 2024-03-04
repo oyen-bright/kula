@@ -13,6 +13,7 @@ extension Show on Widget {
       bool? expand,
       bool invert = false,
       double? elevation,
+      Color? barrierColor,
       bool isScrollControlled = false,
       HapticFeedbackType? hapticType = HapticFeedbackType.selection,
       bool? bottomSafeArea}) {
@@ -28,6 +29,7 @@ extension Show on Widget {
         context: context,
         elevation: elevation,
         topSafeArea: topSafeArea,
+        barrierColor: barrierColor,
         bottomSafeArea: bottomSafeArea ?? true,
         isDismissible: isDismissible,
         backgroundColor: backgroundColor,

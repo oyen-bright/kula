@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/extensions/context.dart';
+import 'package:kula/extensions/widget.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
+import 'package:kula/ui/components/inputs/text_field_input.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -16,7 +18,7 @@ class HomeView extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              pinned: false,
+              pinned: true,
               collapsedHeight: 60,
               toolbarHeight: 60,
               floating: true,
@@ -64,27 +66,42 @@ class HomeView extends StatelessWidget {
                           style: TextStyle(fontSize: 16)),
                     ],
                   ),
+                  const SizedBox(
+                    height: 2,
+                  ),
                 ],
               ),
             ),
-            // SliverPersistentHeader(
-            //     pinned: true,
-            //     delegate: PersistentHeader(
-            //       (shrinkOffset) => AppTextField(
-            //         hintColor: const Color.fromARGB(255, 170, 174, 184),
-            //         suffixIcon: Image.asset(
-            //           AppImages.searchIcon,
-            //           scale: 2,
-            //         ),
-            //         hintText: "Fried Rice",
-            //       ),
-            //     )),
             SliverToBoxAdapter(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AppTextField(
+                      hintColor: const Color.fromARGB(255, 170, 174, 184),
+                      hintText: "Search for a restaurant or meal",
+                      suffixIcon: Image.asset(
+                        AppImages.searchIcon,
+                        scale: 2,
+                      )).withHorViewPadding,
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  AutoSizeText(
+                    "Today’s Special",
+                    style: context.textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.w700),
+                  ).withHorViewPadding,
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
                     width: 273.w,
                     height: 187.h,
+                    constraints:
+                        const BoxConstraints(minHeight: 187, minWidth: 273),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

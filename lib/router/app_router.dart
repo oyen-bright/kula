@@ -16,6 +16,8 @@ import 'package:kula/ui/views/authentication/sign_up/sign_up_welcome.dart';
 import 'package:kula/ui/views/authentication/sign_up/user_details.dart';
 import 'package:kula/ui/views/bottom_navigator/bottom_navigator.dart';
 import 'package:kula/ui/views/home/home_view.dart';
+import 'package:kula/ui/views/orders/order_details_view.dart';
+import 'package:kula/ui/views/orders/orders_view.dart';
 import 'package:kula/ui/views/profile/profile_customer_suport.dart';
 import 'package:kula/ui/views/profile/profile_details_view.dart';
 import 'package:kula/ui/views/profile/profile_feedback.dart';

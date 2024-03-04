@@ -22,6 +22,17 @@ class General {
         );
       },
     ),
+
+    GoRoute(
+      parentNavigatorKey: AppRouter.parentNavigatorKey,
+      path: AppRoutes.orderDetails,
+      pageBuilder: (context, state) {
+        return AppRouter.setupPage(
+          child: const OrderDetailsView(),
+          state: state,
+        );
+      },
+    ),
     //Authentication routes
     GoRoute(
         parentNavigatorKey: AppRouter.parentNavigatorKey,

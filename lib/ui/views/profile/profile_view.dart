@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
@@ -15,7 +16,11 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const SizedBox(
+              height: 15,
+            ),
             const Align(
               alignment: Alignment.center,
               child: WalletInfo(),
@@ -48,11 +53,21 @@ class ProfileView extends StatelessWidget {
                       style: context.textTheme.titleLarge
                           ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     ..._buildCompanyOptions()
                   ],
                 ),
               ),
-            ))
+            )),
+            const SizedBox(
+              height: 10,
+            ),
+            TextButton(onPressed: () {}, child: const Text("Sign out")),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),
@@ -95,7 +110,9 @@ List<Widget> _buildAccountOptions() {
           ),
         ),
       )
-      .toList();
+      .toList()
+      .animate(interval: 400.ms)
+      .fade(duration: 500.ms);
 }
 
 List<Widget> _buildCompanyOptions() {
@@ -135,7 +152,9 @@ List<Widget> _buildCompanyOptions() {
           ),
         ),
       )
-      .toList();
+      .toList()
+      .animate(interval: 400.ms)
+      .fade(duration: 500.ms);
 }
 
 class WalletInfo extends StatelessWidget {
