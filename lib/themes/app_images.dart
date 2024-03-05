@@ -44,5 +44,12 @@ class AppImages {
   static const callIcon = "assets/icons/call_icon.png";
   static const chatIcon = "assets/icons/chat_icon.png";
   static const instagramIcon = "assets/icons/instagram_icon.png";
+
   static const twitterIcon = "assets/icons/twitter_icon.png";
+  static const searchImage = "assets/images/search_image.png";
+  static const noSearchResultImage = "assets/images/no_search_result.png";
+
+  static const star = "assets/icons/Star.png";
+  static const halfStar = "assets/icons/Half-start.png";
+  static const noStar = "assets/icons/no_Star.png";
 }

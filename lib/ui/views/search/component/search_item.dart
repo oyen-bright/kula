@@ -4,12 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_colors.dart';
-import 'package:kula/themes/app_images.dart';
 
-class OrderDetailCard extends StatelessWidget {
-  const OrderDetailCard({
-    super.key,
-  });
+class SearchItem extends StatelessWidget {
+  const SearchItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,22 +46,24 @@ class OrderDetailCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AutoSizeText(
-                "Chukas buka",
+                "Chicken pepper soup",
                 maxLines: 1,
                 style: context.textTheme.bodyLarge?.copyWith(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Text(
-                "Gwarimpa",
-                style: context.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.greyTextColor,
-                  fontSize: 15,
+              Expanded(
+                child: AutoSizeText(
+                  "2 chicken laps, pepper stew, potato fries,mixed with honey glazed gizzard and bay leaves.",
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    color: AppColors.greyTextColor,
+                    fontSize: 15,
+                  ),
                 ),
               ),
-              const Spacer(),
-              Flexible(
+              Align(
+                alignment: Alignment.bottomRight,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 4.r),
                   decoration: BoxDecoration(
@@ -78,43 +77,6 @@ class OrderDetailCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          AppImages.timeIcon,
-                          scale: 1.8,
-                        ),
-                        SizedBox(
-                          width: 3.w,
-                        ),
-                        Expanded(
-                          child: Text(
-                            "50-55 minutes",
-                            maxLines: 1,
-                            style: context.textTheme.bodyMedium
-                                ?.copyWith(color: AppColors.greyTextColor),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        color: AppColors.offWhiteColor,
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                            color: AppColors.cardStrokeColor, width: 2)),
-                    child: Text(
-                      "1",
-                      style: context.textTheme.titleMedium,
-                    ),
-                  )
-                ],
-              )
             ],
           ))
         ],

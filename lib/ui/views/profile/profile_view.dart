@@ -27,38 +27,42 @@ class ProfileView extends StatelessWidget {
             ),
             Expanded(
                 child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppConstants.viewPaddingHorizontal),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Text(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppConstants.viewPaddingHorizontalProfile),
+                    child: Text(
                       "Account",
                       style: context.textTheme.titleLarge
                           ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ..._buildAccountOptions(),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Text(
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ..._buildAccountOptions(),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppConstants.viewPaddingHorizontalProfile),
+                    child: Text(
                       "Company",
                       style: context.textTheme.titleLarge
                           ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ..._buildCompanyOptions()
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ..._buildCompanyOptions()
+                ],
               ),
             )),
             const SizedBox(
@@ -89,7 +93,8 @@ List<Widget> _buildAccountOptions() {
       .map(
         (e) => ListTile(
           visualDensity: VisualDensity.compact,
-          contentPadding: EdgeInsets.zero,
+          contentPadding: const EdgeInsets.symmetric(
+              horizontal: AppConstants.viewPaddingHorizontalProfile),
           leading: Image.asset(
             e.$1,
             color: Colors.black,
@@ -111,8 +116,8 @@ List<Widget> _buildAccountOptions() {
         ),
       )
       .toList()
-      .animate(interval: 400.ms)
-      .fade(duration: 500.ms);
+      .animate(interval: 300.ms)
+      .fade(duration: 400.ms);
 }
 
 List<Widget> _buildCompanyOptions() {
@@ -131,7 +136,8 @@ List<Widget> _buildCompanyOptions() {
       .map(
         (e) => ListTile(
           visualDensity: VisualDensity.compact,
-          contentPadding: EdgeInsets.zero,
+          contentPadding: const EdgeInsets.symmetric(
+              horizontal: AppConstants.viewPaddingHorizontalProfile),
           leading: Image.asset(
             e.$1,
             color: Colors.black,
@@ -153,8 +159,8 @@ List<Widget> _buildCompanyOptions() {
         ),
       )
       .toList()
-      .animate(interval: 400.ms)
-      .fade(duration: 500.ms);
+      .animate(interval: 300.ms)
+      .fade(duration: 400.ms);
 }
 
 class WalletInfo extends StatelessWidget {
@@ -166,8 +172,6 @@ class WalletInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 135.h,
-      // padding: const EdgeInsets.symmetric(vertical: 10),
-
       width: 361.w,
       child: Stack(
         children: [

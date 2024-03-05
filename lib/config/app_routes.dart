@@ -35,4 +35,10 @@ class AppRoutes {
 
   static const String addAddress = '/add-address';
   static const String orderDetails = '/order-details';
+  static const String search = '/search';
+  static const String searchGiveFeedBack = '/feed-back';
+  static const String changeLocation = '/change-location';
+
+  static const String restaurant = '/restaurant';
+  static const String restaurantReview = '$restaurant/review';
 }

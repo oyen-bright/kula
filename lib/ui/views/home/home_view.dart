@@ -1,12 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/config/app_routes.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
-import 'package:kula/themes/app_colors.dart';
+import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/inputs/text_field_input.dart';
+
+import 'components/specials_card.dart';
+import 'components/vendors_card.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -52,22 +55,26 @@ class HomeView extends StatelessWidget {
                   const SizedBox(
                     height: 2,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        AppImages.locationIcon,
-                        scale: 2,
-                      ),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      const Text("Downtown Menlo park....",
-                          style: TextStyle(fontSize: 16)),
-                    ],
+                  InkWell(
+                    onTap: () =>
+                        AppRouter.router.push(AppRoutes.changeLocation),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          AppImages.locationIcon,
+                          scale: 2,
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        const Text("Downtown Menlo park....",
+                            style: TextStyle(fontSize: 16)),
+                      ],
+                    ),
                   ),
                   const SizedBox(
-                    height: 2,
+                    height: 4,
                   ),
                 ],
               ),
@@ -80,6 +87,9 @@ class HomeView extends StatelessWidget {
                     height: 10,
                   ),
                   AppTextField(
+                      readOnly: true,
+                      keyboardType: TextInputType.none,
+                      onTap: () => AppRouter.router.push(AppRoutes.search),
                       hintColor: const Color.fromARGB(255, 170, 174, 184),
                       hintText: "Search for a restaurant or meal",
                       suffixIcon: Image.asset(
@@ -97,190 +107,46 @@ class HomeView extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  Container(
-                    width: 273.w,
-                    height: 187.h,
-                    constraints:
-                        const BoxConstraints(minHeight: 187, minWidth: 273),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          child: Stack(
-                            children: [
-                              Positioned.fill(
-                                  child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.pink,
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.borderRadiusMedium)),
-                              )),
-                              Positioned(
-                                top: 15,
-                                left: 15,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 8.w, vertical: 4.h),
-                                  decoration: ShapeDecoration(
-                                      color: Colors.amber,
-                                      shape: RoundedRectangleBorder(
-                                          side: const BorderSide(width: 1),
-                                          borderRadius: BorderRadius.circular(
-                                              AppConstants.borderRadiusSmall))),
-                                  child: AutoSizeText(
-                                    "Chicken Republic",
-                                    style: context.textTheme.titleSmall
-                                        ?.copyWith(fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                                child: AutoSizeText(
-                              "Chicken n Chips",
-                              maxLines: 1,
-                              style: context.textTheme.titleMedium
-                                  ?.copyWith(fontWeight: FontWeight.w700),
-                            )),
-                            Container(
-                              padding: EdgeInsets.all(4.r),
-                              decoration: BoxDecoration(
-                                  color: AppColors.tertiaryColor,
-                                  borderRadius: BorderRadius.circular(
-                                      AppConstants.borderRadiusSmall)),
-                              child: AutoSizeText(
-                                "₦4,000",
-                                maxLines: 1,
-                                style: context.textTheme.bodyMedium,
-                              ),
-                            )
-                          ],
-                        )
-                      ],
+                  SizedBox(
+                    height: 187,
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => const SizedBox(
+                        width: 10,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppConstants.viewPaddingHorizontal),
+                      shrinkWrap: true,
+                      itemCount: 10,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return const SpecialMealCard();
+                      },
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.cardColor,
-                        border: Border.all(
-                            color: AppColors.cardStrokeColor, width: 2),
-                        borderRadius: BorderRadius.circular(
-                            AppConstants.borderRadiusMedium)),
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    width: double.infinity,
-                    height: 108.h,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 84.w,
-                          height: 84.w,
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(
-                                  AppConstants.borderRadiusMedium)),
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 84.h,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 3),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AutoSizeText(
-                                "Chukas buka",
-                                maxLines: 1,
-                                style: context.textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              AutoSizeText(
-                                "Hot and spicy catfish daily",
-                                maxLines: 1,
-                                style: context.textTheme.titleMedium
-                                    ?.copyWith(color: AppColors.greyTextColor),
-                              ),
-                              const Spacer(),
-                              SizedBox(
-                                width: double.infinity,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                            AppImages.timeIcon,
-                                            scale: 1.3,
-                                          ),
-                                          SizedBox(
-                                            width: 3.w,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "50-55 minutes",
-                                              maxLines: 1,
-                                              style: context
-                                                  .textTheme.bodyMedium
-                                                  ?.copyWith(
-                                                      color: AppColors
-                                                          .greyTextColor),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Image.asset(
-                                            AppImages.starIcon,
-                                            scale: 1.3,
-                                          ),
-                                          Text.rich(
-                                            const TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: '4.8 ',
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: '(74)',
-                                                ),
-                                              ],
-                                            ),
-                                            style: context.textTheme.bodyMedium
-                                                ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            maxLines: 1,
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ))
-                      ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  AutoSizeText(
+                    "Vendors",
+                    style: context.textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.w700),
+                  ).withHorViewPadding,
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppConstants.viewPaddingHorizontal),
+                    separatorBuilder: (_, __) => const SizedBox(
+                      height: 10,
                     ),
-                  )
+                    itemCount: 10,
+                    itemBuilder: (BuildContext context, int index) {
+                      return const VendorsCard();
+                    },
+                  ),
                 ],
               ),
             )

@@ -12,7 +12,8 @@ class AppConstants {
   static const String appName = 'Kula';
   static const String appDomain = 'https://kula.com';
   static const String appDescription = 'Food app';
-  static const double viewPaddingHorizontal = 20;
+  static const double viewPaddingHorizontal = 15;
+  static const double viewPaddingHorizontalProfile = 20;
 
   static const double viewPaddingVertical = 10;
   static const double transactionTimeout = 60;

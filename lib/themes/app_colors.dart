@@ -35,4 +35,5 @@ class AppColors {
 
   static const lightGray = Color(0xFFA8A8A8);
   static const offWhiteColor = Color(0xFFF2F3F5);
+  static const darkGoldenrod = Color(0xFFB3740F);
 }

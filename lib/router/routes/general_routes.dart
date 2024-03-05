@@ -22,7 +22,37 @@ class General {
         );
       },
     ),
+    GoRoute(
+      parentNavigatorKey: AppRouter.parentNavigatorKey,
+      path: AppRoutes.search,
+      pageBuilder: (context, state) {
+        return AppRouter.setupPage(
+          child: const SearchView(),
+          state: state,
+        );
+      },
+    ),
+    GoRoute(
+      parentNavigatorKey: AppRouter.parentNavigatorKey,
+      path: AppRoutes.changeLocation,
+      pageBuilder: (context, state) {
+        return AppRouter.setupPage(
+          child: const ChangeLocationView(),
+          state: state,
+        );
+      },
+    ),
 
+    GoRoute(
+      parentNavigatorKey: AppRouter.parentNavigatorKey,
+      path: AppRoutes.searchGiveFeedBack,
+      pageBuilder: (context, state) {
+        return AppRouter.setupPage(
+          child: const ProfileFeedBack(),
+          state: state,
+        );
+      },
+    ),
     GoRoute(
       parentNavigatorKey: AppRouter.parentNavigatorKey,
       path: AppRoutes.orderDetails,
@@ -33,6 +63,28 @@ class General {
         );
       },
     ),
+
+    GoRoute(
+        parentNavigatorKey: AppRouter.parentNavigatorKey,
+        path: AppRoutes.restaurant,
+        pageBuilder: (context, state) {
+          return AppRouter.setupPage(
+            child: const Restaurant(),
+            state: state,
+          );
+        },
+        routes: [
+          GoRoute(
+            parentNavigatorKey: AppRouter.parentNavigatorKey,
+            path: routeSubPath(AppRoutes.restaurantReview),
+            pageBuilder: (context, state) {
+              return AppRouter.setupPage(
+                child: const RestaurantReview(),
+                state: state,
+              );
+            },
+          ),
+        ]),
     //Authentication routes
     GoRoute(
         parentNavigatorKey: AppRouter.parentNavigatorKey,

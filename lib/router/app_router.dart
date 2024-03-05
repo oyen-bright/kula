@@ -15,6 +15,7 @@ import 'package:kula/ui/views/authentication/sign_up/sign_up_view.dart';
 import 'package:kula/ui/views/authentication/sign_up/sign_up_welcome.dart';
 import 'package:kula/ui/views/authentication/sign_up/user_details.dart';
 import 'package:kula/ui/views/bottom_navigator/bottom_navigator.dart';
+import 'package:kula/ui/views/change_location/change_location_view.dart';
 import 'package:kula/ui/views/home/home_view.dart';
 import 'package:kula/ui/views/orders/order_details_view.dart';
 import 'package:kula/ui/views/orders/orders_view.dart';
@@ -25,6 +26,9 @@ import 'package:kula/ui/views/profile/profile_manage_address.dart';
 import 'package:kula/ui/views/profile/profile_privacy_policy.dart';
 import 'package:kula/ui/views/profile/profile_terms_of_use.dart';
 import 'package:kula/ui/views/profile/profile_view.dart';
+import 'package:kula/ui/views/restaurant/restaurant_review.dart';
+import 'package:kula/ui/views/restaurant/restaurant_view.dart';
+import 'package:kula/ui/views/search/search_view.dart';
 import 'package:kula/ui/views/splash/splash_view.dart';
 import 'package:kula/utils/subpart_route_util.dart';
 
