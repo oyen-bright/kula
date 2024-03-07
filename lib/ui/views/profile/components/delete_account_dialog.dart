@@ -12,7 +12,7 @@ class DeleteAccountDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppConstants.borderRadiusLarge)),
+          borderRadius: BorderRadius.circular(AppConstants.borderRadius.large)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(

@@ -19,31 +19,35 @@ class VendorsCard extends StatelessWidget {
       onTap: () => AppRouter.router.push(AppRoutes.restaurant),
       onLongPress: () => AppRouter.router.push(AppRoutes.restaurantReview),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
         decoration: BoxDecoration(
             color: AppColors.cardColor,
             border: Border.all(color: AppColors.cardStrokeColor, width: 2),
             borderRadius:
-                BorderRadius.circular(AppConstants.borderRadiusMedium)),
+                BorderRadius.circular(AppConstants.borderRadius.medium)),
         width: double.infinity,
         height: 108.h,
         constraints: const BoxConstraints(
-          minHeight: 108,
-          maxHeight: 110,
-          minWidth: 353,
-        ),
+            // minHeight: 108,
+            // maxHeight: 110,
+            // minWidth: 353,
+            ),
         child: Row(
           children: [
             Container(
+              height: 84.h,
               width: 84.w,
               decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius:
-                      BorderRadius.circular(AppConstants.borderRadiusMedium)),
+                      BorderRadius.circular(AppConstants.borderRadius.medium)),
+            ),
+            SizedBox(
+              width: 16.w,
             ),
             Expanded(
                 child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              padding: EdgeInsets.symmetric(vertical: 4.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -51,7 +55,7 @@ class VendorsCard extends StatelessWidget {
                     "Chukas buka",
                     maxLines: 1,
                     style: context.textTheme.bodyLarge?.copyWith(
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -63,7 +67,7 @@ class VendorsCard extends StatelessWidget {
                     maxLines: 1,
                     style: context.textTheme.bodyLarge?.copyWith(
                       color: AppColors.greyTextColor,
-                      fontSize: 15,
+                      fontSize: 14,
                     ),
                   ),
                   const Spacer(),
@@ -76,7 +80,7 @@ class VendorsCard extends StatelessWidget {
                             children: [
                               Image.asset(
                                 AppImages.timeIcon,
-                                scale: 1.8,
+                                scale: 2,
                               ),
                               SizedBox(
                                 width: 3.w,
@@ -85,7 +89,7 @@ class VendorsCard extends StatelessWidget {
                                 child: Text(
                                   "50-55 minutes",
                                   maxLines: 1,
-                                  style: context.textTheme.bodyMedium?.copyWith(
+                                  style: context.textTheme.bodySmall?.copyWith(
                                       color: AppColors.greyTextColor),
                                 ),
                               )
@@ -98,28 +102,25 @@ class VendorsCard extends StatelessWidget {
                             children: [
                               Image.asset(
                                 AppImages.starIcon,
-                                scale: 1.4,
+                                scale: 2,
                               ),
-                              const SizedBox(
-                                width: 2,
+                              SizedBox(
+                                width: 2.w,
                               ),
                               Text.rich(
                                 const TextSpan(
                                   children: [
                                     TextSpan(
                                       text: '4.8 ',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                      ),
                                     ),
                                     TextSpan(
                                       text: '(74)',
                                     ),
                                   ],
                                 ),
-                                style: context.textTheme.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: context.textTheme.bodySmall?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black),
                                 maxLines: 1,
                               ),
                             ],

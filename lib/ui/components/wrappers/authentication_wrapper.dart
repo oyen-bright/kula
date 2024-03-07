@@ -37,7 +37,7 @@ class AuthenticationWrapper extends StatelessWidget {
                             WrapperBackgroundImageSize.large
                         ? AppImages.backgroundLoginImageTopLeft
                         : AppImages.backgroundImageTopLeft,
-                    scale: 2,
+                    scale: 3,
                   )).animate().fadeIn(duration: 500.milliseconds),
               Positioned(
                   bottom: 0,
@@ -47,7 +47,7 @@ class AuthenticationWrapper extends StatelessWidget {
                             WrapperBackgroundImageSize.large
                         ? AppImages.backgroundLoginImageBottomRight
                         : AppImages.backgroundImageBottomRight,
-                    scale: 2,
+                    scale: 3,
                   )).animate().fadeIn(duration: 500.milliseconds),
             } else
               Positioned(
@@ -56,7 +56,7 @@ class AuthenticationWrapper extends StatelessWidget {
                   right: 0,
                   child: Image.asset(
                     AppImages.backgroundImageTop,
-                    scale: 1.5,
+                    scale: 3,
                   )).animate().fadeIn(duration: 500.milliseconds)
           },
           Positioned.fill(

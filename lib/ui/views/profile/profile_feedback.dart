@@ -19,8 +19,8 @@ class ProfileFeedBack extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppConstants.viewPaddingHorizontal),
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppConstants.padding.horizontal),
                 child: Column(
                   children: [
                     AppTextField(

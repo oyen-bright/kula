@@ -23,7 +23,7 @@ class LoadingOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppConstants.borderRadius),
+        borderRadius: BorderRadius.circular(AppConstants.borderRadius.normal),
         child: BackdropFilter(
           filter: ImageFilter.blur(
             sigmaX: blur?.sigmaX ?? 10.0,
@@ -50,7 +50,7 @@ class LoadingOverlay extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: context.colorScheme.secondary,
-          borderRadius: BorderRadius.circular(AppConstants.borderRadius),
+          borderRadius: BorderRadius.circular(AppConstants.borderRadius.normal),
         ),
         child: const CircularProgressIndicator(),
       ).animate().fadeIn(),
@@ -62,13 +62,14 @@ class LoadingOverlay extends StatelessWidget {
           height: 6,
         ),
         Container(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppConstants.viewPaddingHorizontal),
-          margin: const EdgeInsets.symmetric(
-              horizontal: AppConstants.viewPaddingHorizontal),
+          padding:
+              EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
+          margin:
+              EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
           decoration: BoxDecoration(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(AppConstants.borderRadius),
+            borderRadius:
+                BorderRadius.circular(AppConstants.borderRadius.normal),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,

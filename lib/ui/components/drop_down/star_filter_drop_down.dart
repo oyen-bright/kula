@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_colors.dart';
@@ -20,14 +21,14 @@ class StarFilterDropdownState extends State<StarFilterDropdown> {
       decoration: BoxDecoration(
         color: AppColors.cardColor,
         border: Border.all(color: AppColors.cardStrokeColor),
-        borderRadius: BorderRadius.circular(AppConstants.borderRadiusSmall),
+        borderRadius: BorderRadius.circular(AppConstants.borderRadius.small),
       ),
       child: DropdownButton<int>(
         enableFeedback: true,
         padding: const EdgeInsets.only(right: 10),
         elevation: 3,
         itemHeight: null,
-        borderRadius: BorderRadius.circular(AppConstants.borderRadiusLarge),
+        borderRadius: BorderRadius.circular(AppConstants.borderRadius.large),
         value: _selectedStars,
         onChanged: (int? newValue) {
           setState(() {
@@ -49,10 +50,12 @@ class StarFilterDropdownState extends State<StarFilterDropdown> {
           size: 20,
         ),
         hint: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(
+            horizontal: 8.w,
+          ),
           child: Text(
             'Filter stars',
-            style: context.textTheme.bodyMedium?.copyWith(fontSize: 15),
+            style: context.textTheme.bodyMedium?.copyWith(fontSize: 14),
           ),
         ),
       ),

@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kula/config/app_constants.dart';
 
@@ -87,9 +88,9 @@ class AppTheme {
       backgroundColor: colorScheme.secondary,
       foregroundColor: colorScheme.primary,
       disabledBackgroundColor: AppColors.disabledColor,
-      minimumSize: const Size(double.infinity, 48),
+      minimumSize: Size(double.infinity, 48.h),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppConstants.borderRadiusLarge),
+        borderRadius: BorderRadius.circular(AppConstants.borderRadius.large),
       ),
     ));
   }

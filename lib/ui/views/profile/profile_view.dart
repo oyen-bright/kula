@@ -34,8 +34,8 @@ class ProfileView extends StatelessWidget {
                     height: 25,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppConstants.viewPaddingHorizontalProfile),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppConstants.padding.horizontal),
                     child: Text(
                       "Account",
                       style: context.textTheme.titleLarge
@@ -50,8 +50,8 @@ class ProfileView extends StatelessWidget {
                     height: 25,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppConstants.viewPaddingHorizontalProfile),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppConstants.padding.horizontal),
                     child: Text(
                       "Company",
                       style: context.textTheme.titleLarge
@@ -93,8 +93,8 @@ List<Widget> _buildAccountOptions() {
       .map(
         (e) => ListTile(
           visualDensity: VisualDensity.compact,
-          contentPadding: const EdgeInsets.symmetric(
-              horizontal: AppConstants.viewPaddingHorizontalProfile),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
           leading: Image.asset(
             e.$1,
             color: Colors.black,
@@ -136,8 +136,8 @@ List<Widget> _buildCompanyOptions() {
       .map(
         (e) => ListTile(
           visualDensity: VisualDensity.compact,
-          contentPadding: const EdgeInsets.symmetric(
-              horizontal: AppConstants.viewPaddingHorizontalProfile),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
           leading: Image.asset(
             e.$1,
             color: Colors.black,
@@ -180,7 +180,7 @@ class WalletInfo extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.black,
                 borderRadius:
-                    BorderRadius.circular(AppConstants.borderRadiusLarge)),
+                    BorderRadius.circular(AppConstants.borderRadius.large)),
           )),
           Positioned.fill(
               child: Image.asset(

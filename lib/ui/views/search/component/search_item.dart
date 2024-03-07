@@ -22,7 +22,8 @@ class SearchItem extends StatelessWidget {
       decoration: BoxDecoration(
           color: AppColors.cardColor,
           border: Border.all(color: AppColors.cardStrokeColor, width: 2),
-          borderRadius: BorderRadius.circular(AppConstants.borderRadiusMedium)),
+          borderRadius:
+              BorderRadius.circular(AppConstants.borderRadius.medium)),
       width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -35,7 +36,7 @@ class SearchItem extends StatelessWidget {
             decoration: BoxDecoration(
                 // color: Colors.red,
                 borderRadius:
-                    BorderRadius.circular(AppConstants.borderRadiusMedium),
+                    BorderRadius.circular(AppConstants.borderRadius.medium),
                 border: Border.all(color: AppColors.lightGreyColor)),
           ),
           const SizedBox(
@@ -69,7 +70,7 @@ class SearchItem extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: AppColors.tertiaryColor,
                       borderRadius: BorderRadius.circular(
-                          AppConstants.borderRadiusSmall)),
+                          AppConstants.borderRadius.small)),
                   child: AutoSizeText(
                     "₦40,000",
                     maxLines: 1,

@@ -34,8 +34,8 @@ class SearchView extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(
           height: 10,
         ),
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.viewPaddingHorizontal, vertical: 20),
+        padding: EdgeInsets.symmetric(
+            horizontal: AppConstants.padding.horizontal, vertical: 20),
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
           return const SearchItem();
@@ -48,8 +48,7 @@ class SearchView extends StatelessWidget {
 _buildSearchImage(BuildContext context) {
   return Container(
     margin: const EdgeInsets.only(top: 40),
-    padding: const EdgeInsets.symmetric(
-        horizontal: AppConstants.viewPaddingHorizontal),
+    padding: EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
     alignment: Alignment.topCenter,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -74,8 +73,7 @@ _buildSearchImage(BuildContext context) {
 _buildNoSearchImage(BuildContext context) {
   return Container(
     margin: const EdgeInsets.only(top: 40),
-    padding: const EdgeInsets.symmetric(
-        horizontal: AppConstants.viewPaddingHorizontal),
+    padding: EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
     alignment: Alignment.topCenter,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,

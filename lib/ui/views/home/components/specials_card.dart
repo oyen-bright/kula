@@ -27,7 +27,7 @@ class SpecialMealCard extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.pink,
                       borderRadius: BorderRadius.circular(
-                          AppConstants.borderRadiusMedium)),
+                          AppConstants.borderRadius.medium)),
                 )),
                 Positioned(
                   top: 15,
@@ -40,11 +40,11 @@ class SpecialMealCard extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             side: const BorderSide(width: 1),
                             borderRadius: BorderRadius.circular(
-                                AppConstants.borderRadiusSmall))),
+                                AppConstants.borderRadius.small))),
                     child: AutoSizeText(
                       "Chicken Republic",
                       style: context.textTheme.titleSmall
-                          ?.copyWith(fontWeight: FontWeight.w700),
+                          ?.copyWith(fontWeight: FontWeight.w700, fontSize: 13),
                     ),
                   ),
                 )
@@ -52,7 +52,7 @@ class SpecialMealCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 5.h,
+            height: 9.5.h,
           ),
           Row(
             children: [
@@ -61,18 +61,19 @@ class SpecialMealCard extends StatelessWidget {
                 "Chicken n Chips",
                 maxLines: 1,
                 style: context.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
+                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 16),
               )),
               Container(
-                padding: EdgeInsets.all(4.r),
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
                     color: AppColors.tertiaryColor,
-                    borderRadius:
-                        BorderRadius.circular(AppConstants.borderRadiusSmall)),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.borderRadius.small,
+                    )),
                 child: AutoSizeText(
                   "₦4,000",
                   maxLines: 1,
-                  style: context.textTheme.bodyMedium,
+                  style: context.textTheme.bodyMedium?.copyWith(fontSize: 12),
                 ),
               )
             ],

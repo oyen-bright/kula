@@ -33,8 +33,4 @@ class AppEnvironment {
   static String get baseUrl {
     return dotenv.env["${environment.value}_BASE_URL"]!;
   }
-
-  static String get walletConnectID {
-    return dotenv.env["${environment.value}_WALLET_CONNECT_ID"]!;
-  }
 }

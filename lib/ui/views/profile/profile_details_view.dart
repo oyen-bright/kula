@@ -17,8 +17,8 @@ class ProfileDetails extends StatelessWidget {
         title: "Profile Details",
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.viewPaddingHorizontal),
+        padding:
+            EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
         child: Column(
           children: [
             Expanded(

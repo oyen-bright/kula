@@ -31,13 +31,13 @@ class LoginView extends StatelessWidget {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppConstants.viewPaddingHorizontal),
+            padding: EdgeInsets.symmetric(
+                horizontal: AppConstants.padding.horizontal),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: 41.h,
                 ),
                 SizedBox(
                   height: 40.h,
@@ -46,8 +46,8 @@ class LoginView extends StatelessWidget {
                     scale: 2,
                   ),
                 ),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: 48.h,
                 ),
                 Text(
                   Strings.welcomeBack,
@@ -55,8 +55,8 @@ class LoginView extends StatelessWidget {
                   style: context.textTheme.titleLarge
                       ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: 8.h,
                 ),
                 Text(
                   Strings.convenientDelivery,
@@ -64,22 +64,22 @@ class LoginView extends StatelessWidget {
                   style: context.textTheme.titleMedium
                       ?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
                 ),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: 32.h,
                 ),
                 AppTextField(
                   fieldTitle: Strings.email,
                   hintText: Strings.emailHint,
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: 16.h,
                 ),
                 AppTextField(
                   fieldTitle: Strings.password,
                   hintText: Strings.passwordHint,
                 ),
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: 16.h,
                 ),
                 AppElevatedButton(
                   elevation: 0,

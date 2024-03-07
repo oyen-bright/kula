@@ -18,18 +18,19 @@ class MyApp extends StatelessWidget {
     return RepositoriesProvider(
       child: AppCubitProvider(
         child: AppBlocProvider(
-          child: ScreenUtilInit(
-              designSize: AppConstants.designSize,
-              child: MaterialApp.router(
-                theme: AppTheme.theme,
-                debugShowCheckedModeBanner: false,
-                routerConfig: AppRouter.router,
-                builder: (context, child) {
-                  final loadingState = context.watch<LoadingCubit>().state;
-                  return _buildApp(context, child, loadingState);
-                },
-              )),
-        ),
+            child: ScreenUtilInit(
+                designSize: AppConstants.designSize,
+                builder: ((context, child) {
+                  return MaterialApp.router(
+                    theme: AppTheme.theme,
+                    debugShowCheckedModeBanner: false,
+                    routerConfig: AppRouter.router,
+                    builder: (context, child) {
+                      final loadingState = context.watch<LoadingCubit>().state;
+                      return _buildApp(context, child, loadingState);
+                    },
+                  );
+                }))),
       ),
     );
   }

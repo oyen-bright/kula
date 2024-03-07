@@ -50,8 +50,8 @@ class ChangeLocationView extends StatelessWidget {
                             scale: 1.5,
                           ),
                           visualDensity: VisualDensity.compact,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: AppConstants.viewPaddingHorizontal,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: AppConstants.padding.horizontal,
                           ),
                           minLeadingWidth: 0,
                           horizontalTitleGap: 10,

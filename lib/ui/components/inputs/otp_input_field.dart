@@ -85,7 +85,7 @@ class OTPInputFieldState extends State<OTPInputField> {
         color: isFilled
             ? AppColors.inputFieldFillColor
             : AppColors.emptyInputFieldFillColor,
-        borderRadius: BorderRadius.circular(AppConstants.borderRadiusLarge),
+        borderRadius: BorderRadius.circular(AppConstants.borderRadius.large),
         border: Border.all(color: AppColors.inputFieldStrokeColor, width: 1),
       ),
       width: 48,

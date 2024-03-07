@@ -24,8 +24,8 @@ class OrderDetailsView extends StatelessWidget {
             return SizedBox(
                 height: constraints.maxHeight / 1.34,
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: AppConstants.viewPaddingHorizontal),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppConstants.padding.horizontal),
                   child: Column(
                       children: List.generate(
                           10,
@@ -51,8 +51,8 @@ class OrderDetailsView extends StatelessWidget {
             child: SingleChildScrollView(
               controller: scrollController,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppConstants.viewPaddingHorizontal),
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppConstants.padding.horizontal),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -79,14 +79,14 @@ class OrderDetailsView extends StatelessWidget {
                       onTap: () {
                         Container(
                           padding: const EdgeInsets.all(13),
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: AppConstants.viewPaddingHorizontal),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: AppConstants.padding.horizontal),
                           constraints: const BoxConstraints(
                               maxWidth: 353, minHeight: 158),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(
-                                  AppConstants.borderRadiusLarge)),
+                                  AppConstants.borderRadius.large)),
                           height: 100,
                           child: Text(
                             "Once you get to the house, meet the gateman and tell him you are looking for James John. He will open the door for you. Come to apartment 11.",

@@ -21,8 +21,8 @@ class EmailVerificationView extends StatelessWidget {
     return AuthenticationWrapper(
         viewTitle: "Email Verification",
         body: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppConstants.viewPaddingHorizontal),
+          padding:
+              EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

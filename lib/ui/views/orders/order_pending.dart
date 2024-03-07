@@ -10,9 +10,10 @@ class OrderPending extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppConstants.viewPaddingVertical,
-        horizontal: AppConstants.viewPaddingHorizontal,
+      padding: EdgeInsets.symmetric(
+        //TODO; view paddeing
+        vertical: 10,
+        horizontal: AppConstants.padding.horizontal,
       ),
       separatorBuilder: (_, __) => SizedBox(
         height: 10.h,

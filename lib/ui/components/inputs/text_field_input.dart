@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_colors.dart';
@@ -170,7 +171,7 @@ class _AppTextFieldState extends State<AppTextField> {
       children: [
         if (widget.fieldTitle != null)
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: EdgeInsets.only(bottom: 8.h),
             child: widget.fieldTitle is Widget
                 ? widget.fieldTitle as Widget
                 : Text(
@@ -219,14 +220,14 @@ class _AppTextFieldState extends State<AppTextField> {
             errorBorder: widget.errorBorder ??
                 OutlineInputBorder(
                     borderRadius:
-                        BorderRadius.circular(AppConstants.borderRadiusLarge)),
+                        BorderRadius.circular(AppConstants.borderRadius.large)),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius:
-                  BorderRadius.circular(AppConstants.borderRadiusLarge),
+                  BorderRadius.circular(AppConstants.borderRadius.large),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius:
-                  BorderRadius.circular(AppConstants.borderRadiusLarge),
+                  BorderRadius.circular(AppConstants.borderRadius.large),
               borderSide: const BorderSide(
                 color: AppColors.inputFieldStrokeColor,
                 style: BorderStyle.solid,
@@ -234,7 +235,7 @@ class _AppTextFieldState extends State<AppTextField> {
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius:
-                    BorderRadius.circular(AppConstants.borderRadiusLarge),
+                    BorderRadius.circular(AppConstants.borderRadius.large),
                 borderSide: BorderSide(color: context.colorScheme.primary)),
             suffixIcon: widget.suffixIcon,
           ),

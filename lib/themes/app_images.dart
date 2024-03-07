@@ -52,4 +52,6 @@ class AppImages {
   static const star = "assets/icons/Star.png";
   static const halfStar = "assets/icons/Half-start.png";
   static const noStar = "assets/icons/no_Star.png";
+  static const roundBackButton = "assets/icons/round_back_button.png";
+  static const openIcon = "assets/icons/open_icon.png";
 }

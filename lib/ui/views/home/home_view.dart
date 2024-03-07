@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
 import 'package:kula/extensions/context.dart';
@@ -52,8 +53,8 @@ class HomeView extends StatelessWidget {
                         color: Colors.black,
                         fontWeight: FontWeight.w700),
                   ),
-                  const SizedBox(
-                    height: 2,
+                  SizedBox(
+                    height: 6.h,
                   ),
                   InkWell(
                     onTap: () =>
@@ -69,12 +70,12 @@ class HomeView extends StatelessWidget {
                           width: 4,
                         ),
                         const Text("Downtown Menlo park....",
-                            style: TextStyle(fontSize: 16)),
+                            style: TextStyle(fontSize: 14)),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 4,
+                  SizedBox(
+                    height: 6.h,
                   ),
                 ],
               ),
@@ -83,8 +84,8 @@ class HomeView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 10.h,
                   ),
                   AppTextField(
                       readOnly: true,
@@ -96,25 +97,25 @@ class HomeView extends StatelessWidget {
                         AppImages.searchIcon,
                         scale: 2,
                       )).withHorViewPadding,
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    height: 24.h,
                   ),
                   AutoSizeText(
                     "Today’s Special",
                     style: context.textTheme.titleLarge
-                        ?.copyWith(fontWeight: FontWeight.w700),
+                        ?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
                   ).withHorViewPadding,
-                  const SizedBox(
-                    height: 5,
+                  SizedBox(
+                    height: 8.h,
                   ),
                   SizedBox(
-                    height: 187,
+                    height: 187.h,
                     child: ListView.separated(
-                      separatorBuilder: (context, index) => const SizedBox(
-                        width: 10,
+                      separatorBuilder: (context, index) => SizedBox(
+                        width: 8.w,
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppConstants.viewPaddingHorizontal),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppConstants.padding.horizontal),
                       shrinkWrap: true,
                       itemCount: 10,
                       scrollDirection: Axis.horizontal,
@@ -123,24 +124,24 @@ class HomeView extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: 23.h,
                   ),
                   AutoSizeText(
                     "Vendors",
                     style: context.textTheme.titleLarge
-                        ?.copyWith(fontWeight: FontWeight.w700),
+                        ?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
                   ).withHorViewPadding,
-                  const SizedBox(
-                    height: 5,
+                  SizedBox(
+                    height: 8.h,
                   ),
                   ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppConstants.viewPaddingHorizontal),
-                    separatorBuilder: (_, __) => const SizedBox(
-                      height: 10,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppConstants.padding.horizontal),
+                    separatorBuilder: (_, __) => SizedBox(
+                      height: 8.h,
                     ),
                     itemCount: 10,
                     itemBuilder: (BuildContext context, int index) {

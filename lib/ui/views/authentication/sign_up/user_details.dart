@@ -32,8 +32,8 @@ class UserDetailsView extends StatelessWidget with ValidationMixin {
     return AuthenticationWrapper(
       viewTitle: "Name Details",
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.viewPaddingHorizontal),
+        padding:
+            EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
         child: Form(
           key: formKey,
           child: Column(

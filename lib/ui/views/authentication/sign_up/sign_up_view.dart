@@ -47,8 +47,8 @@ class SignUpView extends StatelessWidget with ValidationMixin {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppConstants.viewPaddingHorizontal),
+            padding: EdgeInsets.symmetric(
+                horizontal: AppConstants.padding.horizontal),
             child: Form(
               key: formKey,
               child: Column(

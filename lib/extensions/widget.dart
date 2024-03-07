@@ -47,8 +47,8 @@ extension Show on Widget {
 
   Widget get withHorViewPadding {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: AppConstants.viewPaddingHorizontal),
+      padding:
+          EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
       child: this,
     );
   }

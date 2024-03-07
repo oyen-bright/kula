@@ -51,8 +51,8 @@ class _PhoneNumberVerificationViewState
     return AuthenticationWrapper(
       viewTitle: "Phone Verification",
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.viewPaddingHorizontal),
+        padding:
+            EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
         child: Form(
             key: formKey,
             child: SingleChildScrollView(

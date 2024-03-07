@@ -66,9 +66,8 @@ class ProfileManageAddressView extends StatelessWidget {
                                 color: Colors.black,
                               )),
                           visualDensity: VisualDensity.compact,
-                          contentPadding: const EdgeInsets.only(
-                              left: AppConstants.viewPaddingHorizontal,
-                              right: 10),
+                          contentPadding: EdgeInsets.only(
+                              left: AppConstants.padding.horizontal, right: 10),
                           minLeadingWidth: 0,
                           horizontalTitleGap: 10,
                           title:

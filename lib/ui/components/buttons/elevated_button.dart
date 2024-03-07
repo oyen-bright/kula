@@ -56,7 +56,7 @@ class AppElevatedButton extends StatelessWidget {
               : const BorderSide(
                   color: AppColors.inputFieldStrokeColor, width: 1),
           borderRadius: borderRadius == null
-              ? BorderRadius.circular(AppConstants.borderRadiusLarge)
+              ? BorderRadius.circular(AppConstants.borderRadius.large)
               : borderRadius!,
         ),
       ),
@@ -125,8 +125,8 @@ class AppElevatedButton extends StatelessWidget {
       onPressed: onPressed,
       backgroundColor: Colors.transparent,
       borderColor: borderColor ?? AppColors.primaryColor,
-      borderRadius:
-          borderRadius ?? BorderRadius.circular(AppConstants.borderRadius),
+      borderRadius: borderRadius ??
+          BorderRadius.circular(AppConstants.borderRadius.normal),
       elevation: elevation,
       visualDensity: VisualDensity.compact,
       textStyle:
@@ -159,8 +159,8 @@ class AppElevatedButton extends StatelessWidget {
       disabledBackgroundColor: disabledBackgroundColor,
       onPressed: onPressed,
       borderColor: borderColor ?? AppColors.primaryColor,
-      borderRadius:
-          borderRadius ?? BorderRadius.circular(AppConstants.borderRadius),
+      borderRadius: borderRadius ??
+          BorderRadius.circular(AppConstants.borderRadius.normal),
       elevation: elevation,
       visualDensity: visualDensity,
       padding: padding ?? EdgeInsets.zero,
