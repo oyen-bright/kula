@@ -26,8 +26,8 @@ class LoadingOverlay extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppConstants.borderRadius.normal),
         child: BackdropFilter(
           filter: ImageFilter.blur(
-            sigmaX: blur?.sigmaX ?? 10.0,
-            sigmaY: blur?.sigmaY ?? 10.0,
+            sigmaX: blur?.sigmaX ?? 2.0,
+            sigmaY: blur?.sigmaY ?? 2.0,
           ),
           child: Container(
             color: Colors.transparent,

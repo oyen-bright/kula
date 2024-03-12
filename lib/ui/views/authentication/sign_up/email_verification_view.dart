@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
 import 'package:kula/router/app_router.dart';
@@ -29,10 +30,11 @@ class EmailVerificationView extends StatelessWidget {
               _buildOTPInput(),
               AppElevatedButton(
                 title: "Next",
+                elevation: 0,
                 onPressed: onNext,
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: 24.h,
               )
             ],
           ),
@@ -44,12 +46,15 @@ class EmailVerificationView extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 9.h,
+            ),
             const Text(
               "Please verify your email by inputting the 6-digit code sent to your mail.",
               style: TextStyle(color: AppColors.greyTextColor, fontSize: 16),
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: 8.h,
             ),
             OTPInputField(
               otpLength: 6,

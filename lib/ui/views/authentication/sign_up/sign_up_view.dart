@@ -54,8 +54,8 @@ class SignUpView extends StatelessWidget with ValidationMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 41.h,
                   ),
                   SizedBox(
                     height: 40.h,
@@ -64,8 +64,8 @@ class SignUpView extends StatelessWidget with ValidationMixin {
                       scale: 2,
                     ),
                   ),
-                  const SizedBox(
-                    height: 40,
+                  SizedBox(
+                    height: 48.h,
                   ),
                   Text(
                     Strings.welcomeBack,
@@ -73,8 +73,8 @@ class SignUpView extends StatelessWidget with ValidationMixin {
                     style: context.textTheme.titleLarge
                         ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 8.h,
                   ),
                   Text(
                     Strings.convenientDelivery,
@@ -82,46 +82,48 @@ class SignUpView extends StatelessWidget with ValidationMixin {
                     style: context.textTheme.titleMedium
                         ?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
-                  const SizedBox(
-                    height: 40,
+                  SizedBox(
+                    height: 32.h,
                   ),
                   AppTextField(
+                    isRequired: true,
                     fieldTitle: Strings.email,
                     hintText: Strings.emailHint,
                     controller: emailController,
                     validator: validateEmail,
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 16.h,
                   ),
                   AppTextField(
+                    isRequired: true,
                     fieldTitle: Strings.password,
                     hintText: Strings.passwordHint,
                     controller: passwordController,
                     validator: validatePassword,
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 16.h,
                   ),
                   AppElevatedButton(
                     elevation: 0,
                     onPressed: onRegister,
                     title: Strings.signInButton,
                   ),
-                  const SizedBox(
-                    height: 40,
+                  SizedBox(
+                    height: 40.h,
                   ),
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       text: Strings.signUpText,
-                      style: const TextStyle(color: Colors.black, fontSize: 13),
+                      style: const TextStyle(color: Colors.black, fontSize: 14),
                       children: [
                         TextSpan(
                           text: Strings.signInLink,
                           style: const TextStyle(
                               color: AppColors.hyperLinkColor,
-                              fontSize: 13,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold),
                           recognizer: TapGestureRecognizer()..onTap = onLogin,
                         ),

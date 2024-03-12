@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/extensions/context.dart';
+import 'package:kula/extensions/widget.dart';
 import 'package:kula/themes/app_images.dart';
+import 'package:kula/ui/components/inputs/text_field_input.dart';
 
 import 'components/restaurant_header.dart';
+import 'components/restaurant_meal_info.dart';
 
 class Restaurant extends StatelessWidget {
   const Restaurant({super.key});
@@ -15,6 +20,7 @@ class Restaurant extends StatelessWidget {
           children: [
             const RestaurantHeader(),
             Container(
+              height: 48.h,
               margin: EdgeInsets.symmetric(
                   horizontal: AppConstants.padding.horizontal),
               child: Row(
@@ -23,12 +29,31 @@ class Restaurant extends StatelessWidget {
                     AppImages.openIcon,
                     scale: 2,
                   ),
-                  // const Expanded(child: Text("Open from 8:45am - 9:55pm" , style: context.textTheme.bodyMedium?.copyWith(
-                  //   fontWeight: FontWeight.w400, f
-                  // ),))
+                  Expanded(
+                      child: Text(
+                    "Open from 8:45am - 9:55pm",
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ))
                 ],
               ),
-            )
+            ),
+            AppTextField(
+                keyboardType: TextInputType.none,
+                hintColor: const Color.fromARGB(255, 170, 174, 184),
+                hintText: "Search for a meal",
+                suffixIcon: Image.asset(
+                  AppImages.searchIcon,
+                  scale: 2,
+                )).withHorViewPadding,
+            Expanded(
+                child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(vertical: 16.h),
+              child: const Column(
+                children: [RestaurantMealCard()],
+              ),
+            ))
           ],
         ),
       ),

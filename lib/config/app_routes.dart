@@ -15,12 +15,15 @@ class AppRoutes {
   static const String signUp = '/sign-up';
   static const String signUpWelcome = '$signUp/welcome';
   static const String signUpPhoneVerification = '$signUp/phone-verification';
+  static const String signUpPhoneVerificationConfirm =
+      '$signUp/phone-verification-confirm';
   static const String signUpEmailVerification = '$signUp/email-verification';
   static const String signUpUserDetails = '$signUp/details';
   static const String onBoarding = '/onboarding';
 
   static const String home = '/home';
   static const String cart = '/cart';
+  static const String cartDeliveryInstruction = '$cart/cart';
 
   static const String orders = '/orders';
 
@@ -41,4 +44,6 @@ class AppRoutes {
 
   static const String restaurant = '/restaurant';
   static const String restaurantReview = '$restaurant/review';
+  static const String restaurantReviewNew = '$restaurant/create-review';
+  static const String restaurantMeal = '$restaurant/meal';
 }

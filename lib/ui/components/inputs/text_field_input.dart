@@ -20,6 +20,7 @@ class AppTextField extends StatefulWidget {
   final String? hintText;
   final Color? hintColor;
   final int? maxLines;
+  final bool isRequired;
   final String? initialValue;
   final bool _showObscureIcon;
   final bool readOnly;
@@ -61,6 +62,7 @@ class AppTextField extends StatefulWidget {
     this.inputFormatters,
     this.suffixIcon,
     this.onTap,
+    required this.isRequired,
   }) : _showObscureIcon = showObscureIcon;
 
   factory AppTextField(
@@ -84,6 +86,7 @@ class AppTextField extends StatefulWidget {
       void Function()? onTap,
       Iterable<String>? autofillHints,
       String? labelText,
+      bool isRequired = false,
       TextInputAction? textInputAction,
       TextCapitalization? textCapitalization,
       void Function(String)? onFieldSubmitted,
@@ -95,6 +98,7 @@ class AppTextField extends StatefulWidget {
       readOnly: readOnly,
       inputFormatters: inputFormatters,
       onTap: onTap,
+      isRequired: isRequired,
       prefixText: prefixText,
       errorBorder: errorBorder,
       contentPadding: contentPadding,
@@ -125,6 +129,7 @@ class AppTextField extends StatefulWidget {
     TextInputType? keyboardType,
     String? fieldTitle,
     int? maxLines = 1,
+    bool isRequired = false,
     void Function()? onTap,
     Iterable<String>? autofillHints,
     bool readOnly = false,
@@ -136,6 +141,7 @@ class AppTextField extends StatefulWidget {
       controller: controller,
       autofillHints: autofillHints,
       readOnly: readOnly,
+      isRequired: isRequired,
       textInputAction: textInputAction,
       keyboardType: keyboardType,
       hintText: hintText,
@@ -174,10 +180,20 @@ class _AppTextFieldState extends State<AppTextField> {
             padding: EdgeInsets.only(bottom: 8.h),
             child: widget.fieldTitle is Widget
                 ? widget.fieldTitle as Widget
-                : Text(
-                    widget.fieldTitle! as String,
+                : Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: widget.fieldTitle! as String,
+                        ),
+                        if (widget.isRequired)
+                          const TextSpan(
+                              text: ' *',
+                              style: TextStyle(color: AppColors.red))
+                      ],
+                    ),
                     style: const TextStyle(
-                        fontWeight: FontWeight.w500, fontSize: 16),
+                        fontWeight: FontWeight.w500, fontSize: 15),
                   ),
           ),
         TextFormField(

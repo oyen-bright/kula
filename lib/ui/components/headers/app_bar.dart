@@ -142,7 +142,7 @@ class ViewAppBar extends StatelessWidget implements PreferredSizeWidget {
                 AppImages.backButtonIcon,
                 scale: 2.5,
               ))
-          : leading,
+          : const SizedBox.shrink(),
       automaticallyImplyLeading: automaticallyImplyLeading,
       title: _getViewTitle(context),
       actions: actions,

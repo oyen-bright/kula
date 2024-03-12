@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/config/app_routes.dart';
 import 'package:kula/extensions/widget.dart';
+import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
 import 'package:kula/ui/components/drop_down/star_filter_drop_down.dart';
@@ -96,7 +98,8 @@ class RestaurantReview extends StatelessWidget {
                       child: AppElevatedButton(
                         elevation: 0,
                         title: "Write a review",
-                        onPressed: () {},
+                        onPressed: () => AppRouter.router
+                            .push(AppRoutes.restaurantReviewNew),
                       ),
                     )
                   ],

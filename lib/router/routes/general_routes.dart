@@ -84,6 +84,28 @@ class General {
               );
             },
           ),
+          GoRoute(
+            parentNavigatorKey: AppRouter.parentNavigatorKey,
+            path: routeSubPath(
+              AppRoutes.restaurantReviewNew,
+            ),
+            pageBuilder: (context, state) {
+              return AppRouter.setupPage(
+                child: const CreateReview(),
+                state: state,
+              );
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: AppRouter.parentNavigatorKey,
+            path: routeSubPath(AppRoutes.restaurantMeal),
+            pageBuilder: (context, state) {
+              return AppRouter.setupPage(
+                child: const RestaurantMeal(),
+                state: state,
+              );
+            },
+          ),
         ]),
     //Authentication routes
     GoRoute(
@@ -172,6 +194,27 @@ class General {
 
               return AppRouter.setupPage(
                 child: PhoneNumberVerificationView(
+                  inputs: input,
+                ),
+                state: state,
+              );
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: AppRouter.parentNavigatorKey,
+            path: routeSubPath(AppRoutes.signUpPhoneVerificationConfirm),
+            redirect: (_, state) {
+              final input = state.extra as RegistrationInput?;
+              if (input == null) {
+                return AppRoutes.signUp;
+              }
+              return null;
+            },
+            pageBuilder: (context, state) {
+              final input = state.extra as RegistrationInput;
+
+              return AppRouter.setupPage(
+                child: PhoneNumberVerificationConfirmView(
                   inputs: input,
                 ),
                 state: state,

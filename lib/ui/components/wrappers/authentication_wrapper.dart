@@ -61,6 +61,7 @@ class AuthenticationWrapper extends StatelessWidget {
           },
           Positioned.fill(
               child: SafeArea(
+            top: false,
             bottom: true,
             child: body,
           ))

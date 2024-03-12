@@ -54,4 +54,13 @@ class AppImages {
   static const noStar = "assets/icons/no_Star.png";
   static const roundBackButton = "assets/icons/round_back_button.png";
   static const openIcon = "assets/icons/open_icon.png";
+  static const increaseIcon = "assets/icons/increase_icon.png";
+  static const decreaseIcon = "assets/icons/decrease_icon.png";
+  static const noItemCart = "assets/images/no_item_in_cart.png";
+  static const deleteItemIcon = "assets/icons/delete_icon.png";
+  static const copyIconSmall = "assets/icons/copy.png";
+  static const appIconSmall = "assets/icons/app_icon.png";
+  static const creditCardIcon = "assets/icons/Credit-card.png";
+  static const orderSentIcon = "assets/icons/send icon.png";
+  static const downArrow = "assets/icons/down_arrow.png";
 }

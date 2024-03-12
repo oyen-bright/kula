@@ -10,20 +10,20 @@ import 'package:kula/ui/components/inputs/text_field_input.dart';
 import 'package:kula/ui/components/wrappers/authentication_wrapper.dart';
 import 'package:kula/ui/views/authentication/sign_up/models/registration_input.dart';
 
-class PhoneNumberVerificationView extends StatefulWidget {
+class PhoneNumberVerificationConfirmView extends StatefulWidget {
   final RegistrationInput inputs;
-  const PhoneNumberVerificationView({
+  const PhoneNumberVerificationConfirmView({
     Key? key,
     required this.inputs,
   }) : super(key: key);
 
   @override
-  State<PhoneNumberVerificationView> createState() =>
-      _PhoneNumberVerificationViewState();
+  State<PhoneNumberVerificationConfirmView> createState() =>
+      _PhoneNumberVerificationConfirmViewState();
 }
 
-class _PhoneNumberVerificationViewState
-    extends State<PhoneNumberVerificationView> {
+class _PhoneNumberVerificationConfirmViewState
+    extends State<PhoneNumberVerificationConfirmView> {
   int inputCount = 0;
 
   late final TextEditingController phoneNumberController;
@@ -43,8 +43,7 @@ class _PhoneNumberVerificationViewState
 
   void onNext() {
     if (formKey.currentState!.validate()) {
-      AppRouter.router
-          .push(AppRoutes.signUpPhoneVerificationConfirm, extra: widget.inputs);
+      AppRouter.router.push(AppRoutes.signUpWelcome);
     }
   }
 
@@ -62,7 +61,7 @@ class _PhoneNumberVerificationViewState
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text(
-                    "Enter your phone number for easy ordering and verification",
+                    "Enter the verification code you received on +2349023232323",
                     style:
                         TextStyle(color: AppColors.greyTextColor, fontSize: 16),
                   ),
@@ -70,7 +69,6 @@ class _PhoneNumberVerificationViewState
                     height: 16.h,
                   ),
                   AppTextField(
-                    fieldTitle: "Phone number",
                     hintText: "+234",
                     onChanged: (value) {
                       if (value.length > 10) {

@@ -87,20 +87,20 @@ class LoginView extends StatelessWidget {
                       AppRouter.router.push(AppRoutes.loginWelcome),
                   title: Strings.signInButton,
                 ),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: 40.h,
                 ),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
                     text: Strings.signUpText,
-                    style: const TextStyle(color: Colors.black, fontSize: 13),
+                    style: const TextStyle(color: Colors.black, fontSize: 14),
                     children: [
                       TextSpan(
                         text: Strings.signUpLink,
                         style: const TextStyle(
                             color: AppColors.hyperLinkColor,
-                            fontSize: 13,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold),
                         recognizer: TapGestureRecognizer()..onTap = signUp,
                       ),

@@ -9,7 +9,7 @@ class Strings {
   static const String emailHint = "example@example.com";
   static const String password = "Password";
   static const String passwordHint = "********";
-  static const String signInButton = "signIn";
+  static const String signInButton = "Sign in";
   static const String signUpText = "Don't have an account? ";
   static const String signUpLink = "Sign up";
 }
