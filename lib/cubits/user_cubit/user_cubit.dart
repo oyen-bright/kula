@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user_state.dart';
+import 'user_model.dart';
+
 part 'user_cubit.freezed.dart';
+part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
-  UserCubit() : super(UserState.initial());
+  UserCubit() : super(const UserState.noUser());
 }

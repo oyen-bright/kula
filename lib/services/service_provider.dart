@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'user_service.dart';
+import 'package:kula/services/auth_service.dart';
+import 'package:kula/services/otp_service.dart';
 
 class RepositoriesProvider extends StatelessWidget {
   final Widget child;
@@ -11,9 +11,13 @@ class RepositoriesProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<UserService>(
+        RepositoryProvider<AuthService>(
           lazy: true,
-          create: (context) => UserService(),
+          create: (context) => AuthService(),
+        ),
+        RepositoryProvider<OTPService>(
+          lazy: true,
+          create: (context) => OTPService(),
         ),
       ],
       child: child,

@@ -24,6 +24,8 @@ enum HapticFeedbackType {
   vibrate,
 }
 
+enum BarType { error, success, loading, action }
+
 enum WrapperBackgroundImage { one, two }
 
 enum WrapperBackgroundImageSize { small, large }

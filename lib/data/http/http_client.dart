@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:kula/config/app_environment.dart';
 import 'package:kula/utils/enums.dart';
 
 import 'http_exceptions.dart';
@@ -54,6 +55,7 @@ class HttpClient {
     return {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
+      'X-API-KEY': AppEnvironment.apiKey
     };
   }
 
@@ -181,14 +183,33 @@ class HttpClient {
   }
 
   /// Send a POST request.
-  Future<http.Response> postRequest({
+  static Future<http.Response> postRequest({
     required String endpoint,
+    Map<String, dynamic>? queryParameters,
     required Map<String, dynamic> payload,
-    Map<String, dynamic> token = const {},
+    Map<String, String> headers = const {},
   }) async {
-    // TODO: Implement POST request logic.
-    // Return type should be http.Response.
-    throw UnimplementedError();
+    var uri = Uri.parse(endpoint).replace(queryParameters: queryParameters);
+    final Map<String, String> requestHeaders = {...defaultHeaders, ...headers};
+
+    print(payload);
+
+    try {
+      final http.Response response = await client
+          .post(uri, headers: requestHeaders, body: jsonEncode(payload))
+          .timeout(const Duration(seconds: timeOutDuration));
+
+      log("${response.statusCode} $endpoint", name: "HTTP POST REQUEST");
+
+      return _processResponse(response);
+    } on TimeoutException {
+      throw AppTimeoutException();
+    } on SocketException catch (_) {
+      throw NoInternetException();
+    } catch (e) {
+      log(e.toString(), name: "HTTP POST REQUEST ERROR");
+      rethrow;
+    }
   }
 
   /// Send a DELETE request.

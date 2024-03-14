@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/extensions/context.dart';
 
-class LoadingOverlay extends StatelessWidget {
+class LoadingOverlay extends StatefulWidget {
   final String? message;
 
   final (String, void Function(), int?)? action1;
@@ -20,27 +20,69 @@ class LoadingOverlay extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<LoadingOverlay> createState() => _LoadingOverlayState();
+}
+
+class _LoadingOverlayState extends State<LoadingOverlay>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _sigmaXAnimation;
+  late Animation<double> _sigmaYAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: 1.seconds,
+    );
+
+    _sigmaXAnimation = Tween<double>(
+      begin: 0,
+      end: widget.blur?.sigmaX ?? 10.0,
+    ).animate(_controller);
+
+    _sigmaYAnimation = Tween<double>(
+      begin: 0,
+      end: widget.blur?.sigmaY ?? 10.0,
+    ).animate(_controller);
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppConstants.borderRadius.normal),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: blur?.sigmaX ?? 2.0,
-            sigmaY: blur?.sigmaY ?? 2.0,
-          ),
-          child: Container(
-            color: Colors.transparent,
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: _buildContent(context),
+      child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return ClipRRect(
+              borderRadius:
+                  BorderRadius.circular(AppConstants.borderRadius.normal),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: _sigmaXAnimation.value,
+                  sigmaY: _sigmaYAnimation.value,
+                ),
+                child: Container(
+                  color: Colors.transparent,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _buildContent(context),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
+            );
+          }),
     );
   }
 
@@ -53,10 +95,10 @@ class LoadingOverlay extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppConstants.borderRadius.normal),
         ),
         child: const CircularProgressIndicator(),
-      ).animate().fadeIn(),
+      ).animate().fadeIn(duration: 2.seconds),
     ];
 
-    if (message != null) {
+    if (widget.message != null) {
       content.addAll([
         const SizedBox(
           height: 6,
@@ -75,7 +117,7 @@ class LoadingOverlay extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                message!,
+                widget.message!,
                 textAlign: TextAlign.center,
                 style: context.textTheme.titleMedium!.copyWith(
                   color: context.colorScheme.primary,
@@ -90,24 +132,24 @@ class LoadingOverlay extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (action1 != null)
+                  if (widget.action1 != null)
                     TextButton(
-                        onPressed: action1!.$2,
+                        onPressed: widget.action1!.$2,
                         child: Text(
-                          action1!.$1,
+                          widget.action1!.$1,
                           style: TextStyle(
-                              color: action1!.$3 != null
-                                  ? Color(action1!.$3!)
+                              color: widget.action1!.$3 != null
+                                  ? Color(widget.action1!.$3!)
                                   : null),
                         )),
-                  if (action2 != null)
+                  if (widget.action2 != null)
                     TextButton(
-                        onPressed: action2!.$2,
+                        onPressed: widget.action2!.$2,
                         child: Text(
-                          action2!.$1,
+                          widget.action2!.$1,
                           style: TextStyle(
-                              color: action2!.$3 != null
-                                  ? Color(action2!.$3!)
+                              color: widget.action2!.$3 != null
+                                  ? Color(widget.action2!.$3!)
                                   : null),
                         )),
                 ],

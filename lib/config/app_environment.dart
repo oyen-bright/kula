@@ -30,7 +30,13 @@ class AppEnvironment {
     }
   }
 
-  static String get baseUrl {
+  static String get apiURL {
     return dotenv.env["${environment.value}_BASE_URL"]!;
+  }
+
+  static String get apiKey {
+    print("go go gaga");
+    print(dotenv.env["${environment.value}_X_CSRF_TOKEN"]!);
+    return dotenv.env["${environment.value}_X_CSRF_TOKEN"]!;
   }
 }
