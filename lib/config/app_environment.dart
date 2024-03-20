@@ -35,7 +35,6 @@ class AppEnvironment {
   }
 
   static String get apiKey {
-    print("go go gaga");
     print(dotenv.env["${environment.value}_X_CSRF_TOKEN"]!);
     return dotenv.env["${environment.value}_X_CSRF_TOKEN"]!;
   }

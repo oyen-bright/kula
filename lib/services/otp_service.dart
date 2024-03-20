@@ -26,8 +26,8 @@ class OTPService implements _OTPService {
     try {
       final response = await HttpRepository.emailOTP(email);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      print(data);
-      return OTPServiceResponse(error: null, data: data);
+      final message = data['message'];
+      return OTPServiceResponse(error: null, data: message);
     } catch (e) {
       OTPService.logger(e.toString());
       return OTPServiceResponse(error: e.toString(), data: null);
@@ -39,7 +39,9 @@ class OTPService implements _OTPService {
     try {
       final response = await HttpRepository.emailOTPVerify(email, otp);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      return OTPServiceResponse(error: null, data: data);
+      final message = data['message'];
+
+      return OTPServiceResponse(error: null, data: message);
     } catch (e) {
       OTPService.logger(e.toString());
       return OTPServiceResponse(error: e.toString(), data: null);

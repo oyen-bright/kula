@@ -43,24 +43,25 @@ class _SignUpViewState extends State<SignUpView> with ValidationMixin {
   }
 
   void onRegister() async {
-    if (formKey.currentState!.validate()) {
-      FocusScope.of(context).unfocus();
-      final RegistrationInput input = RegistrationInput()
-        ..email = emailController.text
-        ..password = passwordController.text;
-
-      context.read<LoadingCubit>().loading();
-      context.read<OTPService>().emailOTP(input.email ?? "").then((value) {
-        context.read<LoadingCubit>().loaded();
-        if (value.error == null) {
-          context.showSnackBar(value.data.toString());
-          AppRouter.router
-              .push(AppRoutes.signUpEmailVerification, extra: input);
-          return;
-        }
-        context.showSnackBar(value.error);
-      });
+    FocusScope.of(context).unfocus();
+    if (!formKey.currentState!.validate()) {
+      return;
     }
+
+    final RegistrationInput input = RegistrationInput()
+      ..email = emailController.text
+      ..password = passwordController.text;
+
+    context.read<LoadingCubit>().loading();
+    context.read<OTPService>().emailOTP(input.email ?? "").then((value) {
+      context.read<LoadingCubit>().loaded();
+      if (value.error == null) {
+        context.showSnackBar(value.data.toString());
+        AppRouter.router.push(AppRoutes.signUpEmailVerification, extra: input);
+        return;
+      }
+      context.showSnackBar(value.error);
+    });
   }
 
   @override

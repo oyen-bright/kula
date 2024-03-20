@@ -37,18 +37,19 @@ class HttpRepository {
 
   static Future<Response> emailOTPVerify(String email, String otp) async {
     return await HttpClient.postRequest(
-        endpoint: Endpoint.register, payload: {"code": otp, "email": email});
+        endpoint: Endpoint.emailOTPVerify,
+        payload: {"code": otp, "email": email});
   }
 
   static Future<Response> phoneNumberOTP(String phoneNumber) async {
     return await HttpClient.postRequest(
-        endpoint: Endpoint.register, payload: {"phone_number": phoneNumber});
+        endpoint: Endpoint.phoneOTP, payload: {"phone_number": phoneNumber});
   }
 
   static Future<Response> phoneNumberVerify(
       String phoneNumber, String otp) async {
     return await HttpClient.postRequest(
-        endpoint: Endpoint.register,
+        endpoint: Endpoint.phoneOTPVerify,
         payload: {"code": otp, "phone_number": phoneNumber});
   }
 }

@@ -242,6 +242,7 @@ class HttpClient {
   static http.Response _processResponse(http.Response response) {
     var body = response.body;
 
+    log(body.toString());
     switch (response.statusCode) {
       case 200:
       case 201:

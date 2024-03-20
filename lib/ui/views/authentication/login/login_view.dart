@@ -22,6 +22,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void signUp() {
+      //weyir60608@fryshare.com
       AppRouter.router.pushReplacement(AppRoutes.signUp);
     }
 
