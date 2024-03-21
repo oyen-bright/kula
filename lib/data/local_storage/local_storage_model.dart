@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:kula/utils/types.dart';
 
 part 'local_storage_model.g.dart';
 
@@ -7,7 +8,7 @@ class LocalStorageModel {
   static const String boxName = "local_storage_model";
 
   @HiveField(0)
-  String? accessToken;
+  Token? accessToken;
 
   @HiveField(1)
   String? userId;

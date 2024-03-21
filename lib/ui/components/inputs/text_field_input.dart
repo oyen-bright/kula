@@ -33,6 +33,7 @@ class AppTextField extends StatefulWidget {
   final Color? backgroundColor;
   final String? labelText;
   final void Function()? onTap;
+  final bool autofocus;
   final InputBorder? errorBorder;
   final void Function(String)? onChanged;
 
@@ -47,6 +48,7 @@ class AppTextField extends StatefulWidget {
     this.suffixText,
     this.fieldTitle,
     this.readOnly = false,
+    this.autofocus = false,
     this.hintText,
     this.initialValue,
     this.hintColor,
@@ -76,6 +78,7 @@ class AppTextField extends StatefulWidget {
       Widget? prefixIcon,
       String? fieldTitle,
       Color? hintColor,
+      bool autofocus = false,
       String? initialValue,
       Color? backgroundColor,
       void Function(String)? onChanged,
@@ -98,6 +101,7 @@ class AppTextField extends StatefulWidget {
       readOnly: readOnly,
       inputFormatters: inputFormatters,
       onTap: onTap,
+      autofocus: autofocus,
       isRequired: isRequired,
       prefixText: prefixText,
       errorBorder: errorBorder,
@@ -197,6 +201,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   ),
           ),
         TextFormField(
+          autofocus: widget.autofocus,
           autofillHints: widget.autofillHints,
           onFieldSubmitted: widget.onFieldSubmitted,
           maxLines: widget._showObscureIcon ? 1 : widget.maxLines,
@@ -224,8 +229,10 @@ class _AppTextFieldState extends State<AppTextField> {
             contentPadding: widget.contentPadding ??
                 const EdgeInsets.symmetric(horizontal: 18),
             filled: true,
+            prefixIcon: widget.prefixIcon,
             suffixText: widget.suffixText,
             prefixText: widget.prefixText,
+            prefixStyle: AppTextStyles.inputTextStyle,
             fillColor: isFilled
                 ? widget.backgroundColor ?? AppColors.inputFieldFillColor
                 : widget.backgroundColor ?? AppColors.emptyInputFieldFillColor,

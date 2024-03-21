@@ -106,8 +106,8 @@ class __$$DetailsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$DetailsImpl implements _Details {
-  const _$DetailsImpl({required this.user});
+class _$DetailsImpl extends _Details {
+  const _$DetailsImpl({required this.user}) : super._();
 
   @override
   final User user;
@@ -197,8 +197,9 @@ class _$DetailsImpl implements _Details {
   }
 }
 
-abstract class _Details implements UserState {
+abstract class _Details extends UserState {
   const factory _Details({required final User user}) = _$DetailsImpl;
+  const _Details._() : super._();
 
   User get user;
   @JsonKey(ignore: true)
@@ -224,8 +225,8 @@ class __$$NoUserImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$NoUserImpl implements _NoUser {
-  const _$NoUserImpl();
+class _$NoUserImpl extends _NoUser {
+  const _$NoUserImpl() : super._();
 
   @override
   String toString() {
@@ -304,6 +305,7 @@ class _$NoUserImpl implements _NoUser {
   }
 }
 
-abstract class _NoUser implements UserState {
+abstract class _NoUser extends UserState {
   const factory _NoUser() = _$NoUserImpl;
+  const _NoUser._() : super._();
 }

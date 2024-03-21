@@ -23,13 +23,14 @@ class EmailVerificationView extends StatefulWidget {
 
 class _EmailVerificationViewState extends State<EmailVerificationView> {
   void onNext() {
+    FocusScope.of(context).unfocus();
     if (inputOTP.isEmpty) {
       context.showSnackBar(
           "Please provide the OTP sent to your email:${widget.inputs.email}");
       return;
     }
 
-    context.read<LoadingCubit>().loading();
+    context.read<LoadingCubit>().loading(message: "Verifying OTP");
     context
         .read<OTPService>()
         .emailOTPVerify(widget.inputs.email ?? "", inputOTP)
@@ -41,6 +42,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
         return;
       }
 
+      context.showSnackBar(res.data);
       AppRouter.router
           .pushReplacement(AppRoutes.signUpUserDetails, extra: widget.inputs);
     });

@@ -17,7 +17,7 @@ class LocalStorageModelAdapter extends TypeAdapter<LocalStorageModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return LocalStorageModel()
-      ..accessToken = fields[0] as String?
+      ..accessToken = fields[0] as ({String access, String refresh})?
       ..userId = fields[1] as String?
       ..recentlyViewedVehicles = (fields[2] as List?)?.cast<String>()
       ..smartCarAccessToken = fields[3] as String?;

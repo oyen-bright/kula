@@ -6,6 +6,7 @@
 import 'dart:developer';
 
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:kula/adapters/token_adapter.dart';
 
 import 'models/app_config_model.dart';
 
@@ -14,7 +15,10 @@ class AppConfig {
 
   //init Hive
   static Future<void> init() async {
-    Hive.registerAdapter(AppConfigModelAdapter());
+    Hive
+      ..registerAdapter(AppConfigModelAdapter())
+      ..registerAdapter(TokenAdapter());
+
     await Hive.openBox<AppConfigModel>(AppConfigModel.boxName);
     log("App configuration initialized");
   }

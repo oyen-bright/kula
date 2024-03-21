@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_text_styles.dart';
@@ -61,9 +62,9 @@ class OTPInputFieldState extends State<OTPInputField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Text(
+        Padding(
+          padding: EdgeInsets.only(bottom: 8.h),
+          child: const Text(
             "OTP code",
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
           ),
@@ -88,8 +89,8 @@ class OTPInputFieldState extends State<OTPInputField> {
         borderRadius: BorderRadius.circular(AppConstants.borderRadius.large),
         border: Border.all(color: AppColors.inputFieldStrokeColor, width: 1),
       ),
-      width: 48,
-      height: 48,
+      width: 48.w,
+      height: 48.w,
       child: TextField(
         autofillHints: const [AutofillHints.oneTimeCode],
         controller: controllers[index],

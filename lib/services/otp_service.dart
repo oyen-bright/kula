@@ -49,15 +49,32 @@ class OTPService implements _OTPService {
   }
 
   @override
-  Future<OTPServiceResponse> phoneNumberOTP(String phoneNumber) {
-    // TODO: implement phoneNumberOTP
-    throw UnimplementedError();
+  Future<OTPServiceResponse<String?>> phoneNumberOTP(String phoneNumber) async {
+    try {
+      final response = await HttpRepository.phoneNumberOTP(phoneNumber);
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final message = data['message'];
+
+      return OTPServiceResponse(error: null, data: message);
+    } catch (e) {
+      OTPService.logger(e.toString());
+      return OTPServiceResponse(error: e.toString(), data: null);
+    }
   }
 
   @override
-  Future<OTPServiceResponse> phoneNumberVerify(String phoneNumber, String otp) {
-    // TODO: implement phoneNumberVerify
-    throw UnimplementedError();
+  Future<OTPServiceResponse<String?>> phoneNumberVerify(
+      String phoneNumber, String otp) async {
+    try {
+      final response = await HttpRepository.phoneNumberVerify(phoneNumber, otp);
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final message = data['message'];
+
+      return OTPServiceResponse(error: null, data: message);
+    } catch (e) {
+      OTPService.logger(e.toString());
+      return OTPServiceResponse(error: e.toString(), data: null);
+    }
   }
 
   static void logger(String error) {

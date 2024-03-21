@@ -6,14 +6,14 @@ import 'package:kula/extensions/context.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_images.dart';
 
-class LoginWelcomeView extends StatefulWidget {
-  const LoginWelcomeView({super.key});
+class WelcomeView extends StatefulWidget {
+  const WelcomeView({super.key});
 
   @override
-  State<LoginWelcomeView> createState() => _LoginWelcomeViewState();
+  State<WelcomeView> createState() => _WelcomeViewState();
 }
 
-class _LoginWelcomeViewState extends State<LoginWelcomeView> {
+class _WelcomeViewState extends State<WelcomeView> {
   @override
   void initState() {
     super.initState();
@@ -48,7 +48,7 @@ class _LoginWelcomeViewState extends State<LoginWelcomeView> {
   Center _buildAppName() {
     return const Center(
       child: Text(
-        "Welcome back",
+        "Welcome",
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
       ),
     );

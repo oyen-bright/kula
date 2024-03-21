@@ -8,4 +8,8 @@ part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
   UserCubit() : super(const UserState.noUser());
+
+  emitUserDetails(User user) {
+    emit(UserState.details(user: user));
+  }
 }

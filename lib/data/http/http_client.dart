@@ -192,7 +192,7 @@ class HttpClient {
     var uri = Uri.parse(endpoint).replace(queryParameters: queryParameters);
     final Map<String, String> requestHeaders = {...defaultHeaders, ...headers};
 
-    print(payload);
+    log(payload.toString(), name: "HTTP Request Payload");
 
     try {
       final http.Response response = await client
@@ -242,7 +242,7 @@ class HttpClient {
   static http.Response _processResponse(http.Response response) {
     var body = response.body;
 
-    log(body.toString());
+    log(body.toString(), name: "HTTP Request Response");
     switch (response.statusCode) {
       case 200:
       case 201:

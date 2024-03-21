@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/extensions/widget.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
@@ -12,6 +15,8 @@ class ProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<UserCubit>().state.user!;
+
     return Scaffold(
       appBar: ViewAppBar(
         title: "Profile Details",
@@ -25,10 +30,13 @@ class ProfileDetails extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 17.h,
                     ),
                     AppTextField(
+                      readOnly: true,
+                      controller: TextEditingController()
+                        ..text = user.firstName,
                       fieldTitle: "First Name",
                       hintText: "Justin",
                       suffixIcon: Image.asset(
@@ -36,10 +44,12 @@ class ProfileDetails extends StatelessWidget {
                         scale: 2,
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 16.h,
                     ),
                     AppTextField(
+                      readOnly: true,
+                      controller: TextEditingController()..text = user.lastName,
                       fieldTitle: "Last Name",
                       hintText: "Jarvis",
                       suffixIcon: Image.asset(
@@ -47,10 +57,13 @@ class ProfileDetails extends StatelessWidget {
                         scale: 2,
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 16.h,
                     ),
                     AppTextField(
+                      readOnly: true,
+                      controller: TextEditingController()
+                        ..text = user.phoneNumber,
                       fieldTitle: "Phone number",
                       hintText: "09025608832",
                       suffixIcon: Image.asset(
@@ -58,10 +71,12 @@ class ProfileDetails extends StatelessWidget {
                         scale: 2,
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 16.h,
                     ),
                     AppTextField(
+                      readOnly: true,
+                      controller: TextEditingController()..text = user.email,
                       fieldTitle: "Email",
                       hintText: "example@example.com",
                       suffixIcon: Image.asset(
@@ -69,15 +84,15 @@ class ProfileDetails extends StatelessWidget {
                         scale: 2,
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 16.h,
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: 10.h,
             ),
             AppElevatedButton(
               elevation: 0,
@@ -87,8 +102,8 @@ class ProfileDetails extends StatelessWidget {
                 const DeleteAccountDialog().asDialog(context);
               },
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: 35.h,
             )
           ],
         ),

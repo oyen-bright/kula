@@ -18,26 +18,27 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userId, String token, bool isFistLogin)
+    required TResult Function(
+            String userId, ({String access, String refresh}) token)
         authenticated,
     required TResult Function() unauthenticated,
-    required TResult Function(String errorMessage, bool isNewUser) error,
+    required TResult Function(String errorMessage) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userId, String token, bool isFistLogin)?
+    TResult? Function(String userId, ({String access, String refresh}) token)?
         authenticated,
     TResult? Function()? unauthenticated,
-    TResult? Function(String errorMessage, bool isNewUser)? error,
+    TResult? Function(String errorMessage)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userId, String token, bool isFistLogin)?
+    TResult Function(String userId, ({String access, String refresh}) token)?
         authenticated,
     TResult Function()? unauthenticated,
-    TResult Function(String errorMessage, bool isNewUser)? error,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -88,7 +89,7 @@ abstract class _$$AuthenticatedImplCopyWith<$Res> {
           _$AuthenticatedImpl value, $Res Function(_$AuthenticatedImpl) then) =
       __$$AuthenticatedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String userId, String token, bool isFistLogin});
+  $Res call({String userId, ({String access, String refresh}) token});
 }
 
 /// @nodoc
@@ -104,7 +105,6 @@ class __$$AuthenticatedImplCopyWithImpl<$Res>
   $Res call({
     Object? userId = null,
     Object? token = null,
-    Object? isFistLogin = null,
   }) {
     return _then(_$AuthenticatedImpl(
       userId: null == userId
@@ -114,11 +114,7 @@ class __$$AuthenticatedImplCopyWithImpl<$Res>
       token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
-              as String,
-      isFistLogin: null == isFistLogin
-          ? _value.isFistLogin
-          : isFistLogin // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as ({String access, String refresh}),
     ));
   }
 }
@@ -126,19 +122,16 @@ class __$$AuthenticatedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AuthenticatedImpl implements _Authenticated {
-  const _$AuthenticatedImpl(
-      {required this.userId, required this.token, required this.isFistLogin});
+  const _$AuthenticatedImpl({required this.userId, required this.token});
 
   @override
   final String userId;
   @override
-  final String token;
-  @override
-  final bool isFistLogin;
+  final ({String access, String refresh}) token;
 
   @override
   String toString() {
-    return 'AuthState.authenticated(userId: $userId, token: $token, isFistLogin: $isFistLogin)';
+    return 'AuthState.authenticated(userId: $userId, token: $token)';
   }
 
   @override
@@ -147,13 +140,11 @@ class _$AuthenticatedImpl implements _Authenticated {
         (other.runtimeType == runtimeType &&
             other is _$AuthenticatedImpl &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.token, token) || other.token == token) &&
-            (identical(other.isFistLogin, isFistLogin) ||
-                other.isFistLogin == isFistLogin));
+            (identical(other.token, token) || other.token == token));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId, token, isFistLogin);
+  int get hashCode => Object.hash(runtimeType, userId, token);
 
   @JsonKey(ignore: true)
   @override
@@ -164,36 +155,37 @@ class _$AuthenticatedImpl implements _Authenticated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userId, String token, bool isFistLogin)
+    required TResult Function(
+            String userId, ({String access, String refresh}) token)
         authenticated,
     required TResult Function() unauthenticated,
-    required TResult Function(String errorMessage, bool isNewUser) error,
+    required TResult Function(String errorMessage) error,
   }) {
-    return authenticated(userId, token, isFistLogin);
+    return authenticated(userId, token);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userId, String token, bool isFistLogin)?
+    TResult? Function(String userId, ({String access, String refresh}) token)?
         authenticated,
     TResult? Function()? unauthenticated,
-    TResult? Function(String errorMessage, bool isNewUser)? error,
+    TResult? Function(String errorMessage)? error,
   }) {
-    return authenticated?.call(userId, token, isFistLogin);
+    return authenticated?.call(userId, token);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userId, String token, bool isFistLogin)?
+    TResult Function(String userId, ({String access, String refresh}) token)?
         authenticated,
     TResult Function()? unauthenticated,
-    TResult Function(String errorMessage, bool isNewUser)? error,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
-      return authenticated(userId, token, isFistLogin);
+      return authenticated(userId, token);
     }
     return orElse();
   }
@@ -235,13 +227,12 @@ class _$AuthenticatedImpl implements _Authenticated {
 
 abstract class _Authenticated implements AuthState {
   const factory _Authenticated(
-      {required final String userId,
-      required final String token,
-      required final bool isFistLogin}) = _$AuthenticatedImpl;
+          {required final String userId,
+          required final ({String access, String refresh}) token}) =
+      _$AuthenticatedImpl;
 
   String get userId;
-  String get token;
-  bool get isFistLogin;
+  ({String access, String refresh}) get token;
   @JsonKey(ignore: true)
   _$$AuthenticatedImplCopyWith<_$AuthenticatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -285,10 +276,11 @@ class _$UnauthenticatedImpl implements _Unauthenticated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userId, String token, bool isFistLogin)
+    required TResult Function(
+            String userId, ({String access, String refresh}) token)
         authenticated,
     required TResult Function() unauthenticated,
-    required TResult Function(String errorMessage, bool isNewUser) error,
+    required TResult Function(String errorMessage) error,
   }) {
     return unauthenticated();
   }
@@ -296,10 +288,10 @@ class _$UnauthenticatedImpl implements _Unauthenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userId, String token, bool isFistLogin)?
+    TResult? Function(String userId, ({String access, String refresh}) token)?
         authenticated,
     TResult? Function()? unauthenticated,
-    TResult? Function(String errorMessage, bool isNewUser)? error,
+    TResult? Function(String errorMessage)? error,
   }) {
     return unauthenticated?.call();
   }
@@ -307,10 +299,10 @@ class _$UnauthenticatedImpl implements _Unauthenticated {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userId, String token, bool isFistLogin)?
+    TResult Function(String userId, ({String access, String refresh}) token)?
         authenticated,
     TResult Function()? unauthenticated,
-    TResult Function(String errorMessage, bool isNewUser)? error,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -364,7 +356,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String errorMessage, bool isNewUser});
+  $Res call({String errorMessage});
 }
 
 /// @nodoc
@@ -379,17 +371,12 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? errorMessage = null,
-    Object? isNewUser = null,
   }) {
     return _then(_$ErrorImpl(
       errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      isNewUser: null == isNewUser
-          ? _value.isNewUser
-          : isNewUser // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -397,17 +384,14 @@ class __$$ErrorImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ErrorImpl implements _Error {
-  const _$ErrorImpl({required this.errorMessage, this.isNewUser = false});
+  const _$ErrorImpl({required this.errorMessage});
 
   @override
   final String errorMessage;
-  @override
-  @JsonKey()
-  final bool isNewUser;
 
   @override
   String toString() {
-    return 'AuthState.error(errorMessage: $errorMessage, isNewUser: $isNewUser)';
+    return 'AuthState.error(errorMessage: $errorMessage)';
   }
 
   @override
@@ -416,13 +400,11 @@ class _$ErrorImpl implements _Error {
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage) &&
-            (identical(other.isNewUser, isNewUser) ||
-                other.isNewUser == isNewUser));
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, errorMessage, isNewUser);
+  int get hashCode => Object.hash(runtimeType, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -433,36 +415,37 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userId, String token, bool isFistLogin)
+    required TResult Function(
+            String userId, ({String access, String refresh}) token)
         authenticated,
     required TResult Function() unauthenticated,
-    required TResult Function(String errorMessage, bool isNewUser) error,
+    required TResult Function(String errorMessage) error,
   }) {
-    return error(errorMessage, isNewUser);
+    return error(errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userId, String token, bool isFistLogin)?
+    TResult? Function(String userId, ({String access, String refresh}) token)?
         authenticated,
     TResult? Function()? unauthenticated,
-    TResult? Function(String errorMessage, bool isNewUser)? error,
+    TResult? Function(String errorMessage)? error,
   }) {
-    return error?.call(errorMessage, isNewUser);
+    return error?.call(errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userId, String token, bool isFistLogin)?
+    TResult Function(String userId, ({String access, String refresh}) token)?
         authenticated,
     TResult Function()? unauthenticated,
-    TResult Function(String errorMessage, bool isNewUser)? error,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(errorMessage, isNewUser);
+      return error(errorMessage);
     }
     return orElse();
   }
@@ -503,11 +486,9 @@ class _$ErrorImpl implements _Error {
 }
 
 abstract class _Error implements AuthState {
-  const factory _Error(
-      {required final String errorMessage, final bool isNewUser}) = _$ErrorImpl;
+  const factory _Error({required final String errorMessage}) = _$ErrorImpl;
 
   String get errorMessage;
-  bool get isNewUser;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;

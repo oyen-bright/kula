@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kula/cubits/auth_cubit/auth_cubit.dart';
+import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/services/auth_service.dart';
 import 'package:kula/services/otp_service.dart';
 
@@ -14,12 +15,18 @@ class AppCubitProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<UserCubit>(
+          create: (context) => UserCubit(),
+        ),
         BlocProvider<LoadingCubit>(
           create: (context) => LoadingCubit(),
         ),
         BlocProvider<AuthCubit>(
-          create: (context) => AuthCubit(context.read<AuthService>(),
-              context.read<OTPService>(), context.read<LoadingCubit>()),
+          create: (context) => AuthCubit(
+              context.read<AuthService>(),
+              context.read<OTPService>(),
+              context.read<LoadingCubit>(),
+              context.read<UserCubit>()),
         )
       ],
       child: child,

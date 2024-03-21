@@ -16,10 +16,9 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(
-              height: 15,
+            SizedBox(
+              height: 24.h,
             ),
             const Align(
               alignment: Alignment.center,
@@ -28,10 +27,10 @@ class ProfileView extends StatelessWidget {
             Expanded(
                 child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 25,
+                  SizedBox(
+                    height: 24.h,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -42,12 +41,12 @@ class ProfileView extends StatelessWidget {
                           ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 8.h,
                   ),
                   ..._buildAccountOptions(),
-                  const SizedBox(
-                    height: 25,
+                  SizedBox(
+                    height: 24.h,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -58,8 +57,8 @@ class ProfileView extends StatelessWidget {
                           ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 8.h,
                   ),
                   ..._buildCompanyOptions()
                 ],
@@ -68,7 +67,15 @@ class ProfileView extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            TextButton(onPressed: () {}, child: const Text("Sign out")),
+            SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                      foregroundColor: Colors.red,
+                      textStyle: const TextStyle(color: Colors.red)),
+                  child: const Text("Sign out"),
+                )),
             const SizedBox(
               height: 10,
             ),
@@ -116,8 +123,8 @@ List<Widget> _buildAccountOptions() {
         ),
       )
       .toList()
-      .animate(interval: 300.ms)
-      .fade(duration: 400.ms);
+      .animate()
+      .slide(duration: 400.ms);
 }
 
 List<Widget> _buildCompanyOptions() {
@@ -159,8 +166,8 @@ List<Widget> _buildCompanyOptions() {
         ),
       )
       .toList()
-      .animate(interval: 300.ms)
-      .fade(duration: 400.ms);
+      .animate()
+      .slide(duration: 400.ms);
 }
 
 class WalletInfo extends StatelessWidget {

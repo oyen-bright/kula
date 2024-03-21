@@ -37,13 +37,23 @@ class _LoadingOverlayState extends State<LoadingOverlay>
       duration: 1.seconds,
     );
 
+    // _sigmaXAnimation = Tween<double>(
+    //   begin: 0,
+    //   end: widget.blur?.sigmaX ?? 10.0,
+    // ).animate(_controller);
+
+    // _sigmaYAnimation = Tween<double>(
+    //   begin: 0,
+    //   end: widget.blur?.sigmaY ?? 10.0,
+    // ).animate(_controller);
+
     _sigmaXAnimation = Tween<double>(
-      begin: 0,
+      begin: widget.blur?.sigmaX ?? 10.0,
       end: widget.blur?.sigmaX ?? 10.0,
     ).animate(_controller);
 
     _sigmaYAnimation = Tween<double>(
-      begin: 0,
+      begin: widget.blur?.sigmaY ?? 10.0,
       end: widget.blur?.sigmaY ?? 10.0,
     ).animate(_controller);
 

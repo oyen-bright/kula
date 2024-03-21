@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/auth_cubit/auth_cubit.dart';
 import 'package:kula/cubits/loading_cubit/loading_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/mixins/validation.dart';
@@ -42,6 +43,14 @@ class _SignUpViewState extends State<SignUpView> with ValidationMixin {
     AppRouter.router.pushReplacement(AppRoutes.login);
   }
 
+  void onError(String error) {
+    context.showSnackBar(error);
+  }
+
+  void goHome() {
+    AppRouter.router.pushReplacement(AppRoutes.homeWelcome);
+  }
+
   void onRegister() async {
     FocusScope.of(context).unfocus();
     if (!formKey.currentState!.validate()) {
@@ -73,101 +82,112 @@ class _SignUpViewState extends State<SignUpView> with ValidationMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AuthenticationWrapper(
-      wrapperBackgroundImage: WrapperBackgroundImage.two,
-      wrapperBackgroundImageSize: WrapperBackgroundImageSize.large,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: AppConstants.padding.horizontal),
-            child: Form(
-              key: formKey,
-              child: AutofillGroup(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(
-                      height: 41.h,
-                    ),
-                    SizedBox(
-                      height: 40.h,
-                      child: Image.asset(
-                        AppImages.appNameLogo,
-                        scale: 2,
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        state.mapOrNull(
+          authenticated: (_) => goHome(),
+          error: (state) => onError(state.errorMessage),
+        );
+      },
+      child: AuthenticationWrapper(
+        wrapperBackgroundImage: WrapperBackgroundImage.two,
+        wrapperBackgroundImageSize: WrapperBackgroundImageSize.large,
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppConstants.padding.horizontal),
+              child: Form(
+                key: formKey,
+                child: AutofillGroup(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                        height: 41.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 48.h,
-                    ),
-                    Text(
-                      Strings.welcomeBack,
-                      textAlign: TextAlign.center,
-                      style: context.textTheme.titleLarge
-                          ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Text(
-                      Strings.convenientDelivery,
-                      textAlign: TextAlign.center,
-                      style: context.textTheme.titleMedium
-                          ?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
-                    ),
-                    SizedBox(
-                      height: 32.h,
-                    ),
-                    AppTextField(
-                      isRequired: true,
-                      fieldTitle: Strings.email,
-                      autofillHints: const [AutofillHints.email],
-                      hintText: Strings.emailHint,
-                      controller: emailController,
-                      validator: validateEmail,
-                    ),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    AppTextField(
-                      isRequired: true,
-                      autofillHints: const [AutofillHints.password],
-                      fieldTitle: Strings.password,
-                      hintText: Strings.passwordHint,
-                      controller: passwordController,
-                      validator: validatePassword,
-                      onFieldSubmitted: (_) => onRegister,
-                    ),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    AppElevatedButton(
-                      elevation: 0,
-                      onPressed: onRegister,
-                      title: Strings.signInButton,
-                    ),
-                    SizedBox(
-                      height: 40.h,
-                    ),
-                    RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: Strings.signUpText,
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 14),
-                        children: [
-                          TextSpan(
-                            text: Strings.signInLink,
-                            style: const TextStyle(
-                                color: AppColors.hyperLinkColor,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                            recognizer: TapGestureRecognizer()..onTap = onLogin,
-                          ),
-                        ],
+                      SizedBox(
+                        height: 40.h,
+                        child: Image.asset(
+                          AppImages.appNameLogo,
+                          scale: 2,
+                        ),
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: 48.h,
+                      ),
+                      Text(
+                        Strings.welcomeBack,
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.titleLarge?.copyWith(
+                            fontSize: 20, fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Text(
+                        Strings.convenientDelivery,
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.titleMedium?.copyWith(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(
+                        height: 32.h,
+                      ),
+                      AppTextField(
+                        isRequired: true,
+                        fieldTitle: Strings.email,
+                        autofillHints: const [AutofillHints.email],
+                        hintText: Strings.emailHint,
+                        controller: emailController,
+                        textInputAction: TextInputAction.next,
+                        validator: validateEmail,
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      AppTextField(
+                        isRequired: true,
+                        autofillHints: const [AutofillHints.password],
+                        fieldTitle: Strings.password,
+                        hintText: Strings.passwordHint,
+                        textInputAction: TextInputAction.done,
+                        controller: passwordController,
+                        validator: validatePasswordCreateAccount,
+                        onFieldSubmitted: (_) => onRegister,
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      AppElevatedButton(
+                        elevation: 0,
+                        onPressed: onRegister,
+                        title: Strings.signInButton,
+                      ),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: Strings.signUpText,
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 14),
+                          children: [
+                            TextSpan(
+                              text: Strings.signInLink,
+                              style: const TextStyle(
+                                  color: AppColors.hyperLinkColor,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = onLogin,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
