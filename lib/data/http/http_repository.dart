@@ -52,4 +52,44 @@ class HttpRepository {
         endpoint: Endpoint.phoneOTPVerify,
         payload: {"code": otp, "phone_number": phoneNumber});
   }
+
+  //ADDRESS
+  static Future<Response> addAddress(
+      {required String street,
+      required String houseNumber,
+      required String floorNumber,
+      required String longitude,
+      required String latitude,
+      required String additionalInfo}) async {
+    return await HttpClient.postRequest(
+        endpoint: Endpoint.addAddress,
+        payload: {
+          "street": street,
+          "house_number": houseNumber,
+          "floor_number": floorNumber,
+          "longitude": longitude,
+          "latitude": latitude,
+          "additional_info": additionalInfo
+        });
+  }
+
+  static Future<Response> getAddress() async {
+    return await HttpClient.getRequest(
+      endpoint: Endpoint.address,
+    );
+  }
+
+  static Future<Response> deleteAddress(String addressId) async {
+    return await HttpClient.deleteRequest(
+      endpoint: "${Endpoint.address}/$addressId",
+    );
+  }
+
+  static Future<Response> setDefaultAddress(String id) async {
+    return await HttpClient.postRequest(
+        endpoint: Endpoint.setDefault,
+        payload: {
+          "id": id,
+        });
+  }
 }

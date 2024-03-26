@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/address_cubit/address_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
 import 'package:kula/router/app_router.dart';
@@ -12,8 +14,28 @@ import 'package:kula/ui/components/inputs/text_field_input.dart';
 import 'components/specials_card.dart';
 import 'components/vendors_card.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+
+    shouldAddAddress();
+  }
+
+  void shouldAddAddress() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.read<AddressCubit>().state.isEmpty) {
+        AppRouter.router.push(AppRoutes.addAddress);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

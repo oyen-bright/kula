@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:kula/config/app_environment.dart';
+import 'package:kula/cubits/address_cubit/address_cubit.dart';
 import 'package:kula/cubits/loading_cubit/loading_cubit.dart';
 import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/cubits/user_cubit/user_model.dart';
@@ -16,10 +17,11 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   final AuthService authService;
   final UserCubit userCubit;
+  final AddressCubit addressCubit;
   final OTPService otpService;
   final LoadingCubit loadingCubit;
-  AuthCubit(
-      this.authService, this.otpService, this.loadingCubit, this.userCubit)
+  AuthCubit(this.authService, this.otpService, this.loadingCubit,
+      this.userCubit, this.addressCubit)
       : super(const AuthState.unauthenticated());
 
   Future<void> loginWithEmailAndPassword(
@@ -36,7 +38,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
     final Token token = authResponse.data!.token;
     final User user = authResponse.data!.user;
-    _emitAuthenticatedState(user, token);
+    _emitAuthenticatedState(user, token, addressCubit);
   }
 
   Future<void> createAccount({
@@ -69,10 +71,20 @@ class AuthCubit extends Cubit<AuthState> {
 
     final Token token = createAccountResponse.data!.token;
     final User user = createAccountResponse.data!.user;
-    _emitAuthenticatedState(user, token);
+    _emitAuthenticatedState(user, token, addressCubit);
   }
 
-  void _emitAuthenticatedState(User user, Token token) {
+  void _emitAuthenticatedState(
+      User user, Token token, AddressCubit addressCubit) async {
+    final getAddressResponse = await addressCubit.addressService.getAddress();
+
+    if (getAddressResponse.error != null) {
+      emit(AuthState.error(errorMessage: getAddressResponse.error ?? ""));
+      return;
+    }
+
+    addressCubit
+        .emit(AddressState.loaded(addresses: getAddressResponse.data ?? []));
     emit(AuthState.authenticated(userId: user.id, token: token));
     userCubit.emitUserDetails(user);
   }

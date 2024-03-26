@@ -1,14 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/mixins/validation.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
 import 'package:kula/ui/components/headers/app_bar.dart';
 import 'package:kula/ui/components/inputs/text_field_input.dart';
+import 'package:kula/ui/views/authentication/sign_up/models/address_input.dart';
 
-class AddAdditionalAddress extends StatelessWidget {
-  const AddAdditionalAddress({super.key});
+class AddAdditionalAddress extends StatefulWidget {
+  final InputAddress? address;
+  const AddAdditionalAddress({Key? key, this.address}) : super(key: key);
+
+  @override
+  _AddAdditionalAddressState createState() => _AddAdditionalAddressState();
+}
+
+class _AddAdditionalAddressState extends State<AddAdditionalAddress>
+    with ValidationMixin {
+  final houseAddressController = TextEditingController();
+  final houseNumberController = TextEditingController();
+  final floorNumberController = TextEditingController();
+  final deliveryInstructionsController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    houseAddressController.dispose();
+    houseNumberController.dispose();
+    floorNumberController.dispose();
+    deliveryInstructionsController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    if (widget.address != null) {
+      houseAddressController.text = widget.address?.street ?? "";
+      houseNumberController.text = widget.address?.houseNumber ?? "";
+      floorNumberController.text = widget.address?.floorNumber ?? "";
+      deliveryInstructionsController.text =
+          widget.address?.additionalInfo ?? "";
+    }
+    super.initState();
+  }
+
+  void onContinue() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    context.pop(InputAddress()
+      ..street = houseAddressController.text
+      ..houseNumber = houseNumberController.text
+      ..floorNumber = floorNumberController.text
+      ..additionalInfo = deliveryInstructionsController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,72 +68,73 @@ class AddAdditionalAddress extends StatelessWidget {
         title: "Add alternative address",
         actions: [
           TextButton(
-              onPressed: () => AppRouter.router.pop(),
-              child: const Text("Cancel"))
+            onPressed: () => AppRouter.router.pop(),
+            child: const Text("Cancel"),
+          )
         ],
       ),
       body: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: AppConstants.padding.horizontal),
+        padding: EdgeInsets.symmetric(
+          horizontal: AppConstants.padding.horizontal,
+        ),
         child: Column(
           children: [
-            Expanded(
+            Form(
+              key: _formKey,
+              child: Expanded(
                 child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    "Enter the addresses that your food would be delivered to. You can add multiple addresses.",
-                    style:
-                        TextStyle(color: AppColors.greyTextColor, fontSize: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        "Enter the addresses that your food would be delivered to. You can add multiple addresses.",
+                        style: TextStyle(
+                          color: AppColors.greyTextColor,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+                      _buildSectionTitle('Address details ', true),
+                      SizedBox(height: 8.h),
+                      AppTextField(
+                        controller: houseAddressController,
+                        validator: validateRequired,
+                        hintText: "Enter house address",
+                        suffixIcon: Image.asset(
+                          AppImages.mapIcon,
+                          scale: 2,
+                        ),
+                      ),
+                      SizedBox(height: 12.h),
+                      AppTextField(
+                        validator: validateRequired,
+                        controller: houseNumberController,
+                        hintText: "House Number",
+                      ),
+                      SizedBox(height: 12.h),
+                      AppTextField(
+                        validator: validateRequired,
+                        controller: floorNumberController,
+                        hintText: "Floor number",
+                      ),
+                      SizedBox(height: 24.h),
+                      _buildSectionTitle('Additional Information '),
+                      SizedBox(height: 8.h),
+                      AppTextField(
+                        controller: deliveryInstructionsController,
+                        hintText: "Extra Delivery Instructions",
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _buildSectionTitle('Address details ', true),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AppTextField(
-                    hintText: "Enter house address",
-                    suffixIcon: Image.asset(
-                      AppImages.mapIcon,
-                      scale: 2,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  AppTextField(
-                    hintText: "House Number",
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  AppTextField(
-                    hintText: "floor number",
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  _buildSectionTitle('Additional Information '),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AppTextField(
-                    hintText: "Extra Delivery Instructions",
-                  ),
-                ],
+                ),
               ),
-            )),
+            ),
             AppElevatedButton(
               elevation: 0,
               title: "Continue",
-              onPressed: () {},
+              onPressed: onContinue,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10.h),
           ],
         ),
       ),
@@ -95,7 +146,10 @@ class AddAdditionalAddress extends StatelessWidget {
       text: TextSpan(
         text: title,
         style: const TextStyle(
-            fontWeight: FontWeight.w500, fontSize: 16, color: Colors.black),
+          fontWeight: FontWeight.w500,
+          fontSize: 16,
+          color: Colors.black,
+        ),
         children: <TextSpan>[
           if (showRequired)
             const TextSpan(

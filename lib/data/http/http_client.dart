@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:kula/config/app_environment.dart';
+import 'package:kula/data/local_storage/local_storage.dart';
 import 'package:kula/utils/enums.dart';
 
 import 'http_exceptions.dart';
@@ -55,7 +56,9 @@ class HttpClient {
     return {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
-      'X-API-KEY': AppEnvironment.apiKey
+      'X-API-KEY': AppEnvironment.apiKey,
+      if (LocalStorage.accessToken != null)
+        'Authorization': "Bearer ${LocalStorage.accessToken!}"
     };
   }
 
