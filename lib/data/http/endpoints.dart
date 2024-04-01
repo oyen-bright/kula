@@ -23,4 +23,6 @@ class Endpoint {
   static final address = "$_baseUrl/addresses";
   static final addAddress = "$_baseUrl/address/add";
   static final setDefault = "$_baseUrl/address/set-default";
+
+  static final restaurant = "$_baseUrl/resturants";
 }

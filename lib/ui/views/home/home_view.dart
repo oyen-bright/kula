@@ -1,18 +1,23 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
 import 'package:kula/cubits/address_cubit/address_cubit.dart';
+import 'package:kula/cubits/restaurant_cubit/restaurant_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
+import 'package:kula/mixins/location.dart';
 import 'package:kula/router/app_router.dart';
-import 'package:kula/themes/app_images.dart';
-import 'package:kula/ui/components/inputs/text_field_input.dart';
+import 'package:kula/services/location_service.dart';
+import 'package:kula/services/resturant_service.dart';
+import 'package:kula/themes/app_colors.dart';
+import 'package:kula/ui/components/widgets/refresh_indicator.dart';
+import 'package:kula/ui/views/home/components/vendors.dart';
+import 'package:kula/utils/enums.dart';
 
-import 'components/specials_card.dart';
-import 'components/vendors_card.dart';
+import 'components/app_bar.dart';
+import 'components/search_bar.dart';
+import 'components/todays_specials.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -21,12 +26,38 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView> with LocationMixin {
   @override
   void initState() {
     super.initState();
-
+    checkLocationPermission();
     shouldAddAddress();
+  }
+
+  bool hasLocationPermission = false;
+
+  void checkLocationPermission() async {
+    final response = await requestLocationPermission(context);
+    hasLocationPermission = response;
+
+    if (mounted && context.mounted) {
+      if (hasLocationPermission) {
+        context.read<LocationService>().getCurrentLocation().then((res) {
+          if (res.error != null) {
+            context.showSnackBar(res.error, BarType.error);
+            return;
+          }
+
+          if (res.position != null) {
+            context.read<RestaurantService>().getRestaurants((
+              longitude: res.position!.longitude,
+              latitude: res.position!.latitude
+            ));
+          }
+        });
+      }
+      setState(() {});
+    }
   }
 
   void shouldAddAddress() {
@@ -40,68 +71,35 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: !hasLocationPermission
+          ? _buildLocationPermissionNotAvailable(context)
+          : BlocConsumer<RestaurantCubit, RestaurantState>(
+              listener: (context, state) {
+                state.mapOrNull(
+                    error: (state) => context.showSnackBar(state.error));
+              },
+              builder: (context, state) {
+                return state.maybeMap(
+                  loaded: (state) {
+                    if (state.restaurants.isEmpty) {
+                      return _buildNoRestaurantNearYou(context);
+                    }
+                    return _buildHomeView();
+                  },
+                  orElse: () => _buildHomeView(),
+                );
+              },
+            ),
+    );
+  }
+
+  SafeArea _buildHomeView() {
+    return SafeArea(
+      child: AppRefreshIndicator(
+        onRefresh: context.read<RestaurantCubit>().getRestaurants,
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              pinned: true,
-              collapsedHeight: 60,
-              toolbarHeight: 60,
-              floating: true,
-              snap: true,
-              actions: [
-                IconButton(
-                    visualDensity: VisualDensity.compact,
-                    alignment: Alignment.topCenter,
-                    onPressed: () {},
-                    icon: Image.asset(
-                      AppImages.notificationIcon,
-                      scale: 2,
-                    )),
-                const SizedBox(
-                  width: 5,
-                )
-              ],
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "Justin Travis",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  InkWell(
-                    onTap: () =>
-                        AppRouter.router.push(AppRoutes.changeLocation),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          AppImages.locationIcon,
-                          scale: 2,
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        const Text("Downtown Menlo park....",
-                            style: TextStyle(fontSize: 14)),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                ],
-              ),
-            ),
+            const HomeAppBar(),
             SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,73 +107,96 @@ class _HomeViewState extends State<HomeView> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  AppTextField(
-                      readOnly: true,
-                      keyboardType: TextInputType.none,
-                      onTap: () => AppRouter.router.push(AppRoutes.search),
-                      hintColor: const Color.fromARGB(255, 170, 174, 184),
-                      hintText: "Search for a restaurant or meal",
-                      suffixIcon: Image.asset(
-                        AppImages.searchIcon,
-                        scale: 2,
-                      )).withHorViewPadding,
+                  const HomeSearchBar().withHorViewPadding,
                   SizedBox(
                     height: 24.h,
                   ),
-                  AutoSizeText(
-                    "Today’s Special",
-                    style: context.textTheme.titleLarge
-                        ?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
-                  ).withHorViewPadding,
-                  SizedBox(
-                    height: 8.h,
-                  ),
-                  SizedBox(
-                    height: 187.h,
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) => SizedBox(
-                        width: 8.w,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppConstants.padding.horizontal),
-                      shrinkWrap: true,
-                      itemCount: 10,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return const SpecialMealCard();
-                      },
-                    ),
-                  ),
+                  const TodaySpecials(),
                   SizedBox(
                     height: 23.h,
                   ),
-                  AutoSizeText(
-                    "Vendors",
-                    style: context.textTheme.titleLarge
-                        ?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
-                  ).withHorViewPadding,
-                  SizedBox(
-                    height: 8.h,
-                  ),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppConstants.padding.horizontal),
-                    separatorBuilder: (_, __) => SizedBox(
-                      height: 8.h,
-                    ),
-                    itemCount: 10,
-                    itemBuilder: (BuildContext context, int index) {
-                      return const VendorsCard();
-                    },
-                  ),
+                  const Vendors()
                 ],
               ),
             )
           ],
         ),
       ),
+    );
+  }
+
+  Center _buildLocationPermissionNotAvailable(BuildContext context) {
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.error,
+            color: AppColors.primaryColor,
+            size: 100,
+          ),
+          SizedBox(
+            height: 15.h,
+          ),
+          Text(
+            "Location Permission Required",
+            textAlign: TextAlign.center,
+            style: context.textTheme.titleLarge
+                ?.copyWith(fontWeight: FontWeight.w600),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Text(
+            "Please enable location permission on att in other to continue ot user this app ",
+            textAlign: TextAlign.center,
+            style: context.textTheme.bodyLarge,
+          ),
+          TextButton(
+              onPressed: () async {
+                await requestLocationPermission(context, shouldRequest: true);
+                checkLocationPermission();
+              },
+              child: const Text("Enable"))
+        ],
+      ).withHorViewPadding,
+    );
+  }
+
+  Center _buildNoRestaurantNearYou(BuildContext context) {
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.error,
+            color: AppColors.primaryColor,
+            size: 100,
+          ),
+          SizedBox(
+            height: 15.h,
+          ),
+          Text(
+            "No Restaurants",
+            textAlign: TextAlign.center,
+            style: context.textTheme.titleLarge
+                ?.copyWith(fontWeight: FontWeight.w600),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Text(
+            "No restaurants within a 200000 kilo-meter radius of your location",
+            textAlign: TextAlign.center,
+            style: context.textTheme.bodyLarge,
+          ),
+          TextButton(
+              onPressed: context.read<RestaurantCubit>().getRestaurants,
+              child: const Text("Retry"))
+        ],
+      ).withHorViewPadding,
     );
   }
 }

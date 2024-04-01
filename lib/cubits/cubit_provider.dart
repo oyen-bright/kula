@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kula/cubits/address_cubit/address_cubit.dart';
 import 'package:kula/cubits/auth_cubit/auth_cubit.dart';
+import 'package:kula/cubits/restaurant_cubit/restaurant_cubit.dart';
 import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/services/address_service.dart';
 import 'package:kula/services/auth_service.dart';
+import 'package:kula/services/location_service.dart';
 import 'package:kula/services/otp_service.dart';
+import 'package:kula/services/resturant_service.dart';
 
 import 'loading_cubit/loading_cubit.dart';
 
@@ -17,14 +20,15 @@ class AppCubitProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<LoadingCubit>(
+          create: (context) => LoadingCubit(),
+        ),
         BlocProvider<AddressCubit>(
-          create: (context) => AddressCubit(context.read<AddressService>()),
+          create: (context) => AddressCubit(
+              context.read<AddressService>(), context.read<LoadingCubit>()),
         ),
         BlocProvider<UserCubit>(
           create: (context) => UserCubit(),
-        ),
-        BlocProvider<LoadingCubit>(
-          create: (context) => LoadingCubit(),
         ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(
@@ -34,6 +38,10 @@ class AppCubitProvider extends StatelessWidget {
               context.read<UserCubit>(),
               context.read<AddressCubit>()),
         ),
+        BlocProvider<RestaurantCubit>(
+            create: (context) => RestaurantCubit(
+                context.read<RestaurantService>(),
+                context.read<LocationService>())),
       ],
       child: child,
     );

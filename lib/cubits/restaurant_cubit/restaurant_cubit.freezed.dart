@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'address_cubit.dart';
+part of 'restaurant_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,29 +15,29 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$AddressState {
+mixin _$RestaurantState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Address> addresses) loaded,
-    required TResult Function(List<Address> addresses) loading,
-    required TResult Function(String error, List<Address> addresses) error,
+    required TResult Function(List<Restaurant> restaurants) loaded,
+    required TResult Function(List<Restaurant> restaurants) loading,
+    required TResult Function(String error, List<Restaurant> restaurants) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Address> addresses)? loaded,
-    TResult? Function(List<Address> addresses)? loading,
-    TResult? Function(String error, List<Address> addresses)? error,
+    TResult? Function(List<Restaurant> restaurants)? loaded,
+    TResult? Function(List<Restaurant> restaurants)? loading,
+    TResult? Function(String error, List<Restaurant> restaurants)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Address> addresses)? loaded,
-    TResult Function(List<Address> addresses)? loading,
-    TResult Function(String error, List<Address> addresses)? error,
+    TResult Function(List<Restaurant> restaurants)? loaded,
+    TResult Function(List<Restaurant> restaurants)? loading,
+    TResult Function(String error, List<Restaurant> restaurants)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,16 +69,16 @@ mixin _$AddressState {
 }
 
 /// @nodoc
-abstract class $AddressStateCopyWith<$Res> {
-  factory $AddressStateCopyWith(
-          AddressState value, $Res Function(AddressState) then) =
-      _$AddressStateCopyWithImpl<$Res, AddressState>;
+abstract class $RestaurantStateCopyWith<$Res> {
+  factory $RestaurantStateCopyWith(
+          RestaurantState value, $Res Function(RestaurantState) then) =
+      _$RestaurantStateCopyWithImpl<$Res, RestaurantState>;
 }
 
 /// @nodoc
-class _$AddressStateCopyWithImpl<$Res, $Val extends AddressState>
-    implements $AddressStateCopyWith<$Res> {
-  _$AddressStateCopyWithImpl(this._value, this._then);
+class _$RestaurantStateCopyWithImpl<$Res, $Val extends RestaurantState>
+    implements $RestaurantStateCopyWith<$Res> {
+  _$RestaurantStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +95,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$AddressStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$RestaurantStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -109,7 +109,7 @@ class _$InitialImpl extends _Initial {
 
   @override
   String toString() {
-    return 'AddressState.initial()';
+    return 'RestaurantState.initial()';
   }
 
   @override
@@ -125,9 +125,9 @@ class _$InitialImpl extends _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Address> addresses) loaded,
-    required TResult Function(List<Address> addresses) loading,
-    required TResult Function(String error, List<Address> addresses) error,
+    required TResult Function(List<Restaurant> restaurants) loaded,
+    required TResult Function(List<Restaurant> restaurants) loading,
+    required TResult Function(String error, List<Restaurant> restaurants) error,
   }) {
     return initial();
   }
@@ -136,9 +136,9 @@ class _$InitialImpl extends _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Address> addresses)? loaded,
-    TResult? Function(List<Address> addresses)? loading,
-    TResult? Function(String error, List<Address> addresses)? error,
+    TResult? Function(List<Restaurant> restaurants)? loaded,
+    TResult? Function(List<Restaurant> restaurants)? loading,
+    TResult? Function(String error, List<Restaurant> restaurants)? error,
   }) {
     return initial?.call();
   }
@@ -147,9 +147,9 @@ class _$InitialImpl extends _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Address> addresses)? loaded,
-    TResult Function(List<Address> addresses)? loading,
-    TResult Function(String error, List<Address> addresses)? error,
+    TResult Function(List<Restaurant> restaurants)? loaded,
+    TResult Function(List<Restaurant> restaurants)? loading,
+    TResult Function(String error, List<Restaurant> restaurants)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -196,7 +196,7 @@ class _$InitialImpl extends _Initial {
   }
 }
 
-abstract class _Initial extends AddressState {
+abstract class _Initial extends RestaurantState {
   const factory _Initial() = _$InitialImpl;
   const _Initial._() : super._();
 }
@@ -207,12 +207,12 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Address> addresses});
+  $Res call({List<Restaurant> restaurants});
 }
 
 /// @nodoc
 class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$AddressStateCopyWithImpl<$Res, _$LoadedImpl>
+    extends _$RestaurantStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
@@ -221,13 +221,13 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? addresses = null,
+    Object? restaurants = null,
   }) {
     return _then(_$LoadedImpl(
-      addresses: null == addresses
-          ? _value._addresses
-          : addresses // ignore: cast_nullable_to_non_nullable
-              as List<Address>,
+      restaurants: null == restaurants
+          ? _value._restaurants
+          : restaurants // ignore: cast_nullable_to_non_nullable
+              as List<Restaurant>,
     ));
   }
 }
@@ -235,21 +235,21 @@ class __$$LoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadedImpl extends _Loaded {
-  const _$LoadedImpl({required final List<Address> addresses})
-      : _addresses = addresses,
+  const _$LoadedImpl({required final List<Restaurant> restaurants})
+      : _restaurants = restaurants,
         super._();
 
-  final List<Address> _addresses;
+  final List<Restaurant> _restaurants;
   @override
-  List<Address> get addresses {
-    if (_addresses is EqualUnmodifiableListView) return _addresses;
+  List<Restaurant> get restaurants {
+    if (_restaurants is EqualUnmodifiableListView) return _restaurants;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_addresses);
+    return EqualUnmodifiableListView(_restaurants);
   }
 
   @override
   String toString() {
-    return 'AddressState.loaded(addresses: $addresses)';
+    return 'RestaurantState.loaded(restaurants: $restaurants)';
   }
 
   @override
@@ -258,12 +258,12 @@ class _$LoadedImpl extends _Loaded {
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
             const DeepCollectionEquality()
-                .equals(other._addresses, _addresses));
+                .equals(other._restaurants, _restaurants));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_addresses));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_restaurants));
 
   @JsonKey(ignore: true)
   @override
@@ -275,35 +275,35 @@ class _$LoadedImpl extends _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Address> addresses) loaded,
-    required TResult Function(List<Address> addresses) loading,
-    required TResult Function(String error, List<Address> addresses) error,
+    required TResult Function(List<Restaurant> restaurants) loaded,
+    required TResult Function(List<Restaurant> restaurants) loading,
+    required TResult Function(String error, List<Restaurant> restaurants) error,
   }) {
-    return loaded(addresses);
+    return loaded(restaurants);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Address> addresses)? loaded,
-    TResult? Function(List<Address> addresses)? loading,
-    TResult? Function(String error, List<Address> addresses)? error,
+    TResult? Function(List<Restaurant> restaurants)? loaded,
+    TResult? Function(List<Restaurant> restaurants)? loading,
+    TResult? Function(String error, List<Restaurant> restaurants)? error,
   }) {
-    return loaded?.call(addresses);
+    return loaded?.call(restaurants);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Address> addresses)? loaded,
-    TResult Function(List<Address> addresses)? loading,
-    TResult Function(String error, List<Address> addresses)? error,
+    TResult Function(List<Restaurant> restaurants)? loaded,
+    TResult Function(List<Restaurant> restaurants)? loading,
+    TResult Function(String error, List<Restaurant> restaurants)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(addresses);
+      return loaded(restaurants);
     }
     return orElse();
   }
@@ -346,12 +346,12 @@ class _$LoadedImpl extends _Loaded {
   }
 }
 
-abstract class _Loaded extends AddressState {
-  const factory _Loaded({required final List<Address> addresses}) =
+abstract class _Loaded extends RestaurantState {
+  const factory _Loaded({required final List<Restaurant> restaurants}) =
       _$LoadedImpl;
   const _Loaded._() : super._();
 
-  List<Address> get addresses;
+  List<Restaurant> get restaurants;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -363,12 +363,12 @@ abstract class _$$LoadingImplCopyWith<$Res> {
           _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Address> addresses});
+  $Res call({List<Restaurant> restaurants});
 }
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$AddressStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$RestaurantStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -377,13 +377,13 @@ class __$$LoadingImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? addresses = null,
+    Object? restaurants = null,
   }) {
     return _then(_$LoadingImpl(
-      addresses: null == addresses
-          ? _value._addresses
-          : addresses // ignore: cast_nullable_to_non_nullable
-              as List<Address>,
+      restaurants: null == restaurants
+          ? _value._restaurants
+          : restaurants // ignore: cast_nullable_to_non_nullable
+              as List<Restaurant>,
     ));
   }
 }
@@ -391,21 +391,21 @@ class __$$LoadingImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadingImpl extends _Loading {
-  const _$LoadingImpl({required final List<Address> addresses})
-      : _addresses = addresses,
+  const _$LoadingImpl({required final List<Restaurant> restaurants})
+      : _restaurants = restaurants,
         super._();
 
-  final List<Address> _addresses;
+  final List<Restaurant> _restaurants;
   @override
-  List<Address> get addresses {
-    if (_addresses is EqualUnmodifiableListView) return _addresses;
+  List<Restaurant> get restaurants {
+    if (_restaurants is EqualUnmodifiableListView) return _restaurants;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_addresses);
+    return EqualUnmodifiableListView(_restaurants);
   }
 
   @override
   String toString() {
-    return 'AddressState.loading(addresses: $addresses)';
+    return 'RestaurantState.loading(restaurants: $restaurants)';
   }
 
   @override
@@ -414,12 +414,12 @@ class _$LoadingImpl extends _Loading {
         (other.runtimeType == runtimeType &&
             other is _$LoadingImpl &&
             const DeepCollectionEquality()
-                .equals(other._addresses, _addresses));
+                .equals(other._restaurants, _restaurants));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_addresses));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_restaurants));
 
   @JsonKey(ignore: true)
   @override
@@ -431,35 +431,35 @@ class _$LoadingImpl extends _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Address> addresses) loaded,
-    required TResult Function(List<Address> addresses) loading,
-    required TResult Function(String error, List<Address> addresses) error,
+    required TResult Function(List<Restaurant> restaurants) loaded,
+    required TResult Function(List<Restaurant> restaurants) loading,
+    required TResult Function(String error, List<Restaurant> restaurants) error,
   }) {
-    return loading(addresses);
+    return loading(restaurants);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Address> addresses)? loaded,
-    TResult? Function(List<Address> addresses)? loading,
-    TResult? Function(String error, List<Address> addresses)? error,
+    TResult? Function(List<Restaurant> restaurants)? loaded,
+    TResult? Function(List<Restaurant> restaurants)? loading,
+    TResult? Function(String error, List<Restaurant> restaurants)? error,
   }) {
-    return loading?.call(addresses);
+    return loading?.call(restaurants);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Address> addresses)? loaded,
-    TResult Function(List<Address> addresses)? loading,
-    TResult Function(String error, List<Address> addresses)? error,
+    TResult Function(List<Restaurant> restaurants)? loaded,
+    TResult Function(List<Restaurant> restaurants)? loading,
+    TResult Function(String error, List<Restaurant> restaurants)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(addresses);
+      return loading(restaurants);
     }
     return orElse();
   }
@@ -502,12 +502,12 @@ class _$LoadingImpl extends _Loading {
   }
 }
 
-abstract class _Loading extends AddressState {
-  const factory _Loading({required final List<Address> addresses}) =
+abstract class _Loading extends RestaurantState {
+  const factory _Loading({required final List<Restaurant> restaurants}) =
       _$LoadingImpl;
   const _Loading._() : super._();
 
-  List<Address> get addresses;
+  List<Restaurant> get restaurants;
   @JsonKey(ignore: true)
   _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -519,12 +519,12 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String error, List<Address> addresses});
+  $Res call({String error, List<Restaurant> restaurants});
 }
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$AddressStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$RestaurantStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -534,17 +534,17 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? error = null,
-    Object? addresses = null,
+    Object? restaurants = null,
   }) {
     return _then(_$ErrorImpl(
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      addresses: null == addresses
-          ? _value._addresses
-          : addresses // ignore: cast_nullable_to_non_nullable
-              as List<Address>,
+      restaurants: null == restaurants
+          ? _value._restaurants
+          : restaurants // ignore: cast_nullable_to_non_nullable
+              as List<Restaurant>,
     ));
   }
 }
@@ -553,24 +553,24 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 class _$ErrorImpl extends _Error {
   const _$ErrorImpl(
-      {required this.error, final List<Address> addresses = const []})
-      : _addresses = addresses,
+      {required this.error, final List<Restaurant> restaurants = const []})
+      : _restaurants = restaurants,
         super._();
 
   @override
   final String error;
-  final List<Address> _addresses;
+  final List<Restaurant> _restaurants;
   @override
   @JsonKey()
-  List<Address> get addresses {
-    if (_addresses is EqualUnmodifiableListView) return _addresses;
+  List<Restaurant> get restaurants {
+    if (_restaurants is EqualUnmodifiableListView) return _restaurants;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_addresses);
+    return EqualUnmodifiableListView(_restaurants);
   }
 
   @override
   String toString() {
-    return 'AddressState.error(error: $error, addresses: $addresses)';
+    return 'RestaurantState.error(error: $error, restaurants: $restaurants)';
   }
 
   @override
@@ -580,12 +580,12 @@ class _$ErrorImpl extends _Error {
             other is _$ErrorImpl &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
-                .equals(other._addresses, _addresses));
+                .equals(other._restaurants, _restaurants));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, error, const DeepCollectionEquality().hash(_addresses));
+      runtimeType, error, const DeepCollectionEquality().hash(_restaurants));
 
   @JsonKey(ignore: true)
   @override
@@ -597,35 +597,35 @@ class _$ErrorImpl extends _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Address> addresses) loaded,
-    required TResult Function(List<Address> addresses) loading,
-    required TResult Function(String error, List<Address> addresses) error,
+    required TResult Function(List<Restaurant> restaurants) loaded,
+    required TResult Function(List<Restaurant> restaurants) loading,
+    required TResult Function(String error, List<Restaurant> restaurants) error,
   }) {
-    return error(this.error, addresses);
+    return error(this.error, restaurants);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Address> addresses)? loaded,
-    TResult? Function(List<Address> addresses)? loading,
-    TResult? Function(String error, List<Address> addresses)? error,
+    TResult? Function(List<Restaurant> restaurants)? loaded,
+    TResult? Function(List<Restaurant> restaurants)? loading,
+    TResult? Function(String error, List<Restaurant> restaurants)? error,
   }) {
-    return error?.call(this.error, addresses);
+    return error?.call(this.error, restaurants);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Address> addresses)? loaded,
-    TResult Function(List<Address> addresses)? loading,
-    TResult Function(String error, List<Address> addresses)? error,
+    TResult Function(List<Restaurant> restaurants)? loaded,
+    TResult Function(List<Restaurant> restaurants)? loading,
+    TResult Function(String error, List<Restaurant> restaurants)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error, addresses);
+      return error(this.error, restaurants);
     }
     return orElse();
   }
@@ -668,14 +668,14 @@ class _$ErrorImpl extends _Error {
   }
 }
 
-abstract class _Error extends AddressState {
+abstract class _Error extends RestaurantState {
   const factory _Error(
       {required final String error,
-      final List<Address> addresses}) = _$ErrorImpl;
+      final List<Restaurant> restaurants}) = _$ErrorImpl;
   const _Error._() : super._();
 
   String get error;
-  List<Address> get addresses;
+  List<Restaurant> get restaurants;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;

@@ -25,7 +25,7 @@ class AddressService implements _AddressService {
       List<InputAddress> inputAddress) async {
     try {
       final response = await Future.wait(inputAddress
-          .map((e) => HttpRepository.addAddress(
+          .map((e) => AppRepository.addAddress(
               street: e.street!,
               houseNumber: e.houseNumber ?? "",
               floorNumber: e.floorNumber ?? "",
@@ -46,7 +46,7 @@ class AddressService implements _AddressService {
   @override
   Future<AddressServiceResponse> deleteAddress(String addressId) async {
     try {
-      final response = await HttpRepository.deleteAddress(addressId);
+      final response = await AppRepository.deleteAddress(addressId);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final message = data['message'];
 
@@ -60,7 +60,7 @@ class AddressService implements _AddressService {
   @override
   Future<AddressServiceResponse<List<Address>?>> getAddress() async {
     try {
-      final response = await HttpRepository.getAddress();
+      final response = await AppRepository.getAddress();
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
       final List<Map<String, dynamic>> addresses = List.from(data['data']);
@@ -77,7 +77,7 @@ class AddressService implements _AddressService {
   @override
   Future<AddressServiceResponse> setDefaultAddress(String addressId) async {
     try {
-      final response = await HttpRepository.setDefaultAddress(addressId);
+      final response = await AppRepository.setDefaultAddress(addressId);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final message = data['message'];
 

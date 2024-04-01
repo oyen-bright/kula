@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kula/services/address_service.dart';
 import 'package:kula/services/auth_service.dart';
+import 'package:kula/services/location_service.dart';
 import 'package:kula/services/otp_service.dart';
+import 'package:kula/services/resturant_service.dart';
 
 class RepositoriesProvider extends StatelessWidget {
   final Widget child;
@@ -23,6 +25,14 @@ class RepositoriesProvider extends StatelessWidget {
         RepositoryProvider<AddressService>(
           lazy: true,
           create: (context) => AddressService(),
+        ),
+        RepositoryProvider<LocationService>(
+          lazy: true,
+          create: (context) => LocationService(),
+        ),
+        RepositoryProvider<RestaurantService>(
+          lazy: true,
+          create: (context) => RestaurantService(),
         ),
       ],
       child: child,

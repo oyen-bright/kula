@@ -1,10 +1,11 @@
 import 'package:http/http.dart';
+import 'package:kula/utils/types.dart';
 
 import 'endpoints.dart';
 import 'http_client.dart';
 
-class HttpRepository {
-  HttpRepository._();
+class AppRepository {
+  AppRepository._();
 
 //AUTHENTICATION
   static Future<Response> login(String email, String password) async {
@@ -81,7 +82,7 @@ class HttpRepository {
 
   static Future<Response> deleteAddress(String addressId) async {
     return await HttpClient.deleteRequest(
-      endpoint: "${Endpoint.address}/$addressId",
+      endpoint: "${Endpoint.address}/$addressId/",
     );
   }
 
@@ -91,5 +92,13 @@ class HttpRepository {
         payload: {
           "id": id,
         });
+  }
+
+  //RESTAURANT
+  static Future<Response> getRestaurants(Location location) async {
+    return await HttpClient.getRequest(
+      endpoint:
+          "${Endpoint.restaurant}/${location.longitude}/${location.latitude}",
+    );
   }
 }

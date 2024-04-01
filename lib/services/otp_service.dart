@@ -24,7 +24,7 @@ class OTPService implements _OTPService {
   @override
   Future<OTPServiceResponse> emailOTP(String email) async {
     try {
-      final response = await HttpRepository.emailOTP(email);
+      final response = await AppRepository.emailOTP(email);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final message = data['message'];
       return OTPServiceResponse(error: null, data: message);
@@ -37,7 +37,7 @@ class OTPService implements _OTPService {
   @override
   Future<OTPServiceResponse> emailOTPVerify(String email, String otp) async {
     try {
-      final response = await HttpRepository.emailOTPVerify(email, otp);
+      final response = await AppRepository.emailOTPVerify(email, otp);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final message = data['message'];
 
@@ -51,7 +51,7 @@ class OTPService implements _OTPService {
   @override
   Future<OTPServiceResponse<String?>> phoneNumberOTP(String phoneNumber) async {
     try {
-      final response = await HttpRepository.phoneNumberOTP(phoneNumber);
+      final response = await AppRepository.phoneNumberOTP(phoneNumber);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final message = data['message'];
 
@@ -66,7 +66,7 @@ class OTPService implements _OTPService {
   Future<OTPServiceResponse<String?>> phoneNumberVerify(
       String phoneNumber, String otp) async {
     try {
-      final response = await HttpRepository.phoneNumberVerify(phoneNumber, otp);
+      final response = await AppRepository.phoneNumberVerify(phoneNumber, otp);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final message = data['message'];
 

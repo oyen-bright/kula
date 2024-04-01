@@ -6,8 +6,10 @@ class AddressState with _$AddressState {
   const factory AddressState.initial() = _Initial;
   const factory AddressState.loaded({required List<Address> addresses}) =
       _Loaded;
-  const factory AddressState.loading() = _Loading;
-  const factory AddressState.error({required String error}) = _Error;
+  const factory AddressState.loading({required List<Address> addresses}) =
+      _Loading;
+  const factory AddressState.error(
+      {required String error, @Default([]) List<Address> addresses}) = _Error;
 
   bool get isEmpty {
     return map(
@@ -21,9 +23,9 @@ class AddressState with _$AddressState {
   List<Address> get addresses {
     return map(
       loaded: (state) => state.addresses,
-      error: (_) => [],
+      error: (state) => state.addresses,
       initial: (_) => [],
-      loading: (_) => [],
+      loading: (state) => state.addresses,
     );
   }
 }

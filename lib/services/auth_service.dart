@@ -38,7 +38,7 @@ class AuthService implements _AuthService {
     required String password,
   }) async {
     try {
-      final response = await HttpRepository.createAccount(
+      final response = await AppRepository.createAccount(
           firsName, lastName, phoneNumber, dob, email, password);
       final body = jsonDecode(response.body) as Map<String, dynamic>;
       final User user = User.fromJson(body['data']['user']);
@@ -58,7 +58,7 @@ class AuthService implements _AuthService {
   Future<AuthServiceResponse<({Token token, User user})?>>
       loginWithEmailAndPassword(String email, String password) async {
     try {
-      final response = await HttpRepository.login(email, password);
+      final response = await AppRepository.login(email, password);
       final body = jsonDecode(response.body) as Map<String, dynamic>;
       final User user = User.fromJson(body['data']['user']);
       final Token token =

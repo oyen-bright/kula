@@ -1,4 +1,4 @@
-class Address {
+class Restaurant {
   final String id;
   final String street;
   final String floorNumber;
@@ -7,7 +7,7 @@ class Address {
   final String latitude;
   final bool isDefault;
   final String additionalInfo;
-  Address({
+  Restaurant({
     required this.id,
     required this.isDefault,
     required this.street,
@@ -18,8 +18,8 @@ class Address {
     required this.additionalInfo,
   });
 
-  factory Address.fromJson(Map<String, dynamic> json) {
-    return Address(
+  factory Restaurant.fromJson(Map<String, dynamic> json) {
+    return Restaurant(
       id: json['id'],
       isDefault: (json['is_default'] ?? 0) == 1 ? true : false,
       street: json['street'] ?? '',
