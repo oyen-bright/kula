@@ -67,9 +67,17 @@ class General {
     GoRoute(
         parentNavigatorKey: AppRouter.parentNavigatorKey,
         path: AppRoutes.restaurant,
+        redirect: (_, state) {
+          if (state.extra is Restaurant) {
+            return null;
+          }
+          return AppRoutes.homeWelcome;
+        },
         pageBuilder: (context, state) {
           return AppRouter.setupPage(
-            child: const Restaurant(),
+            child: RestaurantView(
+              restaurant: state.extra as Restaurant,
+            ),
             state: state,
           );
         },
@@ -101,7 +109,9 @@ class General {
             path: routeSubPath(AppRoutes.restaurantMeal),
             pageBuilder: (context, state) {
               return AppRouter.setupPage(
-                child: const RestaurantMeal(),
+                child: RestaurantMeal(
+                  restaurant: state.extra as Restaurant,
+                ),
                 state: state,
               );
             },

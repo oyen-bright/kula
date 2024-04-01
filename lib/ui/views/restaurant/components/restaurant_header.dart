@@ -4,13 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/restaurant_cubit/restaurant_model.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
 
 class RestaurantHeader extends StatelessWidget {
-  const RestaurantHeader({super.key});
+  final Restaurant restaurant;
+  const RestaurantHeader({super.key, required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class RestaurantHeader extends StatelessWidget {
                           scale: 2,
                         )),
                     Text(
-                      "Chuks Buka",
+                      restaurant.storeName,
                       style: context.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
@@ -154,7 +156,9 @@ class RestaurantHeader extends StatelessWidget {
 }
 
 class RestaurantHeaderMeal extends StatelessWidget {
-  const RestaurantHeaderMeal({super.key});
+  final Restaurant restaurant;
+
+  const RestaurantHeaderMeal({super.key, required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +201,7 @@ class RestaurantHeaderMeal extends StatelessWidget {
               children: [
                 const Spacer(),
                 Text(
-                  "Chuks Buka",
+                  restaurant.storeName,
                   style: context.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                       fontSize: 16,

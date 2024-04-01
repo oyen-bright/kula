@@ -3,25 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/restaurant_cubit/restaurant_model.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
 
 class VendorsCard extends StatelessWidget {
+  final Color backgroundColor;
+  final void Function()? onTap;
+  final Restaurant restaurant;
   const VendorsCard({
     super.key,
+    this.backgroundColor = AppColors.cardColor,
+    required this.restaurant,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => AppRouter.router.push(AppRoutes.restaurant),
+      onTap: onTap,
       onLongPress: () => AppRouter.router.push(AppRoutes.restaurantReview),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
         decoration: BoxDecoration(
-            color: AppColors.cardColor,
+            color: backgroundColor,
             border: Border.all(color: AppColors.cardStrokeColor, width: 2),
             borderRadius:
                 BorderRadius.circular(AppConstants.borderRadius.medium)),
@@ -52,7 +59,7 @@ class VendorsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AutoSizeText(
-                    "Chukas buka",
+                    restaurant.storeName,
                     maxLines: 1,
                     style: context.textTheme.bodyLarge?.copyWith(
                       fontSize: 14,
@@ -63,8 +70,8 @@ class VendorsCard extends StatelessWidget {
                     height: 2.h,
                   ),
                   AutoSizeText(
-                    "Hot and spicy catfish daily",
-                    maxLines: 1,
+                    restaurant.shortDescription,
+                    maxLines: 2,
                     style: context.textTheme.bodyLarge?.copyWith(
                       color: AppColors.greyTextColor,
                       fontSize: 14,

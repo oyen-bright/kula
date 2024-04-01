@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/cubits/restaurant_cubit/restaurant_model.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
@@ -9,7 +10,8 @@ import 'package:kula/ui/components/buttons/elevated_button.dart';
 import 'package:kula/ui/views/restaurant/components/restaurant_header.dart';
 
 class RestaurantMeal extends StatelessWidget {
-  const RestaurantMeal({super.key});
+  final Restaurant restaurant;
+  const RestaurantMeal({super.key, required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,9 @@ class RestaurantMeal extends StatelessWidget {
         bottom: false,
         child: Column(
           children: [
-            const RestaurantHeaderMeal(),
+            RestaurantHeaderMeal(
+              restaurant: restaurant,
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Container(

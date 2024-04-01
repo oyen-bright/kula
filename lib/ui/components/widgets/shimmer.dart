@@ -21,7 +21,7 @@ class AppShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       enabled: enabled ?? true,
-      baseColor: baseColor ?? Colors.grey[300]!,
+      baseColor: baseColor ?? Colors.grey[200]!,
       highlightColor: highlightColor ?? Colors.grey[100]!,
       period: period,
       child: child,

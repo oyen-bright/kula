@@ -40,6 +40,6 @@ class RestaurantCubit extends Cubit<RestaurantState> {
       return;
     }
 
-    emit(const RestaurantState.loaded(restaurants: []));
+    emit(RestaurantState.loaded(restaurants: response.data ?? []));
   }
 }
