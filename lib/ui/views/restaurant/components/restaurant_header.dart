@@ -19,11 +19,12 @@ class RestaurantHeader extends StatelessWidget {
     return Container(
       width: 393.w,
       height: 120.h,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.cover,
               image: NetworkImage(
-                  "https://plus.unsplash.com/premium_photo-1663047707111-c022dee3abe7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWVhbHxlbnwwfHwwfHx8MA%3D%3D"))),
+                restaurant.previewImage,
+              ))),
       child: Stack(
         children: [
           Positioned.fill(
@@ -63,13 +64,13 @@ class RestaurantHeader extends StatelessWidget {
                           width: 2.w,
                         ),
                         Text.rich(
-                          const TextSpan(
+                          TextSpan(
                             children: [
                               TextSpan(
-                                text: '4.8 ',
+                                text: '${restaurant.averageRating} ',
                               ),
                               TextSpan(
-                                text: '(74)',
+                                text: '(${restaurant.totalRatings})',
                               ),
                             ],
                           ),
@@ -89,60 +90,68 @@ class RestaurantHeader extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: const TextSpan(
-                          text: 'delivery cost\n',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '₦1,500',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.inputFieldHintTextColor,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
+                      Expanded(
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: const TextSpan(
+                            text: 'delivery cost\n',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.transparent,
+                                fontWeight: FontWeight.w600),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: '₦1,500',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.transparent,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const VerticalDivider(
                         thickness: 1.1,
                         color: Colors.white,
                       ),
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: const TextSpan(
-                          text: 'Wait time\n',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '30-45 mins',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.inputFieldHintTextColor,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
+                      Expanded(
+                        flex: 2,
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: 'Wait time\n',
+                            style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: restaurant.duration,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.inputFieldHintTextColor,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const VerticalDivider(
                         thickness: 1.1,
                         color: Colors.white,
                       ),
-                      TextButton(
-                          onPressed: () {
-                            AppRouter.router.push(AppRoutes.restaurantReview);
-                          },
-                          child: const Text(
-                            "More Details >",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ))
+                      Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              AppRouter.router.push(AppRoutes.restaurantReview,
+                                  extra: restaurant);
+                            },
+                            child: const AutoSizeText(
+                              "More Details >",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            )),
+                      )
                     ],
                   ),
                 )

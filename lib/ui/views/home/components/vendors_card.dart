@@ -45,9 +45,19 @@ class VendorsCard extends StatelessWidget {
               height: 84.h,
               width: 84.w,
               decoration: BoxDecoration(
-                  color: Colors.red,
+                  color: AppColors.primaryColor,
                   borderRadius:
                       BorderRadius.circular(AppConstants.borderRadius.medium)),
+              child: ClipRRect(
+                borderRadius:
+                    BorderRadius.circular(AppConstants.borderRadius.medium),
+                child: onTap != null
+                    ? Image.network(
+                        restaurant.previewImage,
+                        fit: BoxFit.cover,
+                      )
+                    : const SizedBox.shrink(),
+              ),
             ),
             SizedBox(
               width: 16.w,
@@ -94,7 +104,7 @@ class VendorsCard extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  "50-55 minutes",
+                                  restaurant.duration,
                                   maxLines: 1,
                                   style: context.textTheme.bodySmall?.copyWith(
                                       color: AppColors.greyTextColor),
@@ -115,13 +125,13 @@ class VendorsCard extends StatelessWidget {
                                 width: 2.w,
                               ),
                               Text.rich(
-                                const TextSpan(
+                                TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: '4.8 ',
+                                      text: '${restaurant.averageRating} ',
                                     ),
                                     TextSpan(
-                                      text: '(74)',
+                                      text: '(${restaurant.totalRatings})',
                                     ),
                                   ],
                                 ),

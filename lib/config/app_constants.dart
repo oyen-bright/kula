@@ -13,6 +13,7 @@ class AppConstants {
   static const String appName = 'Kula';
   static const String appDomain = 'https://kula.com';
   static const String appDescription = 'Food app';
+  static const String appCurrency = '₦';
 
   static const String appErrorMessage = 'Something went wrong please try again';
 

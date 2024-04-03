@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/cubits/restaurant_cubit/meal_model.dart';
 import 'package:kula/cubits/restaurant_cubit/restaurant_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
@@ -18,13 +19,16 @@ class TodaySpecials extends StatelessWidget {
     return BlocBuilder<RestaurantCubit, RestaurantState>(
       builder: (context, state) {
         return state.maybeMap(
-            orElse: () => AppShimmer(child: _buildBody(context)),
-            loaded: (state) => _buildBody(context));
+            orElse: () => AppShimmer(
+                child: _buildBody(
+                    context, List.generate(5, (_) => Meal.dummy), true)),
+            loaded: (state) => _buildBody(context, state.todaySpecials));
       },
     );
   }
 
-  Column _buildBody(BuildContext context) {
+  Column _buildBody(BuildContext context, List<Meal> todaySpecial,
+      [bool isDummy = false]) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -45,10 +49,13 @@ class TodaySpecials extends StatelessWidget {
             padding: EdgeInsets.symmetric(
                 horizontal: AppConstants.padding.horizontal),
             shrinkWrap: true,
-            itemCount: 10,
+            itemCount: todaySpecial.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
-              return const SpecialMealCard();
+              return SpecialMealCard(
+                onTap: !isDummy ? () {} : null,
+                meal: todaySpecial[index],
+              );
             },
           ),
         ),

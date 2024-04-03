@@ -5,12 +5,15 @@ class RestaurantState with _$RestaurantState {
   const RestaurantState._();
   const factory RestaurantState.initial() = _Initial;
   const factory RestaurantState.loaded(
-      {required List<Restaurant> restaurants}) = _Loaded;
+      {required List<Restaurant> restaurants,
+      required List<Meal> todaySpecials}) = _Loaded;
   const factory RestaurantState.loading(
-      {required List<Restaurant> restaurants}) = _Loading;
+      {required List<Restaurant> restaurants,
+      required List<Meal> todaySpecials}) = _Loading;
   const factory RestaurantState.error(
       {required String error,
-      @Default([]) List<Restaurant> restaurants}) = _Error;
+      @Default([]) List<Restaurant> restaurants,
+      @Default([]) List<Meal> todaySpecials}) = _Error;
 
   List<Restaurant> get restaurants {
     return map(
@@ -18,6 +21,15 @@ class RestaurantState with _$RestaurantState {
       error: (state) => state.restaurants,
       initial: (_) => [],
       loading: (state) => state.restaurants,
+    );
+  }
+
+  List<Meal> get todaySpecials {
+    return map(
+      loaded: (state) => state.todaySpecials,
+      error: (state) => state.todaySpecials,
+      initial: (_) => [],
+      loading: (state) => state.todaySpecials,
     );
   }
 }

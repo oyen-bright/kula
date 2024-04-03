@@ -101,4 +101,18 @@ class AppRepository {
           "${Endpoint.restaurant}/${location.longitude}/${location.latitude}",
     );
   }
+
+  static Future<Response> getRestaurantMeals(
+      Location location, String id) async {
+    return await HttpClient.getRequest(
+      endpoint:
+          "${Endpoint.restaurantMeal}/$id/${location.longitude}/${location.latitude}",
+    );
+  }
+
+  static Future<Response> getTodaySpecial() async {
+    return await HttpClient.getRequest(
+      endpoint: Endpoint.todaySpecial,
+    );
+  }
 }

@@ -19,25 +19,39 @@ mixin _$RestaurantState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Restaurant> restaurants) loaded,
-    required TResult Function(List<Restaurant> restaurants) loading,
-    required TResult Function(String error, List<Restaurant> restaurants) error,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loaded,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loading,
+    required TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Restaurant> restaurants)? loaded,
-    TResult? Function(List<Restaurant> restaurants)? loading,
-    TResult? Function(String error, List<Restaurant> restaurants)? error,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult? Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Restaurant> restaurants)? loaded,
-    TResult Function(List<Restaurant> restaurants)? loading,
-    TResult Function(String error, List<Restaurant> restaurants)? error,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -125,9 +139,15 @@ class _$InitialImpl extends _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Restaurant> restaurants) loaded,
-    required TResult Function(List<Restaurant> restaurants) loading,
-    required TResult Function(String error, List<Restaurant> restaurants) error,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loaded,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loading,
+    required TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)
+        error,
   }) {
     return initial();
   }
@@ -136,9 +156,13 @@ class _$InitialImpl extends _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Restaurant> restaurants)? loaded,
-    TResult? Function(List<Restaurant> restaurants)? loading,
-    TResult? Function(String error, List<Restaurant> restaurants)? error,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult? Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
   }) {
     return initial?.call();
   }
@@ -147,9 +171,13 @@ class _$InitialImpl extends _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Restaurant> restaurants)? loaded,
-    TResult Function(List<Restaurant> restaurants)? loading,
-    TResult Function(String error, List<Restaurant> restaurants)? error,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -207,7 +235,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Restaurant> restaurants});
+  $Res call({List<Restaurant> restaurants, List<Meal> todaySpecials});
 }
 
 /// @nodoc
@@ -222,12 +250,17 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? restaurants = null,
+    Object? todaySpecials = null,
   }) {
     return _then(_$LoadedImpl(
       restaurants: null == restaurants
           ? _value._restaurants
           : restaurants // ignore: cast_nullable_to_non_nullable
               as List<Restaurant>,
+      todaySpecials: null == todaySpecials
+          ? _value._todaySpecials
+          : todaySpecials // ignore: cast_nullable_to_non_nullable
+              as List<Meal>,
     ));
   }
 }
@@ -235,8 +268,11 @@ class __$$LoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadedImpl extends _Loaded {
-  const _$LoadedImpl({required final List<Restaurant> restaurants})
+  const _$LoadedImpl(
+      {required final List<Restaurant> restaurants,
+      required final List<Meal> todaySpecials})
       : _restaurants = restaurants,
+        _todaySpecials = todaySpecials,
         super._();
 
   final List<Restaurant> _restaurants;
@@ -247,9 +283,17 @@ class _$LoadedImpl extends _Loaded {
     return EqualUnmodifiableListView(_restaurants);
   }
 
+  final List<Meal> _todaySpecials;
+  @override
+  List<Meal> get todaySpecials {
+    if (_todaySpecials is EqualUnmodifiableListView) return _todaySpecials;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_todaySpecials);
+  }
+
   @override
   String toString() {
-    return 'RestaurantState.loaded(restaurants: $restaurants)';
+    return 'RestaurantState.loaded(restaurants: $restaurants, todaySpecials: $todaySpecials)';
   }
 
   @override
@@ -258,12 +302,16 @@ class _$LoadedImpl extends _Loaded {
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
             const DeepCollectionEquality()
-                .equals(other._restaurants, _restaurants));
+                .equals(other._restaurants, _restaurants) &&
+            const DeepCollectionEquality()
+                .equals(other._todaySpecials, _todaySpecials));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_restaurants));
+      runtimeType,
+      const DeepCollectionEquality().hash(_restaurants),
+      const DeepCollectionEquality().hash(_todaySpecials));
 
   @JsonKey(ignore: true)
   @override
@@ -275,35 +323,49 @@ class _$LoadedImpl extends _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Restaurant> restaurants) loaded,
-    required TResult Function(List<Restaurant> restaurants) loading,
-    required TResult Function(String error, List<Restaurant> restaurants) error,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loaded,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loading,
+    required TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)
+        error,
   }) {
-    return loaded(restaurants);
+    return loaded(restaurants, todaySpecials);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Restaurant> restaurants)? loaded,
-    TResult? Function(List<Restaurant> restaurants)? loading,
-    TResult? Function(String error, List<Restaurant> restaurants)? error,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult? Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
   }) {
-    return loaded?.call(restaurants);
+    return loaded?.call(restaurants, todaySpecials);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Restaurant> restaurants)? loaded,
-    TResult Function(List<Restaurant> restaurants)? loading,
-    TResult Function(String error, List<Restaurant> restaurants)? error,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(restaurants);
+      return loaded(restaurants, todaySpecials);
     }
     return orElse();
   }
@@ -347,11 +409,13 @@ class _$LoadedImpl extends _Loaded {
 }
 
 abstract class _Loaded extends RestaurantState {
-  const factory _Loaded({required final List<Restaurant> restaurants}) =
-      _$LoadedImpl;
+  const factory _Loaded(
+      {required final List<Restaurant> restaurants,
+      required final List<Meal> todaySpecials}) = _$LoadedImpl;
   const _Loaded._() : super._();
 
   List<Restaurant> get restaurants;
+  List<Meal> get todaySpecials;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -363,7 +427,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
           _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Restaurant> restaurants});
+  $Res call({List<Restaurant> restaurants, List<Meal> todaySpecials});
 }
 
 /// @nodoc
@@ -378,12 +442,17 @@ class __$$LoadingImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? restaurants = null,
+    Object? todaySpecials = null,
   }) {
     return _then(_$LoadingImpl(
       restaurants: null == restaurants
           ? _value._restaurants
           : restaurants // ignore: cast_nullable_to_non_nullable
               as List<Restaurant>,
+      todaySpecials: null == todaySpecials
+          ? _value._todaySpecials
+          : todaySpecials // ignore: cast_nullable_to_non_nullable
+              as List<Meal>,
     ));
   }
 }
@@ -391,8 +460,11 @@ class __$$LoadingImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadingImpl extends _Loading {
-  const _$LoadingImpl({required final List<Restaurant> restaurants})
+  const _$LoadingImpl(
+      {required final List<Restaurant> restaurants,
+      required final List<Meal> todaySpecials})
       : _restaurants = restaurants,
+        _todaySpecials = todaySpecials,
         super._();
 
   final List<Restaurant> _restaurants;
@@ -403,9 +475,17 @@ class _$LoadingImpl extends _Loading {
     return EqualUnmodifiableListView(_restaurants);
   }
 
+  final List<Meal> _todaySpecials;
+  @override
+  List<Meal> get todaySpecials {
+    if (_todaySpecials is EqualUnmodifiableListView) return _todaySpecials;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_todaySpecials);
+  }
+
   @override
   String toString() {
-    return 'RestaurantState.loading(restaurants: $restaurants)';
+    return 'RestaurantState.loading(restaurants: $restaurants, todaySpecials: $todaySpecials)';
   }
 
   @override
@@ -414,12 +494,16 @@ class _$LoadingImpl extends _Loading {
         (other.runtimeType == runtimeType &&
             other is _$LoadingImpl &&
             const DeepCollectionEquality()
-                .equals(other._restaurants, _restaurants));
+                .equals(other._restaurants, _restaurants) &&
+            const DeepCollectionEquality()
+                .equals(other._todaySpecials, _todaySpecials));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_restaurants));
+      runtimeType,
+      const DeepCollectionEquality().hash(_restaurants),
+      const DeepCollectionEquality().hash(_todaySpecials));
 
   @JsonKey(ignore: true)
   @override
@@ -431,35 +515,49 @@ class _$LoadingImpl extends _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Restaurant> restaurants) loaded,
-    required TResult Function(List<Restaurant> restaurants) loading,
-    required TResult Function(String error, List<Restaurant> restaurants) error,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loaded,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loading,
+    required TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)
+        error,
   }) {
-    return loading(restaurants);
+    return loading(restaurants, todaySpecials);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Restaurant> restaurants)? loaded,
-    TResult? Function(List<Restaurant> restaurants)? loading,
-    TResult? Function(String error, List<Restaurant> restaurants)? error,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult? Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
   }) {
-    return loading?.call(restaurants);
+    return loading?.call(restaurants, todaySpecials);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Restaurant> restaurants)? loaded,
-    TResult Function(List<Restaurant> restaurants)? loading,
-    TResult Function(String error, List<Restaurant> restaurants)? error,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(restaurants);
+      return loading(restaurants, todaySpecials);
     }
     return orElse();
   }
@@ -503,11 +601,13 @@ class _$LoadingImpl extends _Loading {
 }
 
 abstract class _Loading extends RestaurantState {
-  const factory _Loading({required final List<Restaurant> restaurants}) =
-      _$LoadingImpl;
+  const factory _Loading(
+      {required final List<Restaurant> restaurants,
+      required final List<Meal> todaySpecials}) = _$LoadingImpl;
   const _Loading._() : super._();
 
   List<Restaurant> get restaurants;
+  List<Meal> get todaySpecials;
   @JsonKey(ignore: true)
   _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -519,7 +619,8 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String error, List<Restaurant> restaurants});
+  $Res call(
+      {String error, List<Restaurant> restaurants, List<Meal> todaySpecials});
 }
 
 /// @nodoc
@@ -535,6 +636,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
   $Res call({
     Object? error = null,
     Object? restaurants = null,
+    Object? todaySpecials = null,
   }) {
     return _then(_$ErrorImpl(
       error: null == error
@@ -545,6 +647,10 @@ class __$$ErrorImplCopyWithImpl<$Res>
           ? _value._restaurants
           : restaurants // ignore: cast_nullable_to_non_nullable
               as List<Restaurant>,
+      todaySpecials: null == todaySpecials
+          ? _value._todaySpecials
+          : todaySpecials // ignore: cast_nullable_to_non_nullable
+              as List<Meal>,
     ));
   }
 }
@@ -553,8 +659,11 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 class _$ErrorImpl extends _Error {
   const _$ErrorImpl(
-      {required this.error, final List<Restaurant> restaurants = const []})
+      {required this.error,
+      final List<Restaurant> restaurants = const [],
+      final List<Meal> todaySpecials = const []})
       : _restaurants = restaurants,
+        _todaySpecials = todaySpecials,
         super._();
 
   @override
@@ -568,9 +677,18 @@ class _$ErrorImpl extends _Error {
     return EqualUnmodifiableListView(_restaurants);
   }
 
+  final List<Meal> _todaySpecials;
+  @override
+  @JsonKey()
+  List<Meal> get todaySpecials {
+    if (_todaySpecials is EqualUnmodifiableListView) return _todaySpecials;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_todaySpecials);
+  }
+
   @override
   String toString() {
-    return 'RestaurantState.error(error: $error, restaurants: $restaurants)';
+    return 'RestaurantState.error(error: $error, restaurants: $restaurants, todaySpecials: $todaySpecials)';
   }
 
   @override
@@ -580,12 +698,17 @@ class _$ErrorImpl extends _Error {
             other is _$ErrorImpl &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
-                .equals(other._restaurants, _restaurants));
+                .equals(other._restaurants, _restaurants) &&
+            const DeepCollectionEquality()
+                .equals(other._todaySpecials, _todaySpecials));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, error, const DeepCollectionEquality().hash(_restaurants));
+      runtimeType,
+      error,
+      const DeepCollectionEquality().hash(_restaurants),
+      const DeepCollectionEquality().hash(_todaySpecials));
 
   @JsonKey(ignore: true)
   @override
@@ -597,35 +720,49 @@ class _$ErrorImpl extends _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Restaurant> restaurants) loaded,
-    required TResult Function(List<Restaurant> restaurants) loading,
-    required TResult Function(String error, List<Restaurant> restaurants) error,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loaded,
+    required TResult Function(
+            List<Restaurant> restaurants, List<Meal> todaySpecials)
+        loading,
+    required TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)
+        error,
   }) {
-    return error(this.error, restaurants);
+    return error(this.error, restaurants, todaySpecials);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Restaurant> restaurants)? loaded,
-    TResult? Function(List<Restaurant> restaurants)? loading,
-    TResult? Function(String error, List<Restaurant> restaurants)? error,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult? Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult? Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
   }) {
-    return error?.call(this.error, restaurants);
+    return error?.call(this.error, restaurants, todaySpecials);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Restaurant> restaurants)? loaded,
-    TResult Function(List<Restaurant> restaurants)? loading,
-    TResult Function(String error, List<Restaurant> restaurants)? error,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loaded,
+    TResult Function(List<Restaurant> restaurants, List<Meal> todaySpecials)?
+        loading,
+    TResult Function(String error, List<Restaurant> restaurants,
+            List<Meal> todaySpecials)?
+        error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error, restaurants);
+      return error(this.error, restaurants, todaySpecials);
     }
     return orElse();
   }
@@ -671,11 +808,13 @@ class _$ErrorImpl extends _Error {
 abstract class _Error extends RestaurantState {
   const factory _Error(
       {required final String error,
-      final List<Restaurant> restaurants}) = _$ErrorImpl;
+      final List<Restaurant> restaurants,
+      final List<Meal> todaySpecials}) = _$ErrorImpl;
   const _Error._() : super._();
 
   String get error;
   List<Restaurant> get restaurants;
+  List<Meal> get todaySpecials;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;

@@ -1,23 +1,26 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kula/cubits/restaurant_cubit/restaurant_model.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
 import 'package:kula/themes/app_images.dart';
 
 class RestaurantInfo extends StatelessWidget {
-  const RestaurantInfo({super.key});
+  final Restaurant restaurant;
+  const RestaurantInfo({super.key, required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
               AutoSizeText(
-                "Chukas buka",
+                restaurant.storeName,
                 maxLines: 1,
                 style: context.textTheme.bodyLarge?.copyWith(
                   fontSize: 18,
@@ -36,13 +39,13 @@ class RestaurantInfo extends StatelessWidget {
                       width: 2.w,
                     ),
                     Text.rich(
-                      const TextSpan(
+                      TextSpan(
                         children: [
                           TextSpan(
-                            text: '4.8 ',
+                            text: '${restaurant.averageRating} ',
                           ),
                           TextSpan(
-                            text: '(74)',
+                            text: '(${restaurant.totalRatings})',
                           ),
                         ],
                       ),
@@ -81,8 +84,7 @@ class RestaurantInfo extends StatelessWidget {
           SizedBox(
             height: 8.h,
           ),
-          AutoSizeText(
-                  "No2 Adebowale street, off UBA rd Downtown Menlo park, kubwa, Abuja",
+          AutoSizeText(restaurant.storeAddress,
                   style: context.textTheme.bodyMedium?.copyWith(
                       decoration: TextDecoration.underline, fontSize: 14))
               .withHorViewPadding,

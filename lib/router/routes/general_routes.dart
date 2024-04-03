@@ -87,7 +87,9 @@ class General {
             path: routeSubPath(AppRoutes.restaurantReview),
             pageBuilder: (context, state) {
               return AppRouter.setupPage(
-                child: const RestaurantReview(),
+                child: RestaurantReview(
+                  restaurant: state.extra as Restaurant,
+                ),
                 state: state,
               );
             },

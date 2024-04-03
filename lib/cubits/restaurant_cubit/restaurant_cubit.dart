@@ -5,6 +5,7 @@ import 'package:kula/services/location_service.dart';
 import 'package:kula/services/resturant_service.dart';
 import 'package:kula/utils/types.dart';
 
+import 'meal_model.dart';
 import 'restaurant_model.dart';
 
 part 'restaurant_cubit.freezed.dart';
@@ -19,7 +20,8 @@ class RestaurantCubit extends Cubit<RestaurantState> {
   ) : super(const RestaurantState.initial());
 
   Future<void> getRestaurants() async {
-    emit(RestaurantState.loading(restaurants: state.restaurants));
+    emit(RestaurantState.loading(
+        restaurants: state.restaurants, todaySpecials: state.todaySpecials));
 
     final getUserLocationResponse = await locationService.getCurrentLocation();
     if (getUserLocationResponse.error != null) {
@@ -33,13 +35,55 @@ class RestaurantCubit extends Cubit<RestaurantState> {
       longitude: getUserLocationResponse.position!.longitude
     );
 
-    final response = await restaurantService.getRestaurants(usersLocation);
+    final response = await Future.wait([
+      restaurantService.getRestaurants(usersLocation),
+      restaurantService.getTodaysSpecial()
+    ]);
+
+    if (response[0].error != null || response[1].error != null) {
+      emit(RestaurantState.error(
+          restaurants: state.restaurants,
+          error: response[0].error ?? response[1].error ?? ""));
+      return;
+    }
+
+    emit(RestaurantState.loaded(
+        restaurants: List.from(response[0].data ?? []),
+        todaySpecials: List.from(response[1].data ?? [])));
+  }
+
+  Future<void> getRestaurantsMeal(String vendorID) async {
+    emit(RestaurantState.loading(
+        restaurants: state.restaurants, todaySpecials: state.todaySpecials));
+
+    final getUserLocationResponse = await locationService.getCurrentLocation();
+    if (getUserLocationResponse.error != null) {
+      emit(RestaurantState.error(
+          restaurants: state.restaurants,
+          error: getUserLocationResponse.error ?? ""));
+      return;
+    }
+    final Location usersLocation = (
+      latitude: getUserLocationResponse.position!.latitude,
+      longitude: getUserLocationResponse.position!.longitude
+    );
+
+    final response = await restaurantService.getRestaurantMeal(
+        location: usersLocation, id: vendorID);
+
     if (response.error != null) {
       emit(RestaurantState.error(
           restaurants: state.restaurants, error: response.error ?? ""));
       return;
     }
 
-    emit(RestaurantState.loaded(restaurants: response.data ?? []));
+    final newRestaurants = state.restaurants.map((e) {
+      if (e.id != vendorID) return e;
+      e.copyWith(meals: response.data);
+      return e;
+    }).toList();
+
+    emit(RestaurantState.loaded(
+        restaurants: newRestaurants, todaySpecials: state.todaySpecials));
   }
 }
