@@ -2,21 +2,24 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
-import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/restaurant_cubit/meal_model.dart';
 import 'package:kula/extensions/context.dart';
-import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
+import 'package:kula/utils/amount_formatter.dart';
 
 class RestaurantMealCard extends StatelessWidget {
+  final Meal meal;
+  final void Function()? onTap;
   const RestaurantMealCard({
     super.key,
+    required this.meal,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    //TODO: test height responsiceness
     return InkWell(
-      onTap: () => AppRouter.router.push(AppRoutes.restaurantMeal),
+      onTap: onTap,
       child: Container(
         height: 142.h,
         alignment: Alignment.center,
@@ -45,6 +48,12 @@ class RestaurantMealCard extends StatelessWidget {
                   borderRadius:
                       BorderRadius.circular(AppConstants.borderRadius.medium),
                   border: Border.all(color: AppColors.lightGreyColor)),
+              child: onTap != null
+                  ? Image.network(
+                      meal.image,
+                      fit: BoxFit.cover,
+                    )
+                  : null,
             ),
             const SizedBox(
               width: 10,
@@ -54,7 +63,7 @@ class RestaurantMealCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  "Chukas buka",
+                  meal.name,
                   maxLines: 1,
                   style: context.textTheme.bodyLarge?.copyWith(
                     fontSize: 14,
@@ -65,7 +74,7 @@ class RestaurantMealCard extends StatelessWidget {
                   height: 4.h,
                 ),
                 AutoSizeText(
-                  "2 Catfish, pepper stew, potato fries , mixed with honey glazed gizzard and bay leaves.",
+                  meal.description,
                   style: context.textTheme.bodyLarge?.copyWith(
                     color: AppColors.greyTextColor,
                     fontSize: 14,
@@ -82,7 +91,7 @@ class RestaurantMealCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                             AppConstants.borderRadius.small)),
                     child: AutoSizeText(
-                      "₦40,000",
+                      amountFormatter(meal.price),
                       maxLines: 1,
                       style: context.textTheme.bodySmall
                           ?.copyWith(color: Colors.black),

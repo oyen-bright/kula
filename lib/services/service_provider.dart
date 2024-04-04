@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kula/services/address_service.dart';
 import 'package:kula/services/auth_service.dart';
+import 'package:kula/services/cart_service.dart';
 import 'package:kula/services/location_service.dart';
 import 'package:kula/services/otp_service.dart';
 import 'package:kula/services/resturant_service.dart';
@@ -33,6 +34,10 @@ class RepositoriesProvider extends StatelessWidget {
         RepositoryProvider<RestaurantService>(
           lazy: true,
           create: (context) => RestaurantService(),
+        ),
+        RepositoryProvider<CartService>(
+          lazy: true,
+          create: (context) => CartService(),
         ),
       ],
       child: child,

@@ -79,8 +79,7 @@ class RestaurantCubit extends Cubit<RestaurantState> {
 
     final newRestaurants = state.restaurants.map((e) {
       if (e.id != vendorID) return e;
-      e.copyWith(meals: response.data);
-      return e;
+      return e.copyWith(meals: response.data);
     }).toList();
 
     emit(RestaurantState.loaded(

@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/restaurant_cubit/meal_model.dart';
 import 'package:kula/cubits/restaurant_cubit/restaurant_model.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
+import 'package:kula/utils/amount_formatter.dart';
 
 class RestaurantHeader extends StatelessWidget {
   final Restaurant restaurant;
@@ -165,20 +167,18 @@ class RestaurantHeader extends StatelessWidget {
 }
 
 class RestaurantHeaderMeal extends StatelessWidget {
-  final Restaurant restaurant;
+  final Meal meal;
 
-  const RestaurantHeaderMeal({super.key, required this.restaurant});
+  const RestaurantHeaderMeal({super.key, required this.meal});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 393.w,
       height: 120.h,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(
-                  "https://plus.unsplash.com/premium_photo-1663047707111-c022dee3abe7?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWVhbHxlbnwwfHwwfHx8MA%3D%3D"))),
+              fit: BoxFit.cover, image: NetworkImage(meal.image))),
       child: Stack(
         children: [
           Positioned.fill(
@@ -210,7 +210,7 @@ class RestaurantHeaderMeal extends StatelessWidget {
               children: [
                 const Spacer(),
                 Text(
-                  restaurant.storeName,
+                  meal.name,
                   style: context.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                       fontSize: 16,
@@ -226,7 +226,7 @@ class RestaurantHeaderMeal extends StatelessWidget {
                       borderRadius: BorderRadius.circular(
                           AppConstants.borderRadius.small)),
                   child: AutoSizeText(
-                    "₦40,000",
+                    amountFormatter(meal.price),
                     maxLines: 1,
                     style: context.textTheme.bodySmall
                         ?.copyWith(color: Colors.black),

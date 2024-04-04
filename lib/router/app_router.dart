@@ -37,6 +37,7 @@ import 'package:kula/ui/views/restaurant/restaurant_view.dart';
 import 'package:kula/ui/views/search/search_view.dart';
 import 'package:kula/ui/views/splash/splash_view.dart';
 import 'package:kula/utils/subpart_route_util.dart';
+import 'package:kula/utils/types.dart';
 
 part './routes/cart_routes.dart';
 part './routes/general_routes.dart';

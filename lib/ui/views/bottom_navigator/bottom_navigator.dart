@@ -2,7 +2,9 @@ library app_bottom_navigator;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kula/cubits/cart_cubit/cart_cubit.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/utils/orientation_utils.dart';
@@ -55,8 +57,8 @@ class _AppBottomNavigatorState extends State<AppBottomNavigator> {
                   initialLocation: index == widget.child.currentIndex,
                 );
               },
-              items: const [
-                BottomNavigationBarItem(
+              items: [
+                const BottomNavigationBarItem(
                   icon: BottomNavigationIcon(
                     color: AppColors.inActiveBottomNavigationColor,
                     name: AppImages.homeIcon,
@@ -68,17 +70,28 @@ class _AppBottomNavigatorState extends State<AppBottomNavigator> {
                   label: Strings.homeMenu,
                 ),
                 BottomNavigationBarItem(
-                  icon: BottomNavigationIcon(
-                    color: AppColors.inActiveBottomNavigationColor,
-                    name: AppImages.cartIcon,
+                  icon: BlocBuilder<CartCubit, CartState>(
+                    builder: (context, state) {
+                      return Badge(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        backgroundColor: AppColors.activeBottomNavigationColor,
+                        offset: const Offset(10, 0),
+                        isLabelVisible: state.cartItemCount != 0,
+                        label: Text(state.cartItemCount.toString()),
+                        child: const BottomNavigationIcon(
+                          color: AppColors.inActiveBottomNavigationColor,
+                          name: AppImages.cartIcon,
+                        ),
+                      );
+                    },
                   ),
-                  activeIcon: BottomNavigationIcon(
+                  activeIcon: const BottomNavigationIcon(
                     color: AppColors.activeBottomNavigationColor,
                     name: AppImages.cartIcon,
                   ),
                   label: Strings.cartMenu,
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: BottomNavigationIcon(
                     color: AppColors.inActiveBottomNavigationColor,
                     name: AppImages.ordersIcon,
@@ -89,7 +102,7 @@ class _AppBottomNavigatorState extends State<AppBottomNavigator> {
                   ),
                   label: Strings.ordersMenu,
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: BottomNavigationIcon(
                     color: AppColors.inActiveBottomNavigationColor,
                     name: AppImages.profileIcon,

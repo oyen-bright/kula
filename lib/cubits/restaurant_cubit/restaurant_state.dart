@@ -32,4 +32,14 @@ class RestaurantState with _$RestaurantState {
       loading: (state) => state.todaySpecials,
     );
   }
+
+  Restaurant? getRestaurantByID(String id) {
+    try {
+      return restaurants.firstWhere((e) {
+        return (e.id == id);
+      });
+    } catch (e) {
+      return null;
+    }
+  }
 }

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kula/cubits/address_cubit/address_cubit.dart';
 import 'package:kula/cubits/auth_cubit/auth_cubit.dart';
+import 'package:kula/cubits/cart_cubit/cart_cubit.dart';
 import 'package:kula/cubits/restaurant_cubit/restaurant_cubit.dart';
 import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/services/address_service.dart';
 import 'package:kula/services/auth_service.dart';
+import 'package:kula/services/cart_service.dart';
 import 'package:kula/services/location_service.dart';
 import 'package:kula/services/otp_service.dart';
 import 'package:kula/services/resturant_service.dart';
@@ -42,6 +44,9 @@ class AppCubitProvider extends StatelessWidget {
             create: (context) => RestaurantCubit(
                 context.read<RestaurantService>(),
                 context.read<LocationService>())),
+        BlocProvider<CartCubit>(
+            create: (context) => CartCubit(
+                context.read<LoadingCubit>(), context.read<CartService>())),
       ],
       child: child,
     );

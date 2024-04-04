@@ -115,4 +115,19 @@ class AppRepository {
       endpoint: Endpoint.todaySpecial,
     );
   }
+
+  //CART
+  static Future<Response> addToCart(Map<String, dynamic> payload) async {
+    return await HttpClient.postRequest(
+        endpoint: Endpoint.addToCart, payload: payload);
+  }
+
+  static Future<Response> getCart() async {
+    return await HttpClient.getRequest(endpoint: Endpoint.myCart);
+  }
+
+  static Future<Response> deleteCartItem(String id) async {
+    return await HttpClient.deleteRequest(
+        endpoint: "${Endpoint.deleteCart}/$id");
+  }
 }

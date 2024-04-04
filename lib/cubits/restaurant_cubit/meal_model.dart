@@ -8,7 +8,7 @@ class Meal {
   final double salePrice;
   final String vendorId;
   final String estimatedTime;
-  final int showExtras;
+  final bool showExtras;
   final String status;
   final dynamic selectedExtra;
   final Vendor? vendor;
@@ -45,7 +45,8 @@ class Meal {
           .map((x) => MealExtra.fromJson(x))
           .toList(),
       estimatedTime: json['estimated_time'],
-      showExtras: json['show_extras'],
+      showExtras: true,
+      // showExtras: (json['show_extras'] ?? 0) == 1 ? true : false,
       status: json['status'],
       selectedExtra: json['selected_extra'],
       vendor: json['vendor'] != null ? Vendor.fromJson(json['vendor']) : null,
@@ -63,7 +64,7 @@ class Meal {
         salePrice: 0.0,
         vendorId: "vendorId",
         estimatedTime: "estimatedTime",
-        showExtras: 0,
+        showExtras: true,
         status: "status",
         selectedExtra: "selectedExtra",
         vendor: Vendor.dummy);

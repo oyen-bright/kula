@@ -68,7 +68,7 @@ class General {
         parentNavigatorKey: AppRouter.parentNavigatorKey,
         path: AppRoutes.restaurant,
         redirect: (_, state) {
-          if (state.extra is Restaurant) {
+          if (state.extra is Restaurant || state.extra is ResMeal) {
             return null;
           }
           return AppRoutes.homeWelcome;
@@ -112,7 +112,8 @@ class General {
             pageBuilder: (context, state) {
               return AppRouter.setupPage(
                 child: RestaurantMeal(
-                  restaurant: state.extra as Restaurant,
+                  restaurant: (state.extra as ResMeal).restaurant,
+                  meal: (state.extra as ResMeal).meal,
                 ),
                 state: state,
               );
