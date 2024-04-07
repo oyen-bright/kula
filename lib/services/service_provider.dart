@@ -6,6 +6,7 @@ import 'package:kula/services/cart_service.dart';
 import 'package:kula/services/location_service.dart';
 import 'package:kula/services/otp_service.dart';
 import 'package:kula/services/resturant_service.dart';
+import 'package:kula/services/user_service.dart';
 
 class RepositoriesProvider extends StatelessWidget {
   final Widget child;
@@ -38,6 +39,10 @@ class RepositoriesProvider extends StatelessWidget {
         RepositoryProvider<CartService>(
           lazy: true,
           create: (context) => CartService(),
+        ),
+        RepositoryProvider<UserService>(
+          lazy: true,
+          create: (context) => UserService(),
         ),
       ],
       child: child,

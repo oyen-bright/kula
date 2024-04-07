@@ -165,8 +165,8 @@ class HttpClient {
     }
   }
 
-  /// Send a PATCH request.
-  Future<http.Response> patchRequest({
+  /// Send a PUT request.
+  Future<http.Response> putRequest({
     required String endpoint,
     required Map<String, dynamic> payload,
   }) async {
@@ -175,14 +175,34 @@ class HttpClient {
     throw UnimplementedError();
   }
 
-  /// Send a PUT request.
-  Future<http.Response> putRequest({
+  /// Send a PATCH request.
+  static Future<http.Response> patchRequest({
     required String endpoint,
+    Map<String, dynamic>? queryParameters,
     required Map<String, dynamic> payload,
+    Map<String, String> headers = const {},
   }) async {
-    // TODO: Implement PUT request logic.
-    // Return type should be http.Response.
-    throw UnimplementedError();
+    var uri = Uri.parse(endpoint).replace(queryParameters: queryParameters);
+    final Map<String, String> requestHeaders = {...defaultHeaders, ...headers};
+
+    log(payload.toString(), name: "HTTP Request Payload");
+
+    try {
+      final http.Response response = await client
+          .patch(uri, headers: requestHeaders, body: jsonEncode(payload))
+          .timeout(const Duration(seconds: timeOutDuration));
+
+      log("${response.statusCode} $endpoint", name: "HTTP PATCH REQUEST");
+
+      return _processResponse(response);
+    } on TimeoutException {
+      throw AppTimeoutException();
+    } on SocketException catch (_) {
+      throw NoInternetException();
+    } catch (e) {
+      log(e.toString(), name: "HTTP PATCH REQUEST ERROR");
+      rethrow;
+    }
   }
 
   /// Send a POST request.

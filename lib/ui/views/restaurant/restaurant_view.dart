@@ -60,7 +60,7 @@ class _RestaurantViewState extends State<RestaurantView> {
           child: Column(
             children: [
               RestaurantHeader(
-                restaurant: widget.restaurant,
+                restaurant: restaurant,
               ),
               Container(
                 height: 48.h,
@@ -148,8 +148,14 @@ class _RestaurantViewState extends State<RestaurantView> {
             return Padding(
               padding: EdgeInsets.only(bottom: 10.h),
               child: RestaurantMealCard(
-                onTap: () => AppRouter.router.push(AppRoutes.restaurantMeal,
-                    extra: (restaurant: restaurant, meal: meals[index])),
+                onTap: () {
+                  if (!restaurant.isOpen) {
+                    context.showSnackBar("Restaurant is current closed");
+                    return;
+                  }
+                  AppRouter.router.push(AppRoutes.restaurantMeal,
+                      extra: (restaurant: restaurant, meal: meals[index]));
+                },
                 meal: meals[index],
               ),
             );

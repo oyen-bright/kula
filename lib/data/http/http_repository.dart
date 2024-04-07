@@ -110,6 +110,12 @@ class AppRepository {
     );
   }
 
+  static Future<Response> getRestaurantReviews(String id) async {
+    return await HttpClient.getRequest(
+      endpoint: "${Endpoint.restaurantReview}/$id",
+    );
+  }
+
   static Future<Response> getTodaySpecial() async {
     return await HttpClient.getRequest(
       endpoint: Endpoint.todaySpecial,
@@ -122,12 +128,34 @@ class AppRepository {
         endpoint: Endpoint.addToCart, payload: payload);
   }
 
+  static Future<Response> updateCartQuantity(
+      Map<String, dynamic> payload, String cartID) async {
+    return await HttpClient.patchRequest(
+        endpoint: "${Endpoint.updateCart}/$cartID", payload: payload);
+  }
+
   static Future<Response> getCart() async {
     return await HttpClient.getRequest(endpoint: Endpoint.myCart);
+  }
+
+  static Future<Response> clearCart() async {
+    return await HttpClient.postRequest(
+        endpoint: Endpoint.clearCart, payload: {});
   }
 
   static Future<Response> deleteCartItem(String id) async {
     return await HttpClient.deleteRequest(
         endpoint: "${Endpoint.deleteCart}/$id");
+  }
+
+  //PROFILE
+  static Future<Response> sendFeedback(Map<String, dynamic> payload) async {
+    return await HttpClient.postRequest(
+        endpoint: Endpoint.feedback, payload: payload);
+  }
+
+  static Future<Response> updateProfile(Map<String, dynamic> payload) async {
+    return await HttpClient.postRequest(
+        endpoint: Endpoint.profileUpdate, payload: payload);
   }
 }

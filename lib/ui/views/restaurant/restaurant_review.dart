@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
 import 'package:kula/cubits/restaurant_cubit/restaurant_model.dart';
 import 'package:kula/extensions/widget.dart';
 import 'package:kula/router/app_router.dart';
+import 'package:kula/services/resturant_service.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
 import 'package:kula/ui/components/drop_down/star_filter_drop_down.dart';
@@ -14,9 +16,22 @@ import 'components/restaurant_info.dart';
 import 'components/restaurant_meal_list.dart';
 import 'components/restaurant_review_card.dart';
 
-class RestaurantReview extends StatelessWidget {
+class RestaurantReview extends StatefulWidget {
   final Restaurant restaurant;
   const RestaurantReview({super.key, required this.restaurant});
+
+  @override
+  State<RestaurantReview> createState() => _RestaurantReviewState();
+}
+
+class _RestaurantReviewState extends State<RestaurantReview> {
+  @override
+  void initState() {
+    super.initState();
+    context
+        .read<RestaurantService>()
+        .getRestaurantReviews(widget.restaurant.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +46,7 @@ class RestaurantReview extends StatelessWidget {
               child: Column(
                 children: [
                   RestaurantInfo(
-                    restaurant: restaurant,
+                    restaurant: widget.restaurant,
                   ),
                   SizedBox(
                     height: 16.h,
@@ -102,8 +117,9 @@ class RestaurantReview extends StatelessWidget {
                       child: AppElevatedButton(
                         elevation: 0,
                         title: "Write a review",
-                        onPressed: () => AppRouter.router
-                            .push(AppRoutes.restaurantReviewNew),
+                        onPressed: () => AppRouter.router.push(
+                            AppRoutes.restaurantReviewNew,
+                            extra: widget.restaurant),
                       ),
                     )
                   ],

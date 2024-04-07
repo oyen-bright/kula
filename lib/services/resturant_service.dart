@@ -12,6 +12,12 @@ abstract class _RestaurantService {
   Future<RestaurantServiceResponse<List<Meal>?>> getTodaysSpecial();
   Future<RestaurantServiceResponse<List<Meal>?>> getRestaurantMeal(
       {required Location location, required String id});
+  Future<RestaurantServiceResponse<List<Map>?>> getRestaurantReviews(String id);
+  Future<RestaurantServiceResponse<String?>> giveResturantReview(
+      {required String vendorId,
+      required String mealId,
+      required String review,
+      required String rating});
 }
 
 class RestaurantServiceResponse<T> {
@@ -29,8 +35,9 @@ class RestaurantService implements _RestaurantService {
       final response = await AppRepository.getRestaurants(location);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
-      final restaurants =
-          List.from(data['data']).map(((e) => Restaurant.fromJson(e))).toList();
+      final restaurants = List.from(data['data']['data'])
+          .map(((e) => Restaurant.fromJson(e)))
+          .toList();
 
       return RestaurantServiceResponse(error: null, data: restaurants);
     } catch (e) {
@@ -66,7 +73,7 @@ class RestaurantService implements _RestaurantService {
       final response = await AppRepository.getRestaurantMeals(location, id);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
-      final meals = List.from(data['data']['meals'])
+      final meals = List.from(data['data']['meals']['data'])
           .map(((e) => Meal.fromJson(e)))
           .toList();
 
@@ -75,5 +82,31 @@ class RestaurantService implements _RestaurantService {
       RestaurantService.logger(e.toString());
       return RestaurantServiceResponse(error: e.toString(), data: null);
     }
+  }
+
+  @override
+  Future<RestaurantServiceResponse<List<Map>?>> getRestaurantReviews(
+      String id) async {
+    try {
+      final response = await AppRepository.getRestaurantReviews(id);
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      print(data);
+
+      return RestaurantServiceResponse(error: null, data: []);
+    } catch (e) {
+      RestaurantService.logger(e.toString());
+      return RestaurantServiceResponse(error: e.toString(), data: null);
+    }
+  }
+
+  @override
+  Future<RestaurantServiceResponse<String?>> giveResturantReview(
+      {required String vendorId,
+      required String mealId,
+      required String review,
+      required String rating}) {
+    // TODO: implement giveResturantReview
+    throw UnimplementedError();
   }
 }

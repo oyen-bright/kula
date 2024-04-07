@@ -19,28 +19,38 @@ mixin _$CartState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String vendorID, List<CartItem> items) hasItem,
-    required TResult Function(String? vendorID, List<CartItem>? items) loading,
     required TResult Function(
-            String error, String? vendorID, List<CartItem>? items)
+            String vendorID, CartFees? fees, List<CartItem> items)
+        hasItem,
+    required TResult Function(
+            String? vendorID, List<CartItem>? items, CartFees? fees)
+        loading,
+    required TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)
         message,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult? Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult? Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult? Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult? Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult? Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
     required TResult orElse(),
   }) =>
@@ -128,10 +138,14 @@ class _$InitialImpl extends _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String vendorID, List<CartItem> items) hasItem,
-    required TResult Function(String? vendorID, List<CartItem>? items) loading,
     required TResult Function(
-            String error, String? vendorID, List<CartItem>? items)
+            String vendorID, CartFees? fees, List<CartItem> items)
+        hasItem,
+    required TResult Function(
+            String? vendorID, List<CartItem>? items, CartFees? fees)
+        loading,
+    required TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)
         message,
   }) {
     return initial();
@@ -141,9 +155,12 @@ class _$InitialImpl extends _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult? Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult? Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult? Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult? Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult? Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
   }) {
     return initial?.call();
@@ -153,9 +170,12 @@ class _$InitialImpl extends _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
     required TResult orElse(),
   }) {
@@ -214,7 +234,7 @@ abstract class _$$HasItemImplCopyWith<$Res> {
           _$HasItemImpl value, $Res Function(_$HasItemImpl) then) =
       __$$HasItemImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String vendorID, List<CartItem> items});
+  $Res call({String vendorID, CartFees? fees, List<CartItem> items});
 }
 
 /// @nodoc
@@ -229,6 +249,7 @@ class __$$HasItemImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? vendorID = null,
+    Object? fees = freezed,
     Object? items = null,
   }) {
     return _then(_$HasItemImpl(
@@ -236,6 +257,10 @@ class __$$HasItemImplCopyWithImpl<$Res>
           ? _value.vendorID
           : vendorID // ignore: cast_nullable_to_non_nullable
               as String,
+      fees: freezed == fees
+          ? _value.fees
+          : fees // ignore: cast_nullable_to_non_nullable
+              as CartFees?,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -248,12 +273,16 @@ class __$$HasItemImplCopyWithImpl<$Res>
 
 class _$HasItemImpl extends _HasItem {
   const _$HasItemImpl(
-      {required this.vendorID, required final List<CartItem> items})
+      {required this.vendorID,
+      required this.fees,
+      required final List<CartItem> items})
       : _items = items,
         super._();
 
   @override
   final String vendorID;
+  @override
+  final CartFees? fees;
   final List<CartItem> _items;
   @override
   List<CartItem> get items {
@@ -264,7 +293,7 @@ class _$HasItemImpl extends _HasItem {
 
   @override
   String toString() {
-    return 'CartState.hasItem(vendorID: $vendorID, items: $items)';
+    return 'CartState.hasItem(vendorID: $vendorID, fees: $fees, items: $items)';
   }
 
   @override
@@ -274,12 +303,16 @@ class _$HasItemImpl extends _HasItem {
             other is _$HasItemImpl &&
             (identical(other.vendorID, vendorID) ||
                 other.vendorID == vendorID) &&
+            const DeepCollectionEquality().equals(other.fees, fees) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, vendorID, const DeepCollectionEquality().hash(_items));
+      runtimeType,
+      vendorID,
+      const DeepCollectionEquality().hash(fees),
+      const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -291,39 +324,49 @@ class _$HasItemImpl extends _HasItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String vendorID, List<CartItem> items) hasItem,
-    required TResult Function(String? vendorID, List<CartItem>? items) loading,
     required TResult Function(
-            String error, String? vendorID, List<CartItem>? items)
+            String vendorID, CartFees? fees, List<CartItem> items)
+        hasItem,
+    required TResult Function(
+            String? vendorID, List<CartItem>? items, CartFees? fees)
+        loading,
+    required TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)
         message,
   }) {
-    return hasItem(vendorID, items);
+    return hasItem(vendorID, fees, items);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult? Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult? Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult? Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult? Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult? Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
   }) {
-    return hasItem?.call(vendorID, items);
+    return hasItem?.call(vendorID, fees, items);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
     required TResult orElse(),
   }) {
     if (hasItem != null) {
-      return hasItem(vendorID, items);
+      return hasItem(vendorID, fees, items);
     }
     return orElse();
   }
@@ -369,10 +412,12 @@ class _$HasItemImpl extends _HasItem {
 abstract class _HasItem extends CartState {
   const factory _HasItem(
       {required final String vendorID,
+      required final CartFees? fees,
       required final List<CartItem> items}) = _$HasItemImpl;
   const _HasItem._() : super._();
 
   String get vendorID;
+  CartFees? get fees;
   List<CartItem> get items;
   @JsonKey(ignore: true)
   _$$HasItemImplCopyWith<_$HasItemImpl> get copyWith =>
@@ -385,7 +430,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
           _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? vendorID, List<CartItem>? items});
+  $Res call({String? vendorID, List<CartItem>? items, CartFees? fees});
 }
 
 /// @nodoc
@@ -401,6 +446,7 @@ class __$$LoadingImplCopyWithImpl<$Res>
   $Res call({
     Object? vendorID = freezed,
     Object? items = freezed,
+    Object? fees = freezed,
   }) {
     return _then(_$LoadingImpl(
       vendorID: freezed == vendorID
@@ -411,6 +457,10 @@ class __$$LoadingImplCopyWithImpl<$Res>
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<CartItem>?,
+      fees: freezed == fees
+          ? _value.fees
+          : fees // ignore: cast_nullable_to_non_nullable
+              as CartFees?,
     ));
   }
 }
@@ -418,7 +468,7 @@ class __$$LoadingImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadingImpl extends _Loading {
-  const _$LoadingImpl({this.vendorID, final List<CartItem>? items})
+  const _$LoadingImpl({this.vendorID, final List<CartItem>? items, this.fees})
       : _items = items,
         super._();
 
@@ -435,8 +485,11 @@ class _$LoadingImpl extends _Loading {
   }
 
   @override
+  final CartFees? fees;
+
+  @override
   String toString() {
-    return 'CartState.loading(vendorID: $vendorID, items: $items)';
+    return 'CartState.loading(vendorID: $vendorID, items: $items, fees: $fees)';
   }
 
   @override
@@ -446,12 +499,16 @@ class _$LoadingImpl extends _Loading {
             other is _$LoadingImpl &&
             (identical(other.vendorID, vendorID) ||
                 other.vendorID == vendorID) &&
-            const DeepCollectionEquality().equals(other._items, _items));
+            const DeepCollectionEquality().equals(other._items, _items) &&
+            const DeepCollectionEquality().equals(other.fees, fees));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, vendorID, const DeepCollectionEquality().hash(_items));
+      runtimeType,
+      vendorID,
+      const DeepCollectionEquality().hash(_items),
+      const DeepCollectionEquality().hash(fees));
 
   @JsonKey(ignore: true)
   @override
@@ -463,39 +520,49 @@ class _$LoadingImpl extends _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String vendorID, List<CartItem> items) hasItem,
-    required TResult Function(String? vendorID, List<CartItem>? items) loading,
     required TResult Function(
-            String error, String? vendorID, List<CartItem>? items)
+            String vendorID, CartFees? fees, List<CartItem> items)
+        hasItem,
+    required TResult Function(
+            String? vendorID, List<CartItem>? items, CartFees? fees)
+        loading,
+    required TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)
         message,
   }) {
-    return loading(vendorID, items);
+    return loading(vendorID, items, fees);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult? Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult? Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult? Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult? Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult? Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
   }) {
-    return loading?.call(vendorID, items);
+    return loading?.call(vendorID, items, fees);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(vendorID, items);
+      return loading(vendorID, items, fees);
     }
     return orElse();
   }
@@ -540,11 +607,14 @@ class _$LoadingImpl extends _Loading {
 
 abstract class _Loading extends CartState {
   const factory _Loading(
-      {final String? vendorID, final List<CartItem>? items}) = _$LoadingImpl;
+      {final String? vendorID,
+      final List<CartItem>? items,
+      final CartFees? fees}) = _$LoadingImpl;
   const _Loading._() : super._();
 
   String? get vendorID;
   List<CartItem>? get items;
+  CartFees? get fees;
   @JsonKey(ignore: true)
   _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -556,7 +626,8 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String error, String? vendorID, List<CartItem>? items});
+  $Res call(
+      {String error, String? vendorID, CartFees? fees, List<CartItem>? items});
 }
 
 /// @nodoc
@@ -572,6 +643,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
   $Res call({
     Object? error = null,
     Object? vendorID = freezed,
+    Object? fees = freezed,
     Object? items = freezed,
   }) {
     return _then(_$ErrorImpl(
@@ -583,6 +655,10 @@ class __$$ErrorImplCopyWithImpl<$Res>
           ? _value.vendorID
           : vendorID // ignore: cast_nullable_to_non_nullable
               as String?,
+      fees: freezed == fees
+          ? _value.fees
+          : fees // ignore: cast_nullable_to_non_nullable
+              as CartFees?,
       items: freezed == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -597,6 +673,7 @@ class _$ErrorImpl extends _Error {
   const _$ErrorImpl(
       {required this.error,
       required this.vendorID,
+      required this.fees,
       required final List<CartItem>? items})
       : _items = items,
         super._();
@@ -605,6 +682,8 @@ class _$ErrorImpl extends _Error {
   final String error;
   @override
   final String? vendorID;
+  @override
+  final CartFees? fees;
   final List<CartItem>? _items;
   @override
   List<CartItem>? get items {
@@ -617,7 +696,7 @@ class _$ErrorImpl extends _Error {
 
   @override
   String toString() {
-    return 'CartState.message(error: $error, vendorID: $vendorID, items: $items)';
+    return 'CartState.message(error: $error, vendorID: $vendorID, fees: $fees, items: $items)';
   }
 
   @override
@@ -628,11 +707,16 @@ class _$ErrorImpl extends _Error {
             (identical(other.error, error) || other.error == error) &&
             (identical(other.vendorID, vendorID) ||
                 other.vendorID == vendorID) &&
+            const DeepCollectionEquality().equals(other.fees, fees) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error, vendorID,
+  int get hashCode => Object.hash(
+      runtimeType,
+      error,
+      vendorID,
+      const DeepCollectionEquality().hash(fees),
       const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
@@ -645,39 +729,49 @@ class _$ErrorImpl extends _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(String vendorID, List<CartItem> items) hasItem,
-    required TResult Function(String? vendorID, List<CartItem>? items) loading,
     required TResult Function(
-            String error, String? vendorID, List<CartItem>? items)
+            String vendorID, CartFees? fees, List<CartItem> items)
+        hasItem,
+    required TResult Function(
+            String? vendorID, List<CartItem>? items, CartFees? fees)
+        loading,
+    required TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)
         message,
   }) {
-    return message(error, vendorID, items);
+    return message(error, vendorID, fees, items);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult? Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult? Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult? Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult? Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult? Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
   }) {
-    return message?.call(error, vendorID, items);
+    return message?.call(error, vendorID, fees, items);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(String vendorID, List<CartItem> items)? hasItem,
-    TResult Function(String? vendorID, List<CartItem>? items)? loading,
-    TResult Function(String error, String? vendorID, List<CartItem>? items)?
+    TResult Function(String vendorID, CartFees? fees, List<CartItem> items)?
+        hasItem,
+    TResult Function(String? vendorID, List<CartItem>? items, CartFees? fees)?
+        loading,
+    TResult Function(String error, String? vendorID, CartFees? fees,
+            List<CartItem>? items)?
         message,
     required TResult orElse(),
   }) {
     if (message != null) {
-      return message(error, vendorID, items);
+      return message(error, vendorID, fees, items);
     }
     return orElse();
   }
@@ -724,11 +818,13 @@ abstract class _Error extends CartState {
   const factory _Error(
       {required final String error,
       required final String? vendorID,
+      required final CartFees? fees,
       required final List<CartItem>? items}) = _$ErrorImpl;
   const _Error._() : super._();
 
   String get error;
   String? get vendorID;
+  CartFees? get fees;
   List<CartItem>? get items;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>

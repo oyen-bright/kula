@@ -101,7 +101,9 @@ class General {
             ),
             pageBuilder: (context, state) {
               return AppRouter.setupPage(
-                child: const CreateReview(),
+                child: CreateReview(
+                  restaurant: state.extra as Restaurant,
+                ),
                 state: state,
               );
             },

@@ -26,9 +26,14 @@ class Endpoint {
 
   static final restaurant = "$_baseUrl/resturants";
   static final restaurantMeal = "$_baseUrl/resturant/meal";
+  static final restaurantReview = "$_baseUrl/reviews";
   static final todaySpecial = "$_baseUrl/promotion/today-special";
 
   static final addToCart = "$_baseUrl/cart/add-to-cart";
   static final myCart = "$_baseUrl/cart/my-cart";
+  static final clearCart = "$_baseUrl/cart/clear-cart";
   static final deleteCart = "$_baseUrl/cart/delete";
+  static final updateCart = "$_baseUrl/cart/update";
+  static final feedback = "$_baseUrl/feedback/create";
+  static final profileUpdate = "$_baseUrl/profile/update";
 }

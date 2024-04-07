@@ -125,4 +125,11 @@ class MealExtra {
       image: json['image'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'meal_id': mealId,
+      'quantity': totalQuantity,
+    };
+  }
 }

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class User {
   String id;
   String firstName;
@@ -23,6 +24,24 @@ class User {
       phoneNumber: json['phone_number'],
       dateOfBirth: DateTime.parse(json['date_of_birth']),
       email: json['email'],
+    );
+  }
+
+  User copyWith({
+    String? id,
+    String? firstName,
+    String? lastName,
+    String? phoneNumber,
+    DateTime? dateOfBirth,
+    String? email,
+  }) {
+    return User(
+      id: id ?? this.id,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      email: email ?? this.email,
     );
   }
 }

@@ -20,18 +20,49 @@ class CartCubit extends Cubit<CartState> {
     final response = await cartService.addToCart(item);
     loadingCubit.loaded();
     if (response.error != null) {
-      emit(CartState.message(
-          error: response.error ?? "",
-          vendorID: state.vendorID,
-          items: state.cartItems));
+      _emitMessageState(response.error);
 
       return;
     }
 
     emit(CartState.message(
+        fees: state.fees,
         error: response.data ?? "",
         vendorID: vendorID,
         items: state.cartItems));
+    getCart();
+  }
+
+  Future<void> inCrease(CartItem item) async {
+    emit(CartState.loading(vendorID: state.vendorID, items: state.cartItems));
+
+    final response = await cartService
+        .updateCartQuantity(item.copyWith(quantity: item.quantity + 1));
+
+    if (response.error != null) {
+      _emitMessageState(response.error);
+
+      return;
+    }
+
+    getCart();
+  }
+
+  Future<void> decrease(CartItem item) async {
+    if (!(item.quantity - 1 > 0)) {
+      return;
+    }
+    emit(CartState.loading(vendorID: state.vendorID, items: state.cartItems));
+
+    final response = await cartService
+        .updateCartQuantity(item.copyWith(quantity: item.quantity - 1));
+
+    if (response.error != null) {
+      _emitMessageState(response.error);
+
+      return;
+    }
+
     getCart();
   }
 
@@ -41,16 +72,30 @@ class CartCubit extends Cubit<CartState> {
     final response = await cartService.getCart();
 
     if (response.error != null) {
-      emit(CartState.message(
-          error: response.error ?? "",
-          vendorID: state.vendorID,
-          items: state.cartItems));
+      _emitMessageState(response.error);
 
       return;
     }
 
     emit(CartState.hasItem(
-        vendorID: state.vendorID ?? "", items: response.data ?? []));
+        vendorID: state.vendorID ?? "",
+        items: response.data?.item ?? [],
+        fees: response.data?.fess));
+  }
+
+  Future<void> clearCart() async {
+    emit(CartState.loading(vendorID: state.vendorID, items: state.cartItems));
+
+    final response = await cartService.clearCart();
+
+    if (response.error != null) {
+      _emitMessageState(response.error);
+
+      return;
+    }
+
+    emit(CartState.hasItem(
+        vendorID: state.vendorID ?? "", items: [], fees: null));
   }
 
   Future<void> deleteCartItem(String id) async {
@@ -60,14 +105,19 @@ class CartCubit extends Cubit<CartState> {
     loadingCubit.loaded();
 
     if (response.error != null) {
-      emit(CartState.message(
-          error: response.error ?? "",
-          vendorID: state.vendorID,
-          items: state.cartItems));
+      _emitMessageState(response.error);
 
       return;
     }
 
     getCart();
+  }
+
+  void _emitMessageState(String? error) {
+    emit(CartState.message(
+        error: error ?? "",
+        vendorID: state.vendorID,
+        items: state.cartItems,
+        fees: null));
   }
 }

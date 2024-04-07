@@ -13,13 +13,13 @@ import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
-import 'package:kula/ui/components/dialgos/order_sent_dialog.dart';
 import 'package:kula/ui/components/dialgos/payment_method_dialog.dart';
 import 'package:kula/ui/components/headers/app_bar.dart';
 import 'package:kula/ui/components/inputs/text_field_input.dart';
 import 'package:kula/ui/components/widgets/refresh_indicator.dart';
 import 'package:kula/ui/components/widgets/shimmer.dart';
 import 'package:kula/ui/views/cart/components/cart_item_card.dart';
+import 'package:kula/utils/amount_formatter.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -86,6 +86,8 @@ class _CartViewState extends State<CartView> {
         return Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: CartItemCard(
+            onDecrease: () => context.read<CartCubit>().decrease(items[index]),
+            onIncrease: () => context.read<CartCubit>().inCrease(items[index]),
             onDelete: () => context
                 .read<CartCubit>()
                 .deleteCartItem(items[index].cartItemId),
@@ -217,10 +219,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                       child: BlocConsumer<CartCubit, CartState>(
                         builder: (context, state) {
                           return state.maybeMap(
-                              hasItem: (_) => _buildOrderDetails(context),
-                              message: (_) => _buildOrderDetails(context),
+                              hasItem: (_) => _buildOrderDetails(
+                                  context, state.fees ?? CartFees.dummy),
+                              message: (_) => _buildOrderDetails(
+                                  context, state.fees ?? CartFees.dummy),
                               orElse: () => AppShimmer(
-                                  child: _buildOrderDetails(context)));
+                                  child: _buildOrderDetails(
+                                      context, CartFees.dummy)));
                         },
                         listener: (BuildContext context, CartState state) {
                           state.mapOrNull(
@@ -231,7 +236,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         }));
   }
 
-  Widget _buildOrderDetails(BuildContext context) {
+  Widget _buildOrderDetails(BuildContext context, CartFees cartFees) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -294,10 +299,13 @@ class _OrderDetailsState extends State<OrderDetails> {
           height: 8.h,
         ),
         ...[
-          ("Meal Price", "₦12,000.00", null),
-          ("Delivery Fee", "₦1,200.00", null),
-          ("Service fee", "₦240 (2%)", null),
-          ("Total", "₦13,440.00", null)
+          ("Meal Price", amountFormatter(cartFees.totalMealCost)),
+          ("Delivery Fee", amountFormatter(cartFees.deliveryFee)),
+          (
+            "Service fee",
+            "${amountFormatter(cartFees.serviceFee)} (2%)",
+          ),
+          ("Total", amountFormatter(cartFees.total))
         ].map((e) => Padding(
               padding: EdgeInsets.only(bottom: 16.h),
               child: Row(
@@ -336,9 +344,9 @@ class _OrderDetailsState extends State<OrderDetails> {
           height: 10.h,
         ),
         TextButton(
-            onPressed: () {
-              const OrderSentDialog().asDialog(context);
-            },
+            onPressed: context.read<CartCubit>().clearCart,
+            // const OrderSentDialog().asDialog(context);
+
             child: const Text(
               "Cancel order",
               style: TextStyle(color: AppColors.red),

@@ -145,10 +145,13 @@ class RestaurantHeader extends StatelessWidget {
                       ),
                       Expanded(
                         child: TextButton(
-                            onPressed: () {
-                              AppRouter.router.push(AppRoutes.restaurantReview,
-                                  extra: restaurant);
-                            },
+                            onPressed: restaurant.meals != null
+                                ? () {
+                                    AppRouter.router.push(
+                                        AppRoutes.restaurantReview,
+                                        extra: restaurant);
+                                  }
+                                : null,
                             child: const AutoSizeText(
                               "More Details >",
                               style: TextStyle(fontWeight: FontWeight.w600),

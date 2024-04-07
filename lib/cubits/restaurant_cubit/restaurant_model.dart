@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:kula/utils/day_of_week.dart';
+
 import 'meal_model.dart';
 
 class Restaurant {
@@ -15,6 +17,7 @@ class Restaurant {
   final Map<String, String> openingHours;
   final int status;
   final List<Meal>? meals;
+  final List<Map>? reviews;
 
   final String shortDescription;
   final double latitude;
@@ -27,6 +30,7 @@ class Restaurant {
   final double distanceInMeters;
 
   Restaurant({
+    this.reviews,
     required this.averageRating,
     required this.duration,
     required this.totalRatings,
@@ -49,6 +53,11 @@ class Restaurant {
     required this.longitude,
     required this.distanceInMeters,
   });
+
+  bool get isOpen {
+    return openingHours[getDayOfWeek(DateTime.now().weekday).toLowerCase()] !=
+        "closed";
+  }
 
   factory Restaurant.fromJson(Map<String, dynamic> json) {
     return Restaurant(

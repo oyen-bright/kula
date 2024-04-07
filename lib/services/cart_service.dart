@@ -6,7 +6,11 @@ import 'package:kula/cubits/cart_cubit/cart_model.dart';
 import 'package:kula/data/http/http_repository.dart';
 
 abstract class _CartService {
-  Future<CartServiceResponse<List<CartItem>?>> getCart();
+  Future<CartServiceResponse<({CartFees fess, List<CartItem> item})?>>
+      getCart();
+  Future<CartServiceResponse<String?>> clearCart();
+  Future<CartServiceResponse<CartItem?>> updateCartQuantity(CartItem item);
+
   Future<CartServiceResponse<String?>> addToCart(AddToCartItem cartItem);
   Future<CartServiceResponse<String?>> deleteCartItem(String id);
 }
@@ -37,7 +41,8 @@ class CartService implements _CartService {
   }
 
   @override
-  Future<CartServiceResponse<List<CartItem>?>> getCart() async {
+  Future<CartServiceResponse<({CartFees fess, List<CartItem> item})?>>
+      getCart() async {
     try {
       final response = await AppRepository.getCart();
       final data = jsonDecode(response.body) as Map;
@@ -45,7 +50,10 @@ class CartService implements _CartService {
       final cartItems =
           List.from(data['data']).map(((e) => CartItem.fromJson(e))).toList();
 
-      return CartServiceResponse(error: null, data: cartItems);
+      final cartFees = CartFees.fromJson(data['fees']);
+
+      return CartServiceResponse(
+          error: null, data: (fess: cartFees, item: cartItems));
     } catch (e) {
       CartService.logger(e.toString());
       return CartServiceResponse(error: e.toString(), data: null);
@@ -67,6 +75,38 @@ class CartService implements _CartService {
       final message = data['message'];
 
       return CartServiceResponse(error: null, data: message);
+    } catch (e) {
+      CartService.logger(e.toString());
+      return CartServiceResponse(error: e.toString(), data: null);
+    }
+  }
+
+  @override
+  Future<CartServiceResponse<String?>> clearCart() async {
+    try {
+      final response = await AppRepository.clearCart();
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      log(data.toString());
+
+      return CartServiceResponse(error: null, data: "");
+    } catch (e) {
+      CartService.logger(e.toString());
+      return CartServiceResponse(error: e.toString(), data: null);
+    }
+  }
+
+  @override
+  Future<CartServiceResponse<CartItem?>> updateCartQuantity(
+      CartItem item) async {
+    try {
+      final response = await AppRepository.updateCartQuantity(
+          item.toAddToCartMap(), item.cartItemId);
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      log(data.toString());
+
+      return CartServiceResponse(error: null, data: item);
     } catch (e) {
       CartService.logger(e.toString());
       return CartServiceResponse(error: e.toString(), data: null);
