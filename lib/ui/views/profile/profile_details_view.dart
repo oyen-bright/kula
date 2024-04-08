@@ -13,6 +13,7 @@ import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
 import 'package:kula/ui/components/headers/app_bar.dart';
 import 'package:kula/ui/components/inputs/text_field_input.dart';
+import 'package:kula/ui/components/wrappers/will_pop_wrapper.dart';
 import 'package:kula/ui/views/profile/components/delete_account_dialog.dart';
 
 class ProfileDetails extends StatefulWidget {
@@ -83,11 +84,7 @@ class _ProfileDetailsState extends State<ProfileDetails> with ValidationMixin {
   Widget build(BuildContext context) {
     final user = context.read<UserCubit>().state.user!;
 
-    return WillPopScope(
-      onWillPop: () => Future(() => context
-          .read<LoadingCubit>()
-          .state
-          .map(initial: (_) => true, loading: (_) => false)),
+    return WillPopWrapper(
       child: Scaffold(
         appBar: ViewAppBar(
           title: "Profile Details",

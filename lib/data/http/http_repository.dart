@@ -158,4 +158,10 @@ class AppRepository {
     return await HttpClient.postRequest(
         endpoint: Endpoint.profileUpdate, payload: payload);
   }
+
+  //REVIEW
+  static Future<Response> giveReview(Map<String, dynamic> payload) async {
+    return await HttpClient.postRequest(
+        endpoint: Endpoint.restaurantReviewCreate, payload: payload);
+  }
 }

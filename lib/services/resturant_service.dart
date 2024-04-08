@@ -13,7 +13,7 @@ abstract class _RestaurantService {
   Future<RestaurantServiceResponse<List<Meal>?>> getRestaurantMeal(
       {required Location location, required String id});
   Future<RestaurantServiceResponse<List<Map>?>> getRestaurantReviews(String id);
-  Future<RestaurantServiceResponse<String?>> giveResturantReview(
+  Future<RestaurantServiceResponse<String?>> giveRestaurantReview(
       {required String vendorId,
       required String mealId,
       required String review,
@@ -101,12 +101,26 @@ class RestaurantService implements _RestaurantService {
   }
 
   @override
-  Future<RestaurantServiceResponse<String?>> giveResturantReview(
+  Future<RestaurantServiceResponse<String?>> giveRestaurantReview(
       {required String vendorId,
       required String mealId,
       required String review,
-      required String rating}) {
-    // TODO: implement giveResturantReview
-    throw UnimplementedError();
+      required String rating}) async {
+    try {
+      final payload = {
+        "meal_id": mealId,
+        "vendor_id": vendorId,
+        "rating": rating,
+        "review": review
+      };
+      final response = await AppRepository.giveReview(payload);
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final message = data['message'];
+
+      return RestaurantServiceResponse(error: null, data: message);
+    } catch (e) {
+      RestaurantService.logger(e.toString());
+      return RestaurantServiceResponse(error: e.toString(), data: null);
+    }
   }
 }
