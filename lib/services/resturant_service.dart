@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:kula/cubits/restaurant_cubit/meal_model.dart';
 import 'package:kula/cubits/restaurant_cubit/restaurant_model.dart';
+import 'package:kula/cubits/restaurant_cubit/resturant_review_model.dart';
 import 'package:kula/data/http/http_repository.dart';
 import 'package:kula/utils/types.dart';
 
@@ -12,7 +13,8 @@ abstract class _RestaurantService {
   Future<RestaurantServiceResponse<List<Meal>?>> getTodaysSpecial();
   Future<RestaurantServiceResponse<List<Meal>?>> getRestaurantMeal(
       {required Location location, required String id});
-  Future<RestaurantServiceResponse<List<Map>?>> getRestaurantReviews(String id);
+  Future<RestaurantServiceResponse<List<RestaurantReviewM>?>>
+      getRestaurantReviews(String id);
   Future<RestaurantServiceResponse<String?>> giveRestaurantReview(
       {required String vendorId,
       required String mealId,
@@ -85,15 +87,17 @@ class RestaurantService implements _RestaurantService {
   }
 
   @override
-  Future<RestaurantServiceResponse<List<Map>?>> getRestaurantReviews(
-      String id) async {
+  Future<RestaurantServiceResponse<List<RestaurantReviewM>?>>
+      getRestaurantReviews(String id) async {
     try {
       final response = await AppRepository.getRestaurantReviews(id);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
-      print(data);
+      final reviews = (data['data']['data'] as List)
+          .map((e) => RestaurantReviewM.fromJson(Map.from(e)))
+          .toList();
 
-      return RestaurantServiceResponse(error: null, data: []);
+      return RestaurantServiceResponse(error: null, data: reviews);
     } catch (e) {
       RestaurantService.logger(e.toString());
       return RestaurantServiceResponse(error: e.toString(), data: null);

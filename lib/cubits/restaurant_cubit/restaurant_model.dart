@@ -59,6 +59,14 @@ class Restaurant {
         "closed";
   }
 
+  Meal? getMealById(String id) {
+    try {
+      return meals?.firstWhere((element) => element.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
+
   factory Restaurant.fromJson(Map<String, dynamic> json) {
     return Restaurant(
       id: json['id'],

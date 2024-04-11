@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
@@ -5,15 +6,21 @@ import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_colors.dart';
 
 class StarFilterDropdown extends StatefulWidget {
-  const StarFilterDropdown({super.key});
+  final void Function(int?) onChanged;
+
+  final int? selectedStars;
+
+  const StarFilterDropdown({
+    Key? key,
+    required this.onChanged,
+    this.selectedStars,
+  }) : super(key: key);
 
   @override
   StarFilterDropdownState createState() => StarFilterDropdownState();
 }
 
 class StarFilterDropdownState extends State<StarFilterDropdown> {
-  int? _selectedStars;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,12 +36,14 @@ class StarFilterDropdownState extends State<StarFilterDropdown> {
         elevation: 3,
         itemHeight: null,
         borderRadius: BorderRadius.circular(AppConstants.borderRadius.large),
-        value: _selectedStars,
-        onChanged: (int? newValue) {
-          setState(() {
-            _selectedStars = newValue;
-          });
-        },
+        value: widget.selectedStars,
+        onChanged: widget.onChanged,
+        // onChanged: (int? newValue) {
+        //   widget.onChanged(newValue);
+        //   setState(() {
+        //     _selectedStars = newValue;
+        //   });
+        // },
         items: List.generate(5, (index) {
           int stars = index + 1;
           return DropdownMenuItem<int>(
