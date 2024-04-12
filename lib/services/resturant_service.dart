@@ -7,13 +7,17 @@ import 'package:kula/cubits/restaurant_cubit/resturant_review_model.dart';
 import 'package:kula/data/http/http_repository.dart';
 import 'package:kula/utils/types.dart';
 
+typedef ReviewStat = ({int count, double average});
+
 abstract class _RestaurantService {
   Future<RestaurantServiceResponse<List<Restaurant>?>> getRestaurants(
       Location location);
   Future<RestaurantServiceResponse<List<Meal>?>> getTodaysSpecial();
   Future<RestaurantServiceResponse<List<Meal>?>> getRestaurantMeal(
       {required Location location, required String id});
-  Future<RestaurantServiceResponse<List<RestaurantReviewM>?>>
+  Future<
+          RestaurantServiceResponse<
+              ({ReviewStat stat, List<RestaurantReviewM> reviews})?>>
       getRestaurantReviews(String id);
   Future<RestaurantServiceResponse<String?>> giveRestaurantReview(
       {required String vendorId,
@@ -87,7 +91,9 @@ class RestaurantService implements _RestaurantService {
   }
 
   @override
-  Future<RestaurantServiceResponse<List<RestaurantReviewM>?>>
+  Future<
+          RestaurantServiceResponse<
+              ({ReviewStat stat, List<RestaurantReviewM> reviews})?>>
       getRestaurantReviews(String id) async {
     try {
       final response = await AppRepository.getRestaurantReviews(id);
@@ -96,8 +102,14 @@ class RestaurantService implements _RestaurantService {
       final reviews = (data['data']['data'] as List)
           .map((e) => RestaurantReviewM.fromJson(Map.from(e)))
           .toList();
+      final reviewStat = (
+        count: int.tryParse(data['stats']['review_count'].toString()) ?? 0,
+        average: double.tryParse(data['stats']['avg_rating'].toString()) ?? 0.0
+      );
 
-      return RestaurantServiceResponse(error: null, data: reviews);
+      final returnData = (reviews: reviews, stat: reviewStat);
+
+      return RestaurantServiceResponse(error: null, data: returnData);
     } catch (e) {
       RestaurantService.logger(e.toString());
       return RestaurantServiceResponse(error: e.toString(), data: null);

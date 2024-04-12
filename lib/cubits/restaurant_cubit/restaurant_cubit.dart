@@ -85,4 +85,15 @@ class RestaurantCubit extends Cubit<RestaurantState> {
     emit(RestaurantState.loaded(
         restaurants: newRestaurants, todaySpecials: state.todaySpecials));
   }
+
+  void updateRestaurant(Restaurant restaurant) {
+    final updatedRestaurant = state.restaurants.map((element) {
+      if (element.id == restaurant.id) {
+        return restaurant;
+      }
+      return element;
+    }).toList();
+    emit(RestaurantState.loaded(
+        restaurants: updatedRestaurant, todaySpecials: state.todaySpecials));
+  }
 }

@@ -43,7 +43,7 @@ class RestaurantReviewCard extends StatelessWidget {
             Row(children: [
               Flexible(
                 child: Text(
-                  review.userId,
+                  review.customerName,
                   style: context.textTheme.titleMedium?.copyWith(
                       color: AppColors.darkGrey,
                       fontWeight: FontWeight.w700,

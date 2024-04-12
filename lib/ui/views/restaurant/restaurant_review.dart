@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/restaurant_cubit/restaurant_cubit.dart';
 import 'package:kula/cubits/restaurant_cubit/restaurant_model.dart';
 import 'package:kula/cubits/restaurant_cubit/resturant_review_model.dart';
 import 'package:kula/extensions/context.dart';
@@ -53,7 +54,11 @@ class _RestaurantReviewState extends State<RestaurantReview> {
         return;
       }
 
-      reviews = res.data;
+      reviews = res.data?.reviews ?? [];
+      context.read<RestaurantCubit>().updateRestaurant(widget.restaurant
+          .copyWith(
+              averageRating: res.data?.stat.average,
+              totalRatings: res.data?.stat.count));
       filterReview();
     });
   }

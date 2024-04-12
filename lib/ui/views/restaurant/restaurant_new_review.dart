@@ -64,9 +64,11 @@ class _CreateReviewState extends State<CreateReview> with ValidationMixin {
         return;
       }
 
-      texController.clear();
-      _selectedValue = null;
-      ratting = null;
+      setState(() {
+        texController.clear();
+        _selectedValue = null;
+        ratting = null;
+      });
       context.showSnackBar(res.data);
     });
   }

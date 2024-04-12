@@ -4,10 +4,12 @@ class RestaurantReviewM {
   final String mealId;
   final String userId;
   final int rating;
+  final String customerName;
   final String review;
 
   RestaurantReviewM({
     required this.id,
+    required this.customerName,
     required this.vendorId,
     required this.mealId,
     required this.userId,
@@ -18,6 +20,7 @@ class RestaurantReviewM {
   factory RestaurantReviewM.fromJson(Map<String, dynamic> json) {
     return RestaurantReviewM(
       id: json['id'],
+      customerName: json["customer_name"],
       vendorId: json['vendor_id'],
       mealId: json['meal_id'],
       userId: json['user_id'],
@@ -29,6 +32,7 @@ class RestaurantReviewM {
   static RestaurantReviewM get dummy {
     return RestaurantReviewM(
         id: "id",
+        customerName: "customerName",
         vendorId: 'vendorId',
         mealId: 'mealId',
         userId: 'userId',
