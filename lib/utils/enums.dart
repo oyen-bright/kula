@@ -24,6 +24,16 @@ enum HapticFeedbackType {
   vibrate,
 }
 
+enum PaymentMethod {
+  card("cad"),
+  transfer("transfer"),
+  cashOnDelivery("cod"),
+  storeCredit("store_credit");
+
+  const PaymentMethod(this.value);
+  final String value;
+}
+
 enum BarType { error, success, loading, action }
 
 enum WrapperBackgroundImage { one, two }

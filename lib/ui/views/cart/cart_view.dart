@@ -5,11 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/address_cubit/address_cubit.dart';
 import 'package:kula/cubits/cart_cubit/cart_cubit.dart';
 import 'package:kula/cubits/cart_cubit/cart_model.dart';
+import 'package:kula/cubits/loading_cubit/loading_cubit.dart';
+import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
 import 'package:kula/router/app_router.dart';
+import 'package:kula/services/payment_service.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
@@ -20,6 +24,7 @@ import 'package:kula/ui/components/widgets/refresh_indicator.dart';
 import 'package:kula/ui/components/widgets/shimmer.dart';
 import 'package:kula/ui/views/cart/components/cart_item_card.dart';
 import 'package:kula/utils/amount_formatter.dart';
+import 'package:kula/utils/enums.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -237,6 +242,59 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 
   Widget _buildOrderDetails(BuildContext context, CartFees cartFees) {
+    onCompeteOrder() async {
+      final onPayment =
+          await (const PaymentMethodDialog().asDialog<PaymentMethod>(context));
+      if (onPayment == null || !context.mounted || !mounted) {
+        return;
+      }
+
+      // ignore: use_build_context_synchronously
+      context.read<LoadingCubit>().loading(message: "Payment");
+
+      // ignore: use_build_context_synchronously
+      final paymentResponse = await context.read<PaymentService>().makePayment(
+          context,
+          cartFees.total.toString(),
+          // ignore: use_build_context_synchronously
+          context.read<UserCubit>().state.user!);
+
+      if (!mounted || !context.mounted) {
+        return;
+      }
+
+      context.read<LoadingCubit>().loaded();
+
+      if (paymentResponse.error != null) {
+        context.showSnackBar(paymentResponse.error);
+        return;
+      }
+
+      if (paymentResponse.data == null) {
+        return;
+      }
+
+      context.read<LoadingCubit>().loading(message: "Verifying Payment");
+
+      context
+          .read<PaymentService>()
+          .verifyTransaction(paymentResponse.data!)
+          .then((res) {
+        context.read<LoadingCubit>().loaded();
+        if (!mounted || !context.mounted) {
+          return;
+        }
+
+        if (res.error != null) {
+          context.showSnackBar(res.error);
+          return;
+        }
+
+        context.showSnackBar(res.data);
+        return;
+      });
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -267,14 +325,28 @@ class _OrderDetailsState extends State<OrderDetails> {
           height: 16.h,
         ),
         AppTextField(
-          backgroundColor: AppColors.disabledColor,
+          // backgroundColor: AppColors.disabledColor,
           fieldTitle: "Address",
+          readOnly: true,
+          controller: TextEditingController(
+              text: context
+                      .read<AddressCubit>()
+                      .state
+                      .selectedAddress
+                      ?.getFormattedAddress ??
+                  "Not Available"),
+          onTap: () => AppRouter.router.push(AppRoutes.changeLocation),
           suffixIcon: Image.asset(
             AppImages.editIcon,
             scale: 2,
             color: context.colorScheme.primary,
           ),
-          hintText: "Plot 2393 Kabi drive, benue",
+          hintText: context
+                  .read<AddressCubit>()
+                  .state
+                  .selectedAddress
+                  ?.getFormattedAddress ??
+              "Not Available",
         ),
         SizedBox(
           height: 16.h,
@@ -282,10 +354,23 @@ class _OrderDetailsState extends State<OrderDetails> {
         AppTextField(
           readOnly: true,
           onTap: () {
-            AppRouter.router.push(AppRoutes.cartDeliveryInstruction);
+            // AppRouter.router.push(AppRoutes.cartDeliveryInstruction);
           },
+          controller: TextEditingController(
+            text: context
+                    .read<AddressCubit>()
+                    .state
+                    .selectedAddress
+                    ?.additionalInfo ??
+                "Not Available",
+          ),
           fieldTitle: "Extra delivery instructions",
-          hintText: "Once you get to the house, meet the gateman...",
+          hintText: context
+                  .read<AddressCubit>()
+                  .state
+                  .selectedAddress
+                  ?.additionalInfo ??
+              "Not Available",
         ),
         SizedBox(
           height: 24.h,
@@ -336,9 +421,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         AppElevatedButton(
           elevation: 0,
           title: "Complete order",
-          onPressed: () {
-            const PaymentMethodDialog().asDialog(context);
-          },
+          onPressed: onCompeteOrder,
         ),
         SizedBox(
           height: 10.h,

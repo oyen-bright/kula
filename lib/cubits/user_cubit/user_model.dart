@@ -16,6 +16,10 @@ class User {
     required this.email,
   });
 
+  String get name {
+    return "$firstName $lastName";
+  }
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],

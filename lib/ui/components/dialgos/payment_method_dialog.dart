@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
+import 'package:kula/utils/enums.dart';
 
 class PaymentMethodDialog extends StatelessWidget {
   const PaymentMethodDialog({
@@ -72,130 +74,140 @@ class PaymentMethodDialog extends StatelessWidget {
                       SizedBox(
                         height: 24.h,
                       ),
-                      Container(
-                        height: 136.h,
-                        width: 322.w,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 16.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              AppConstants.borderRadius.medium),
-                          border: Border.all(
-                              color: AppColors.cardStrokeColor, width: 2),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Pay with transfer",
-                              style: context.textTheme.bodyMedium
-                                  ?.copyWith(color: AppColors.slateGrey),
-                            ),
-                            Text(
-                              "UNITED BANK FOR AFRICA",
-                              style: context.textTheme.bodyMedium?.copyWith(
-                                color: Colors.black,
+                      InkWell(
+                        onTap: () => context.pop(PaymentMethod.transfer),
+                        child: Container(
+                          height: 136.h,
+                          width: 322.w,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 16.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                AppConstants.borderRadius.medium),
+                            border: Border.all(
+                                color: AppColors.cardStrokeColor, width: 2),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Pay with transfer",
+                                style: context.textTheme.bodyMedium
+                                    ?.copyWith(color: AppColors.slateGrey),
                               ),
-                            ),
-                            Text(
-                              "KULAHQ",
-                              style: context.textTheme.bodyMedium
-                                  ?.copyWith(color: Colors.black),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "4938375892",
-                                  style: context.textTheme.bodyMedium
-                                      ?.copyWith(color: AppColors.primaryColor),
+                              Text(
+                                "UNITED BANK FOR AFRICA",
+                                style: context.textTheme.bodyMedium?.copyWith(
+                                  color: Colors.black,
                                 ),
-                                SizedBox(
-                                  width: 8.w,
-                                ),
-                                Image.asset(
-                                  AppImages.copyIconSmall,
-                                  scale: 2,
-                                )
-                              ],
-                            )
-                          ],
+                              ),
+                              Text(
+                                "KULAHQ",
+                                style: context.textTheme.bodyMedium
+                                    ?.copyWith(color: Colors.black),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "4938375892",
+                                    style: context.textTheme.bodyMedium
+                                        ?.copyWith(
+                                            color: AppColors.primaryColor),
+                                  ),
+                                  SizedBox(
+                                    width: 8.w,
+                                  ),
+                                  Image.asset(
+                                    AppImages.copyIconSmall,
+                                    scale: 2,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: 8.h,
                       ),
-                      Container(
-                        height: 72.h,
-                        width: 322.w,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 20.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              AppConstants.borderRadius.medium),
-                          border: Border.all(
-                              color: AppColors.cardStrokeColor, width: 2),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Pay with card",
-                              style: context.textTheme.bodyLarge?.copyWith(
-                                color: AppColors.slateGrey,
-                              ),
-                            ),
-                            Image.asset(
-                              AppImages.creditCardIcon,
-                              fit: BoxFit.cover,
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8.h,
-                      ),
-                      Container(
-                        height: 72.h,
-                        width: 322.w,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 20.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              AppConstants.borderRadius.medium),
-                          border: Border.all(
-                              color: AppColors.cardStrokeColor, width: 2),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              "Pay from app",
-                              style: context.textTheme.bodyLarge?.copyWith(
-                                color: AppColors.slateGrey,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Container(
-                              color: AppColors.greenLight,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 8.w, vertical: 4.h),
-                              child: Text(
-                                "5% discount",
+                      InkWell(
+                        onTap: () => context.pop(PaymentMethod.card),
+                        child: Container(
+                          height: 72.h,
+                          width: 322.w,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 20.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                AppConstants.borderRadius.medium),
+                            border: Border.all(
+                                color: AppColors.cardStrokeColor, width: 2),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Pay with card",
                                 style: context.textTheme.bodyLarge?.copyWith(
-                                  color: AppColors.green,
+                                  color: AppColors.slateGrey,
                                 ),
                               ),
-                            ),
-                            const Spacer(),
-                            Image.asset(
-                              AppImages.appIconSmall,
-                              fit: BoxFit.cover,
-                            )
-                          ],
+                              Image.asset(
+                                AppImages.creditCardIcon,
+                                fit: BoxFit.cover,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      InkWell(
+                        onTap: () => context.pop(PaymentMethod.storeCredit),
+                        child: Container(
+                          height: 72.h,
+                          width: 322.w,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 20.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                AppConstants.borderRadius.medium),
+                            border: Border.all(
+                                color: AppColors.cardStrokeColor, width: 2),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                "Pay from app",
+                                style: context.textTheme.bodyLarge?.copyWith(
+                                  color: AppColors.slateGrey,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8.w,
+                              ),
+                              Container(
+                                color: AppColors.greenLight,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w, vertical: 4.h),
+                                child: Text(
+                                  "5% discount",
+                                  style: context.textTheme.bodyLarge?.copyWith(
+                                    color: AppColors.green,
+                                  ),
+                                ),
+                              ),
+                              const Spacer(),
+                              Image.asset(
+                                AppImages.appIconSmall,
+                                fit: BoxFit.cover,
+                              )
+                            ],
+                          ),
                         ),
                       )
                     ],

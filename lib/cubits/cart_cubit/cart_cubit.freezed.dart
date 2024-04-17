@@ -303,16 +303,13 @@ class _$HasItemImpl extends _HasItem {
             other is _$HasItemImpl &&
             (identical(other.vendorID, vendorID) ||
                 other.vendorID == vendorID) &&
-            const DeepCollectionEquality().equals(other.fees, fees) &&
+            (identical(other.fees, fees) || other.fees == fees) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      vendorID,
-      const DeepCollectionEquality().hash(fees),
-      const DeepCollectionEquality().hash(_items));
+      runtimeType, vendorID, fees, const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -500,15 +497,12 @@ class _$LoadingImpl extends _Loading {
             (identical(other.vendorID, vendorID) ||
                 other.vendorID == vendorID) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
-            const DeepCollectionEquality().equals(other.fees, fees));
+            (identical(other.fees, fees) || other.fees == fees));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      vendorID,
-      const DeepCollectionEquality().hash(_items),
-      const DeepCollectionEquality().hash(fees));
+      runtimeType, vendorID, const DeepCollectionEquality().hash(_items), fees);
 
   @JsonKey(ignore: true)
   @override
@@ -707,16 +701,12 @@ class _$ErrorImpl extends _Error {
             (identical(other.error, error) || other.error == error) &&
             (identical(other.vendorID, vendorID) ||
                 other.vendorID == vendorID) &&
-            const DeepCollectionEquality().equals(other.fees, fees) &&
+            (identical(other.fees, fees) || other.fees == fees) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      error,
-      vendorID,
-      const DeepCollectionEquality().hash(fees),
+  int get hashCode => Object.hash(runtimeType, error, vendorID, fees,
       const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)

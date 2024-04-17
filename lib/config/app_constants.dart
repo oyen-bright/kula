@@ -17,6 +17,17 @@ class AppConstants {
 
   static const String appErrorMessage = 'Something went wrong please try again';
 
+  String publicKey = 'FLWPUBK_TEST-11cb0e0963f9e2efad1e071a37760e7b-X';
+  String secretKey = 'FLWSECK_TEST-eeb06bd6d8ebf1ab96e2b521a46d447d-X';
+  String encryptionKey = 'FLWSECK_TEST4011af440443';
+
+  static const flutterWaveKeys = (
+    publicKey: 'FLWPUBK_TEST-11cb0e0963f9e2efad1e071a37760e7b-X',
+    secretKey: 'FLWSECK_TEST-eeb06bd6d8ebf1ab96e2b521a46d447d-X',
+    encryptionKey: 'FLWSECK_TEST4011af440443',
+    currency: ["NGN"]
+  );
+
   // static const double borderRadiusLarge = 16.0;
   // static const double borderRadius = 10.0;
   // static const double borderRadiusSmall = 5.0;

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:kula/cubits/cart_cubit/add_to_cart_model.dart';
 import 'package:kula/cubits/cart_cubit/cart_model.dart';
 import 'package:kula/data/http/http_repository.dart';
+import 'package:kula/utils/enums.dart';
 
 abstract class _CartService {
   Future<CartServiceResponse<({CartFees fess, List<CartItem> item})?>>
@@ -13,6 +14,8 @@ abstract class _CartService {
 
   Future<CartServiceResponse<String?>> addToCart(AddToCartItem cartItem);
   Future<CartServiceResponse<String?>> deleteCartItem(String id);
+  Future<CartServiceResponse<String?>> createOrder(
+      PaymentMethod paymentMethod, String amount);
 }
 
 class CartServiceResponse<T> {
@@ -107,6 +110,23 @@ class CartService implements _CartService {
       log(data.toString());
 
       return CartServiceResponse(error: null, data: item);
+    } catch (e) {
+      CartService.logger(e.toString());
+      return CartServiceResponse(error: e.toString(), data: null);
+    }
+  }
+
+  @override
+  Future<CartServiceResponse<String?>> createOrder(
+      PaymentMethod paymentMethod, String amount) async {
+    try {
+      final response = await AppRepository.createOrder(
+          {"payment_method": "card", "payment_amount": 1000});
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      final message = data['message'];
+
+      return CartServiceResponse(error: null, data: message);
     } catch (e) {
       CartService.logger(e.toString());
       return CartServiceResponse(error: e.toString(), data: null);

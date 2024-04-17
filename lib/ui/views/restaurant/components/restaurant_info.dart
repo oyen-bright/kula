@@ -42,7 +42,8 @@ class RestaurantInfo extends StatelessWidget {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: '${restaurant.averageRating} ',
+                            text:
+                                '${restaurant.averageRating.toStringAsFixed(2)} ',
                           ),
                           TextSpan(
                             text: '(${restaurant.totalRatings})',

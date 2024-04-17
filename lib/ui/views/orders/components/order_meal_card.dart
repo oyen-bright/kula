@@ -24,7 +24,7 @@ class OrderCard extends StatelessWidget {
         maxWidth: 353,
       ),
       decoration: BoxDecoration(
-          color: AppColors.cardColor,
+          // color: AppColors.cardColor,
           border: Border.all(color: AppColors.cardStrokeColor, width: 2),
           borderRadius:
               BorderRadius.circular(AppConstants.borderRadius.medium)),

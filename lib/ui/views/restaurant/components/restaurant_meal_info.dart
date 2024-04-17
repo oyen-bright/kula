@@ -30,7 +30,7 @@ class RestaurantMealCard extends StatelessWidget {
           maxWidth: 363,
         ),
         decoration: BoxDecoration(
-            color: AppColors.cardColor,
+            // color: AppColors.cardColor,
             border: Border.all(color: AppColors.cardStrokeColor, width: 2),
             borderRadius:
                 BorderRadius.circular(AppConstants.borderRadius.medium)),

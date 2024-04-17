@@ -28,4 +28,16 @@ class AddressState with _$AddressState {
       loading: (state) => state.addresses,
     );
   }
+
+  Address? get selectedAddress {
+    return map(
+      loaded: (state) =>
+          state.addresses.where((element) => element.isDefault).firstOrNull,
+      error: (state) =>
+          state.addresses.where((element) => element.isDefault).firstOrNull,
+      initial: (_) => null,
+      loading: (state) =>
+          state.addresses.where((element) => element.isDefault).firstOrNull,
+    );
+  }
 }

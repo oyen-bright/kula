@@ -148,6 +148,11 @@ class AppRepository {
         endpoint: "${Endpoint.deleteCart}/$id");
   }
 
+  static Future<Response> createOrder(Map<String, dynamic> payload) async {
+    return await HttpClient.postRequest(
+        payload: payload, endpoint: Endpoint.createOrder);
+  }
+
   //PROFILE
   static Future<Response> sendFeedback(Map<String, dynamic> payload) async {
     return await HttpClient.postRequest(
@@ -163,5 +168,27 @@ class AppRepository {
   static Future<Response> giveReview(Map<String, dynamic> payload) async {
     return await HttpClient.postRequest(
         endpoint: Endpoint.restaurantReviewCreate, payload: payload);
+  }
+
+  //PAYMENT
+
+  static Future<Response> verifyTransaction(String transactionId) async {
+    return await HttpClient.getRequest(
+      endpoint: "${Endpoint.verifyTransaction}/$transactionId",
+    );
+  }
+
+  //ORDER
+
+  static Future<Response> getOrders() async {
+    return await HttpClient.getRequest(
+      endpoint: Endpoint.getOrder,
+    );
+  }
+
+  static Future<Response> getOrderDetails(String orderNo) async {
+    return await HttpClient.getRequest(
+      endpoint: "${Endpoint.getOrderDetails}/$orderNo",
+    );
   }
 }

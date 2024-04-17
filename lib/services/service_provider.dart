@@ -4,7 +4,9 @@ import 'package:kula/services/address_service.dart';
 import 'package:kula/services/auth_service.dart';
 import 'package:kula/services/cart_service.dart';
 import 'package:kula/services/location_service.dart';
+import 'package:kula/services/order_service.dart';
 import 'package:kula/services/otp_service.dart';
+import 'package:kula/services/payment_service.dart';
 import 'package:kula/services/resturant_service.dart';
 import 'package:kula/services/user_service.dart';
 
@@ -43,6 +45,14 @@ class RepositoriesProvider extends StatelessWidget {
         RepositoryProvider<UserService>(
           lazy: true,
           create: (context) => UserService(),
+        ),
+        RepositoryProvider<PaymentService>(
+          lazy: true,
+          create: (context) => PaymentService(),
+        ),
+        RepositoryProvider<OrderService>(
+          lazy: true,
+          create: (context) => OrderService(),
         ),
       ],
       child: child,
