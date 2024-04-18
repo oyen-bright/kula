@@ -61,7 +61,7 @@ class _ProfileDetailsState extends State<ProfileDetails> with ValidationMixin {
         context.showSnackBar(res.error);
         return;
       }
-      context.read<UserCubit>().emitUserDetails(user.copyWith(
+      context.read<UserCubit>().updateUserDetails(user.copyWith(
           firstName: firstNameController.text,
           lastName: lastNameController.text));
       context.showSnackBar(res.data);

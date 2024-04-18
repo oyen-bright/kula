@@ -3,11 +3,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:kula/config/app_environment.dart';
 import 'package:kula/cubits/address_cubit/address_cubit.dart';
+import 'package:kula/cubits/address_cubit/address_model.dart';
 import 'package:kula/cubits/loading_cubit/loading_cubit.dart';
 import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/cubits/user_cubit/user_model.dart';
+import 'package:kula/cubits/user_cubit/wallet_model.dart';
+import 'package:kula/services/address_service.dart';
 import 'package:kula/services/auth_service.dart';
 import 'package:kula/services/otp_service.dart';
+import 'package:kula/services/user_service.dart';
 import 'package:kula/ui/views/authentication/sign_up/models/registration_input.dart';
 import 'package:kula/utils/types.dart';
 
@@ -20,9 +24,13 @@ class AuthCubit extends Cubit<AuthState> {
   final AddressCubit addressCubit;
   final OTPService otpService;
   final LoadingCubit loadingCubit;
-  AuthCubit(this.authService, this.otpService, this.loadingCubit,
-      this.userCubit, this.addressCubit)
-      : super(const AuthState.unauthenticated());
+  AuthCubit(
+    this.authService,
+    this.otpService,
+    this.loadingCubit,
+    this.userCubit,
+    this.addressCubit,
+  ) : super(const AuthState.unauthenticated());
 
   Future<void> loginWithEmailAndPassword(
       {required String email, required String password}) async {
@@ -76,16 +84,29 @@ class AuthCubit extends Cubit<AuthState> {
 
   void _emitAuthenticatedState(
       User user, Token token, AddressCubit addressCubit) async {
-    final getAddressResponse = await addressCubit.addressService.getAddress();
+    final responses = await Future.wait([
+      addressCubit.addressService.getAddress(),
+      userCubit.userService.getWallet()
+    ]);
 
-    if (getAddressResponse.error != null) {
-      emit(AuthState.error(errorMessage: getAddressResponse.error ?? ""));
+    final addressResponse =
+        responses[0] as AddressServiceResponse<List<Address>?>;
+
+    final walletResponse = responses[1] as UserServiceResponse<WalletData?>;
+
+    if (addressResponse.error != null) {
+      emit(AuthState.error(errorMessage: addressResponse.error ?? ""));
       return;
     }
 
+    if (walletResponse.error != null) {
+      emit(AuthState.error(errorMessage: walletResponse.error ?? ""));
+      return;
+    }
     addressCubit
-        .emit(AddressState.loaded(addresses: getAddressResponse.data ?? []));
+        .emit(AddressState.loaded(addresses: addressResponse.data ?? []));
+    userCubit.emitUserDetails(user, walletResponse.data!);
     emit(AuthState.authenticated(userId: user.id, token: token));
-    userCubit.emitUserDetails(user);
+    return;
   }
 }

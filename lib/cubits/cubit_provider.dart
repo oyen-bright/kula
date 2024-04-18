@@ -13,6 +13,7 @@ import 'package:kula/services/location_service.dart';
 import 'package:kula/services/order_service.dart';
 import 'package:kula/services/otp_service.dart';
 import 'package:kula/services/resturant_service.dart';
+import 'package:kula/services/user_service.dart';
 
 import 'loading_cubit/loading_cubit.dart';
 
@@ -32,7 +33,7 @@ class AppCubitProvider extends StatelessWidget {
               context.read<AddressService>(), context.read<LoadingCubit>()),
         ),
         BlocProvider<UserCubit>(
-          create: (context) => UserCubit(),
+          create: (context) => UserCubit(context.read<UserService>()),
         ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(

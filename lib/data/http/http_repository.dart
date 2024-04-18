@@ -164,6 +164,12 @@ class AppRepository {
         endpoint: Endpoint.profileUpdate, payload: payload);
   }
 
+  static Future<Response> getWallet() async {
+    return await HttpClient.getRequest(
+      endpoint: Endpoint.wallet,
+    );
+  }
+
   //REVIEW
   static Future<Response> giveReview(Map<String, dynamic> payload) async {
     return await HttpClient.postRequest(

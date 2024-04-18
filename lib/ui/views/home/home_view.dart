@@ -9,6 +9,7 @@ import 'package:kula/extensions/widget.dart';
 import 'package:kula/mixins/location.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/services/location_service.dart';
+import 'package:kula/services/user_service.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/ui/components/widgets/refresh_indicator.dart';
 import 'package:kula/ui/views/home/components/vendors.dart';
@@ -31,6 +32,7 @@ class _HomeViewState extends State<HomeView> with LocationMixin {
     super.initState();
     checkLocationPermission();
     shouldAddAddress();
+    context.read<UserService>().getWallet();
   }
 
   bool hasLocationPermission = false;

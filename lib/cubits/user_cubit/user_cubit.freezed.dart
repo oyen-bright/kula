@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) details,
+    required TResult Function(User user, WalletData wallet) details,
     required TResult Function() noUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? details,
+    TResult? Function(User user, WalletData wallet)? details,
     TResult? Function()? noUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? details,
+    TResult Function(User user, WalletData wallet)? details,
     TResult Function()? noUser,
     required TResult orElse(),
   }) =>
@@ -79,7 +79,7 @@ abstract class _$$DetailsImplCopyWith<$Res> {
           _$DetailsImpl value, $Res Function(_$DetailsImpl) then) =
       __$$DetailsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({User user});
+  $Res call({User user, WalletData wallet});
 }
 
 /// @nodoc
@@ -94,12 +94,17 @@ class __$$DetailsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = null,
+    Object? wallet = freezed,
   }) {
     return _then(_$DetailsImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      wallet: freezed == wallet
+          ? _value.wallet
+          : wallet // ignore: cast_nullable_to_non_nullable
+              as WalletData,
     ));
   }
 }
@@ -107,14 +112,16 @@ class __$$DetailsImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DetailsImpl extends _Details {
-  const _$DetailsImpl({required this.user}) : super._();
+  const _$DetailsImpl({required this.user, required this.wallet}) : super._();
 
   @override
   final User user;
+  @override
+  final WalletData wallet;
 
   @override
   String toString() {
-    return 'UserState.details(user: $user)';
+    return 'UserState.details(user: $user, wallet: $wallet)';
   }
 
   @override
@@ -122,11 +129,13 @@ class _$DetailsImpl extends _Details {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DetailsImpl &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            const DeepCollectionEquality().equals(other.wallet, wallet));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(
+      runtimeType, user, const DeepCollectionEquality().hash(wallet));
 
   @JsonKey(ignore: true)
   @override
@@ -137,30 +146,30 @@ class _$DetailsImpl extends _Details {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) details,
+    required TResult Function(User user, WalletData wallet) details,
     required TResult Function() noUser,
   }) {
-    return details(user);
+    return details(user, wallet);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? details,
+    TResult? Function(User user, WalletData wallet)? details,
     TResult? Function()? noUser,
   }) {
-    return details?.call(user);
+    return details?.call(user, wallet);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? details,
+    TResult Function(User user, WalletData wallet)? details,
     TResult Function()? noUser,
     required TResult orElse(),
   }) {
     if (details != null) {
-      return details(user);
+      return details(user, wallet);
     }
     return orElse();
   }
@@ -198,10 +207,13 @@ class _$DetailsImpl extends _Details {
 }
 
 abstract class _Details extends UserState {
-  const factory _Details({required final User user}) = _$DetailsImpl;
+  const factory _Details(
+      {required final User user,
+      required final WalletData wallet}) = _$DetailsImpl;
   const _Details._() : super._();
 
   User get user;
+  WalletData get wallet;
   @JsonKey(ignore: true)
   _$$DetailsImplCopyWith<_$DetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -245,7 +257,7 @@ class _$NoUserImpl extends _NoUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User user) details,
+    required TResult Function(User user, WalletData wallet) details,
     required TResult Function() noUser,
   }) {
     return noUser();
@@ -254,7 +266,7 @@ class _$NoUserImpl extends _NoUser {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User user)? details,
+    TResult? Function(User user, WalletData wallet)? details,
     TResult? Function()? noUser,
   }) {
     return noUser?.call();
@@ -263,7 +275,7 @@ class _$NoUserImpl extends _NoUser {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User user)? details,
+    TResult Function(User user, WalletData wallet)? details,
     TResult Function()? noUser,
     required TResult orElse(),
   }) {

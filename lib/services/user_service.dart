@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:kula/cubits/user_cubit/wallet_model.dart';
 import 'package:kula/data/http/http_repository.dart';
 
 abstract class _UserService {
   Future<UserServiceResponse<String?>> sendFeedBack(String feedback);
+  Future<UserServiceResponse<WalletData?>> getWallet();
   Future<UserServiceResponse<String?>> updateProfile(
       {required String firstName, required String lastName});
 }
@@ -54,6 +56,23 @@ class UserService implements _UserService {
         e.toString(),
       );
       return UserServiceResponse(error: e.toString(), data: null);
+    }
+  }
+
+  @override
+  Future<UserServiceResponse<WalletData?>> getWallet() async {
+    try {
+      final response = await AppRepository.getWallet();
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
+
+      final walletData = WalletData.fromJson(body['data']);
+
+      return UserServiceResponse<WalletData?>(error: null, data: walletData);
+    } catch (e) {
+      UserService.logger(
+        e.toString(),
+      );
+      return UserServiceResponse<WalletData?>(error: e.toString(), data: null);
     }
   }
 }

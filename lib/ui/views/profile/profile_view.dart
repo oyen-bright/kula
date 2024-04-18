@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
+import 'package:kula/ui/components/widgets/refresh_indicator.dart';
+import 'package:kula/utils/amount_formatter.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -25,43 +29,53 @@ class ProfileView extends StatelessWidget {
               child: WalletInfo(),
             ),
             Expanded(
-                child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 24.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppConstants.padding.horizontal),
-                    child: Text(
-                      "Account",
-                      style: context.textTheme.titleLarge
-                          ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
+                child: AppRefreshIndicator(
+              onRefresh: () async {
+                return context.read<UserCubit>().getWalletInfo().then((value) {
+                  if (value != null && context.mounted) {
+                    context.showSnackBar(value ?? "");
+                  }
+                });
+              },
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 24.h,
                     ),
-                  ),
-                  SizedBox(
-                    height: 8.h,
-                  ),
-                  ..._buildAccountOptions(),
-                  SizedBox(
-                    height: 24.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppConstants.padding.horizontal),
-                    child: Text(
-                      "Company",
-                      style: context.textTheme.titleLarge
-                          ?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppConstants.padding.horizontal),
+                      child: Text(
+                        "Account",
+                        style: context.textTheme.titleLarge?.copyWith(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 8.h,
-                  ),
-                  ..._buildCompanyOptions()
-                ],
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                    ..._buildAccountOptions(),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppConstants.padding.horizontal),
+                      child: Text(
+                        "Company",
+                        style: context.textTheme.titleLarge?.copyWith(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                    ..._buildCompanyOptions()
+                  ],
+                ),
               ),
             )),
             const SizedBox(
@@ -170,13 +184,25 @@ List<Widget> _buildCompanyOptions() {
       .slide(duration: 400.ms);
 }
 
-class WalletInfo extends StatelessWidget {
+class WalletInfo extends StatefulWidget {
   const WalletInfo({
     super.key,
   });
 
   @override
+  State<WalletInfo> createState() => _WalletInfoState();
+}
+
+class _WalletInfoState extends State<WalletInfo> {
+  bool isVisible = false;
+
+  @override
   Widget build(BuildContext context) {
+    final amount = amountFormatter(
+        context.watch<UserCubit>().state.wallet?.balance ?? "0");
+
+    String maskedAmount = isVisible ? amount : '*' * amount.length;
+
     return SizedBox(
       height: 135.h,
       width: 361.w,
@@ -205,7 +231,7 @@ class WalletInfo extends StatelessWidget {
                         ?.copyWith(color: Colors.white),
                   ),
                   Text(
-                    "₦0",
+                    maskedAmount,
                     style: context.textTheme.titleLarge?.copyWith(
                         color: Colors.white,
                         fontSize: 28,
@@ -244,9 +270,16 @@ class WalletInfo extends StatelessWidget {
           Positioned(
               top: 15,
               right: 15,
-              child: Image.asset(
-                AppImages.visibilityIcon,
-                scale: 2,
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    isVisible = !isVisible;
+                  });
+                },
+                child: Image.asset(
+                  AppImages.visibilityIcon,
+                  scale: 2,
+                ),
               ))
         ],
       ),
