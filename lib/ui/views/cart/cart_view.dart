@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
 import 'package:kula/cubits/address_cubit/address_cubit.dart';
+import 'package:kula/cubits/address_cubit/address_model.dart';
 import 'package:kula/cubits/cart_cubit/cart_cubit.dart';
 import 'package:kula/cubits/cart_cubit/cart_model.dart';
 import 'package:kula/cubits/loading_cubit/loading_cubit.dart';
@@ -221,27 +222,38 @@ class _OrderDetailsState extends State<OrderDetails> {
                   child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: AppConstants.padding.horizontal),
-                      child: BlocConsumer<CartCubit, CartState>(
-                        builder: (context, state) {
-                          return state.maybeMap(
-                              hasItem: (_) => _buildOrderDetails(
-                                  context, state.fees ?? CartFees.dummy),
-                              message: (_) => _buildOrderDetails(
-                                  context, state.fees ?? CartFees.dummy),
-                              orElse: () => AppShimmer(
-                                  child: _buildOrderDetails(
-                                      context, CartFees.dummy)));
-                        },
-                        listener: (BuildContext context, CartState state) {
-                          state.mapOrNull(
-                              loading: (_) =>
-                                  reviewOrder ? revealOrder() : null);
+                      child: BlocBuilder<AddressCubit, AddressState>(
+                        builder: (context, addressState) {
+                          return BlocConsumer<CartCubit, CartState>(
+                            builder: (context, state) {
+                              return state.maybeMap(
+                                  hasItem: (_) => _buildOrderDetails(
+                                      context,
+                                      state.fees ?? CartFees.dummy,
+                                      addressState.selectedAddress),
+                                  message: (_) => _buildOrderDetails(
+                                      context,
+                                      state.fees ?? CartFees.dummy,
+                                      addressState.selectedAddress),
+                                  orElse: () => AppShimmer(
+                                      child: _buildOrderDetails(
+                                          context,
+                                          CartFees.dummy,
+                                          addressState.selectedAddress)));
+                            },
+                            listener: (BuildContext context, CartState state) {
+                              state.mapOrNull(
+                                  loading: (_) =>
+                                      reviewOrder ? revealOrder() : null);
+                            },
+                          );
                         },
                       ))));
         }));
   }
 
-  Widget _buildOrderDetails(BuildContext context, CartFees cartFees) {
+  Widget _buildOrderDetails(
+      BuildContext context, CartFees cartFees, Address? address) {
     onCompeteOrder() async {
       final onPayment =
           await (const PaymentMethodDialog().asDialog<PaymentMethod>(context));
@@ -329,24 +341,13 @@ class _OrderDetailsState extends State<OrderDetails> {
           fieldTitle: "Address",
           readOnly: true,
           controller: TextEditingController(
-              text: context
-                      .read<AddressCubit>()
-                      .state
-                      .selectedAddress
-                      ?.getFormattedAddress ??
-                  "Not Available"),
+              text: address?.getFormattedAddress ?? "Not Available"),
           onTap: () => AppRouter.router.push(AppRoutes.changeLocation),
           suffixIcon: Image.asset(
             AppImages.editIcon,
             scale: 2,
             color: context.colorScheme.primary,
           ),
-          hintText: context
-                  .read<AddressCubit>()
-                  .state
-                  .selectedAddress
-                  ?.getFormattedAddress ??
-              "Not Available",
         ),
         SizedBox(
           height: 16.h,
@@ -357,20 +358,9 @@ class _OrderDetailsState extends State<OrderDetails> {
             // AppRouter.router.push(AppRoutes.cartDeliveryInstruction);
           },
           controller: TextEditingController(
-            text: context
-                    .read<AddressCubit>()
-                    .state
-                    .selectedAddress
-                    ?.additionalInfo ??
-                "Not Available",
+            text: address?.additionalInfo ?? "Not Available",
           ),
           fieldTitle: "Extra delivery instructions",
-          hintText: context
-                  .read<AddressCubit>()
-                  .state
-                  .selectedAddress
-                  ?.additionalInfo ??
-              "Not Available",
         ),
         SizedBox(
           height: 24.h,

@@ -7,6 +7,7 @@ import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_environment.dart';
 import 'package:kula/cubits/user_cubit/user_model.dart';
 import 'package:kula/data/http/http_repository.dart';
+import 'package:uuid/uuid.dart';
 
 abstract class _PaymentService {
   Future<PaymentServiceResponse<String?>> verifyTransaction(
@@ -24,8 +25,14 @@ class PaymentServiceResponse<T> {
 }
 
 class PaymentService implements _PaymentService {
+  late final Uuid uuid;
+  PaymentService() : uuid = const Uuid();
   static void logger(String error) {
     log(error, name: "Payment Service ");
+  }
+
+  String get _generateTxRef {
+    return uuid.v4();
   }
 
   @override
@@ -57,7 +64,7 @@ class PaymentService implements _PaymentService {
           publicKey: AppConstants.flutterWaveKeys.publicKey,
           currency: AppConstants.flutterWaveKeys.currency.first,
           redirectUrl: "kula://payment",
-          txRef: "KulaTrans",
+          txRef: _generateTxRef,
           amount: amount,
           customer: customer,
           paymentOptions: "ussd, card, barter, payattitude",

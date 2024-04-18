@@ -41,5 +41,5 @@ class Endpoint {
   static final createOrder = "$_baseUrl/order/create";
   static final getOrder = "$_baseUrl/order/history";
   static final getOrderDetails = "$_baseUrl/order/show";
-  static final verifyTransaction = "$_baseUrl/verify";
+  static final verifyTransaction = "$_baseUrl/payment/verify";
 }

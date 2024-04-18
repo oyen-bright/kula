@@ -14,7 +14,7 @@ class OrderPending extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCubit, OrderState>(
       builder: (context, state) {
-        return state.maybeMap(orElse: () => LoadingWidget());
+        return state.maybeMap(orElse: () => loadingWidget());
       },
     );
 
@@ -35,7 +35,7 @@ class OrderPending extends StatelessWidget {
     );
   }
 
-  Widget LoadingWidget() {
+  Widget loadingWidget() {
     return ListView.separated(
       padding: EdgeInsets.symmetric(
         //TODO; view paddeing
