@@ -170,6 +170,24 @@ class AppRepository {
     );
   }
 
+  static Future<Response> getTerms() async {
+    return await HttpClient.getRequest(
+      endpoint: Endpoint.terms,
+    );
+  }
+
+  static Future<Response> getPolicy() async {
+    return await HttpClient.getRequest(
+      endpoint: Endpoint.policy,
+    );
+  }
+
+  static Future<Response> deleteAccount() async {
+    return await HttpClient.deleteRequest(
+      endpoint: Endpoint.profileDelete,
+    );
+  }
+
   //REVIEW
   static Future<Response> giveReview(Map<String, dynamic> payload) async {
     return await HttpClient.postRequest(

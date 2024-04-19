@@ -19,25 +19,39 @@ mixin _$OrderState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(String error) error,
-    required TResult Function() loaded,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loading,
+    required TResult Function(
+            String error, ({List<Order> completed, List<Order> pending}) orders)
+        error,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(String error)? error,
-    TResult? Function()? loaded,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult? Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(String error)? error,
-    TResult Function()? loaded,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -104,8 +118,8 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+class _$InitialImpl extends _Initial {
+  const _$InitialImpl() : super._();
 
   @override
   String toString() {
@@ -125,9 +139,15 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(String error) error,
-    required TResult Function() loaded,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loading,
+    required TResult Function(
+            String error, ({List<Order> completed, List<Order> pending}) orders)
+        error,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loaded,
   }) {
     return initial();
   }
@@ -136,9 +156,13 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(String error)? error,
-    TResult? Function()? loaded,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult? Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
   }) {
     return initial?.call();
   }
@@ -147,9 +171,13 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(String error)? error,
-    TResult Function()? loaded,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -196,8 +224,9 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements OrderState {
+abstract class _Initial extends OrderState {
   const factory _Initial() = _$InitialImpl;
+  const _Initial._() : super._();
 }
 
 /// @nodoc
@@ -205,6 +234,8 @@ abstract class _$$LoadingImplCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
           _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({({List<Order> completed, List<Order> pending}) orders});
 }
 
 /// @nodoc
@@ -214,60 +245,98 @@ class __$$LoadingImplCopyWithImpl<$Res>
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? orders = null,
+  }) {
+    return _then(_$LoadingImpl(
+      null == orders
+          ? _value.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as ({List<Order> completed, List<Order> pending}),
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl();
+class _$LoadingImpl extends _Loading {
+  const _$LoadingImpl(this.orders) : super._();
+
+  @override
+  final ({List<Order> completed, List<Order> pending}) orders;
 
   @override
   String toString() {
-    return 'OrderState.loading()';
+    return 'OrderState.loading(orders: $orders)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingImpl &&
+            (identical(other.orders, orders) || other.orders == orders));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, orders);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
+      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(String error) error,
-    required TResult Function() loaded,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loading,
+    required TResult Function(
+            String error, ({List<Order> completed, List<Order> pending}) orders)
+        error,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loaded,
   }) {
-    return loading();
+    return loading(orders);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(String error)? error,
-    TResult? Function()? loaded,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult? Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
   }) {
-    return loading?.call();
+    return loading?.call(orders);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(String error)? error,
-    TResult Function()? loaded,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading();
+      return loading(orders);
     }
     return orElse();
   }
@@ -310,8 +379,16 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements OrderState {
-  const factory _Loading() = _$LoadingImpl;
+abstract class _Loading extends OrderState {
+  const factory _Loading(
+          final ({List<Order> completed, List<Order> pending}) orders) =
+      _$LoadingImpl;
+  const _Loading._() : super._();
+
+  ({List<Order> completed, List<Order> pending}) get orders;
+  @JsonKey(ignore: true)
+  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -320,7 +397,8 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String error});
+  $Res call(
+      {String error, ({List<Order> completed, List<Order> pending}) orders});
 }
 
 /// @nodoc
@@ -335,27 +413,34 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? error = null,
+    Object? orders = null,
   }) {
     return _then(_$ErrorImpl(
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
+      orders: null == orders
+          ? _value.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as ({List<Order> completed, List<Order> pending}),
     ));
   }
 }
 
 /// @nodoc
 
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl({required this.error});
+class _$ErrorImpl extends _Error {
+  const _$ErrorImpl({required this.error, required this.orders}) : super._();
 
   @override
   final String error;
+  @override
+  final ({List<Order> completed, List<Order> pending}) orders;
 
   @override
   String toString() {
-    return 'OrderState.error(error: $error)';
+    return 'OrderState.error(error: $error, orders: $orders)';
   }
 
   @override
@@ -363,11 +448,12 @@ class _$ErrorImpl implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.orders, orders) || other.orders == orders));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode => Object.hash(runtimeType, error, orders);
 
   @JsonKey(ignore: true)
   @override
@@ -379,35 +465,49 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(String error) error,
-    required TResult Function() loaded,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loading,
+    required TResult Function(
+            String error, ({List<Order> completed, List<Order> pending}) orders)
+        error,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loaded,
   }) {
-    return error(this.error);
+    return error(this.error, orders);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(String error)? error,
-    TResult? Function()? loaded,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult? Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
   }) {
-    return error?.call(this.error);
+    return error?.call(this.error, orders);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(String error)? error,
-    TResult Function()? loaded,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error);
+      return error(this.error, orders);
     }
     return orElse();
   }
@@ -450,10 +550,17 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements OrderState {
-  const factory _Error({required final String error}) = _$ErrorImpl;
+abstract class _Error extends OrderState {
+  const factory _Error(
+      {required final String error,
+      required final ({
+        List<Order> completed,
+        List<Order> pending
+      }) orders}) = _$ErrorImpl;
+  const _Error._() : super._();
 
   String get error;
+  ({List<Order> completed, List<Order> pending}) get orders;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -464,6 +571,8 @@ abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({({List<Order> completed, List<Order> pending}) orders});
 }
 
 /// @nodoc
@@ -473,60 +582,98 @@ class __$$LoadedImplCopyWithImpl<$Res>
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? orders = null,
+  }) {
+    return _then(_$LoadedImpl(
+      null == orders
+          ? _value.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as ({List<Order> completed, List<Order> pending}),
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl();
+class _$LoadedImpl extends _Loaded {
+  const _$LoadedImpl(this.orders) : super._();
+
+  @override
+  final ({List<Order> completed, List<Order> pending}) orders;
 
   @override
   String toString() {
-    return 'OrderState.loaded()';
+    return 'OrderState.loaded(orders: $orders)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            (identical(other.orders, orders) || other.orders == orders));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, orders);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(String error) error,
-    required TResult Function() loaded,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loading,
+    required TResult Function(
+            String error, ({List<Order> completed, List<Order> pending}) orders)
+        error,
+    required TResult Function(
+            ({List<Order> completed, List<Order> pending}) orders)
+        loaded,
   }) {
-    return loaded();
+    return loaded(orders);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(String error)? error,
-    TResult? Function()? loaded,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult? Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult? Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
   }) {
-    return loaded?.call();
+    return loaded?.call(orders);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(String error)? error,
-    TResult Function()? loaded,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loading,
+    TResult Function(String error,
+            ({List<Order> completed, List<Order> pending}) orders)?
+        error,
+    TResult Function(({List<Order> completed, List<Order> pending}) orders)?
+        loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(orders);
     }
     return orElse();
   }
@@ -569,6 +716,14 @@ class _$LoadedImpl implements _Loaded {
   }
 }
 
-abstract class _Loaded implements OrderState {
-  const factory _Loaded() = _$LoadedImpl;
+abstract class _Loaded extends OrderState {
+  const factory _Loaded(
+          final ({List<Order> completed, List<Order> pending}) orders) =
+      _$LoadedImpl;
+  const _Loaded._() : super._();
+
+  ({List<Order> completed, List<Order> pending}) get orders;
+  @JsonKey(ignore: true)
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

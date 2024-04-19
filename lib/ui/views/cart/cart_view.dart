@@ -14,6 +14,7 @@ import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
 import 'package:kula/router/app_router.dart';
+import 'package:kula/services/cart_service.dart';
 import 'package:kula/services/payment_service.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
@@ -253,56 +254,59 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 
   Widget _buildOrderDetails(
-      BuildContext context, CartFees cartFees, Address? address) {
+      BuildContext cx, CartFees cartFees, Address? address) {
     onCompeteOrder() async {
-      final onPayment =
-          await (const PaymentMethodDialog().asDialog<PaymentMethod>(context));
-      if (onPayment == null || !context.mounted || !mounted) {
-        return;
-      }
+      await (const PaymentMethodDialog().asDialog<PaymentMethod>(context))
+          .then((res) async {
+        if (res == null || !mounted) {
+          return;
+        }
 
-      // ignore: use_build_context_synchronously
-      context.read<LoadingCubit>().loading(message: "Payment");
+        context.read<LoadingCubit>().loading(message: "Creating Order");
 
-      // ignore: use_build_context_synchronously
-      final paymentResponse = await context.read<PaymentService>().makePayment(
-          context,
-          cartFees.total.toString(),
-          // ignore: use_build_context_synchronously
-          context.read<UserCubit>().state.user!);
+        final createOrderResponse = await context
+            .read<CartService>()
+            .createOrder(res, cartFees.total.toString());
 
-      if (!mounted || !context.mounted) {
-        return;
-      }
-
-      context.read<LoadingCubit>().loaded();
-
-      if (paymentResponse.error != null) {
-        context.showSnackBar(paymentResponse.error);
-        return;
-      }
-
-      if (paymentResponse.data == null) {
-        return;
-      }
-
-      context.read<LoadingCubit>().loading(message: "Verifying Payment");
-
-      context
-          .read<PaymentService>()
-          .verifyTransaction(paymentResponse.data!)
-          .then((res) {
+        if (!mounted || !context.mounted) {
+          return;
+        }
         context.read<LoadingCubit>().loaded();
+
+        if (createOrderResponse.error != null) {
+          context.showSnackBar(createOrderResponse.error);
+          return;
+        }
+        context.read<LoadingCubit>().loading(message: "Payment");
+
+        final paymentResponse = await context
+            .read<PaymentService>()
+            .makePayment(
+                context,
+                cartFees.total.toString(),
+                context.read<UserCubit>().state.user!,
+                createOrderResponse.data!);
+
         if (!mounted || !context.mounted) {
           return;
         }
 
-        if (res.error != null) {
-          context.showSnackBar(res.error);
+        context.read<LoadingCubit>().loaded();
+
+        if (paymentResponse.error != null) {
+          context.showSnackBar(paymentResponse.error);
           return;
         }
 
-        context.showSnackBar(res.data);
+        if (paymentResponse.data == null) {
+          return;
+        }
+        context.showSnackBar(paymentResponse.data);
+
+        //TODO:"remove clear cart"
+        // context.read<CartCubit>().clearCart();
+        // context.read<CartCubit>().getCart();
+
         return;
       });
     }

@@ -58,7 +58,9 @@ class General {
       path: AppRoutes.orderDetails,
       pageBuilder: (context, state) {
         return AppRouter.setupPage(
-          child: const OrderDetailsView(),
+          child: OrderDetailsView(
+            order: state.extra as Order,
+          ),
           state: state,
         );
       },

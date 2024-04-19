@@ -68,12 +68,15 @@ class VendorsCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AutoSizeText(
-                    restaurant.storeName,
-                    maxLines: 1,
-                    style: context.textTheme.bodyLarge?.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
+                  Hero(
+                    tag: "resturant-image${restaurant.id}",
+                    child: AutoSizeText(
+                      restaurant.storeName,
+                      maxLines: 1,
+                      style: context.textTheme.bodyLarge?.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                   SizedBox(

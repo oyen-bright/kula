@@ -44,5 +44,6 @@ abstract class AppColors {
 
   static const red = Color(0xFFFF3737);
   static const green = Color(0xFF43A363);
+  static const greenDArt = Color(0xff5cf6bf70);
   static const greenLight = Color(0xFFE6FBED);
 }

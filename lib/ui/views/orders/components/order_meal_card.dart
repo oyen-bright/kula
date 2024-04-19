@@ -2,15 +2,20 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
-import 'package:kula/config/app_routes.dart';
+import 'package:kula/cubits/order_cubit/order_model.dart';
 import 'package:kula/extensions/context.dart';
-import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
+import 'package:kula/utils/amount_formatter.dart';
+import 'package:kula/utils/date_formatter.dart';
 
 class OrderCard extends StatelessWidget {
+  final void Function()? onPressed;
+  final Order order;
   const OrderCard({
     super.key,
+    this.onPressed,
+    required this.order,
   });
 
   @override
@@ -48,7 +53,8 @@ class OrderCard extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "Gwarimpa",
+          order.status.toString()[0].toUpperCase() +
+              order.status.toString().substring(1),
           style: context.textTheme.bodyLarge?.copyWith(
             color: AppColors.greyTextColor,
             fontSize: 15,
@@ -64,7 +70,7 @@ class OrderCard extends StatelessWidget {
       children: [
         Expanded(
           child: AutoSizeText(
-            "Chukas buka",
+            order.orderNo.toString(),
             maxLines: 1,
             style: context.textTheme.bodyLarge?.copyWith(
               fontSize: 15,
@@ -78,9 +84,10 @@ class OrderCard extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 padding: const EdgeInsets.only(left: 5)),
-            onPressed: () {
-              AppRouter.router.push(AppRoutes.orderDetails);
-            },
+            // onPressed: () {
+            //   AppRouter.router.push(AppRoutes.orderDetails);
+            // },
+            onPressed: onPressed,
             child: Row(
               children: [
                 const Text("View Detailed Order "),
@@ -100,16 +107,16 @@ class OrderCard extends StatelessWidget {
         Expanded(
           child: Row(
             children: [
-              Image.asset(
-                AppImages.timeIcon,
-                scale: 1.8,
-              ),
-              SizedBox(
-                width: 3.w,
-              ),
+              // Image.asset(
+              //   AppImages.timeIcon,
+              //   scale: 1.8,
+              // ),
+              // SizedBox(
+              //   width: 3.w,
+              // ),
               Expanded(
                 child: Text(
-                  "50-55 minutes",
+                  formattedCreatedAt(order.createdAt),
                   maxLines: 1,
                   style: context.textTheme.bodyMedium
                       ?.copyWith(color: AppColors.greyTextColor),
@@ -125,7 +132,7 @@ class OrderCard extends StatelessWidget {
               borderRadius:
                   BorderRadius.circular(AppConstants.borderRadius.small)),
           child: AutoSizeText(
-            "₦40,000",
+            amountFormatter(order.totalAmount),
             maxLines: 1,
             style: context.textTheme.bodyMedium,
           ),

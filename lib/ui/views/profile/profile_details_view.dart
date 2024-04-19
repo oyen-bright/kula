@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/config/app_routes.dart';
 import 'package:kula/cubits/loading_cubit/loading_cubit.dart';
 import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/cubits/user_cubit/user_model.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
 import 'package:kula/mixins/validation.dart';
+import 'package:kula/router/app_router.dart';
 import 'package:kula/services/user_service.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
@@ -65,6 +67,31 @@ class _ProfileDetailsState extends State<ProfileDetails> with ValidationMixin {
           firstName: firstNameController.text,
           lastName: lastNameController.text));
       context.showSnackBar(res.data);
+    });
+  }
+
+  void onDeleteAccount() {
+    const DeleteAccountDialog().asDialog<bool?>(context).then((res) async {
+      if (res == null || !res) {
+        return;
+      }
+
+      context.read<LoadingCubit>().loading();
+
+      final response = await context.read<UserService>().deleteAccount();
+
+      if (!mounted || !context.mounted) {
+        return;
+      }
+
+      if (response.error != null) {
+        context.showSnackBar(response.error ?? "");
+        return;
+      }
+
+      context.showSnackBar(response.data ?? "");
+      AppRouter.router.go(AppRoutes.login);
+      return;
     });
   }
 
@@ -178,9 +205,7 @@ class _ProfileDetailsState extends State<ProfileDetails> with ValidationMixin {
                   elevation: 0,
                   title: "Delete Account",
                   backgroundColor: Colors.red,
-                  onPressed: () {
-                    const DeleteAccountDialog().asDialog(context);
-                  },
+                  onPressed: onDeleteAccount,
                 ),
                 SizedBox(
                   height: 35.h,

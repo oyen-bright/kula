@@ -2,13 +2,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/cubits/order_cubit/order_model.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
+import 'package:kula/utils/amount_formatter.dart';
 
 class OrderDetailCard extends StatelessWidget {
+  final OrderItem data;
   const OrderDetailCard({
     super.key,
+    required this.data,
   });
 
   @override
@@ -41,6 +45,7 @@ class OrderDetailCard extends StatelessWidget {
                 borderRadius:
                     BorderRadius.circular(AppConstants.borderRadius.medium),
                 border: Border.all(color: AppColors.lightGreyColor)),
+            child: Image.network(data.meal.image, fit: BoxFit.cover),
           ),
           const SizedBox(
             width: 10,
@@ -50,33 +55,34 @@ class OrderDetailCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AutoSizeText(
-                "Chukas buka",
+                data.meal.name,
                 maxLines: 1,
                 style: context.textTheme.bodyLarge?.copyWith(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Text(
-                "Gwarimpa",
-                style: context.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.greyTextColor,
-                  fontSize: 15,
+              Expanded(
+                child: AutoSizeText(
+                  data.meal.description,
+                  maxLines: 2,
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    color: AppColors.greyTextColor,
+                    fontSize: 15,
+                  ),
                 ),
               ),
               const Spacer(),
-              Flexible(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 4.r),
-                  decoration: BoxDecoration(
-                      color: AppColors.tertiaryColor,
-                      borderRadius: BorderRadius.circular(
-                          AppConstants.borderRadius.small)),
-                  child: AutoSizeText(
-                    "₦40,000",
-                    maxLines: 1,
-                    style: context.textTheme.bodyMedium,
-                  ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 4.r),
+                decoration: BoxDecoration(
+                    color: AppColors.tertiaryColor,
+                    borderRadius:
+                        BorderRadius.circular(AppConstants.borderRadius.small)),
+                child: AutoSizeText(
+                  amountFormatter(data.totalAmount),
+                  maxLines: 1,
+                  style: context.textTheme.bodyMedium,
                 ),
               ),
               Row(
@@ -93,7 +99,7 @@ class OrderDetailCard extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            "50-55 minutes",
+                            data.meal.estimatedTime,
                             maxLines: 1,
                             style: context.textTheme.bodyMedium
                                 ?.copyWith(color: AppColors.greyTextColor),
@@ -110,7 +116,7 @@ class OrderDetailCard extends StatelessWidget {
                         border: Border.all(
                             color: AppColors.cardStrokeColor, width: 2)),
                     child: Text(
-                      "1",
+                      data.quantity.toString(),
                       style: context.textTheme.titleMedium,
                     ),
                   )

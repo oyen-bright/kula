@@ -1,16 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
+import 'package:kula/cubits/order_cubit/order_model.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/ui/components/headers/app_bar.dart';
 import 'package:kula/ui/components/inputs/text_field_input.dart';
+import 'package:kula/utils/amount_formatter.dart';
 
 import 'components/order_detail_card.dart';
 
 class OrderDetailsView extends StatelessWidget {
-  const OrderDetailsView({super.key});
+  final Order order;
+  const OrderDetailsView({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +32,12 @@ class OrderDetailsView extends StatelessWidget {
                       horizontal: AppConstants.padding.horizontal),
                   child: Column(
                       children: List.generate(
-                          10,
-                          (index) => const Padding(
-                                padding: EdgeInsets.only(bottom: 10),
-                                child: OrderDetailCard(),
+                          order.orderItems.length,
+                          (index) => Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: OrderDetailCard(
+                                  data: order.orderItems[index],
+                                ),
                               ))),
                 ));
           }),
@@ -56,26 +62,28 @@ class OrderDetailsView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 24.h,
                     ),
                     Text(
                       "Delivery",
                       style: context.textTheme.titleMedium
                           ?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 16.h,
                     ),
                     AppTextField(
-                      backgroundColor: AppColors.disabledColor,
+                      readOnly: true,
+                      initialValue: order.deliveryAddress,
+                      // backgroundColor: AppColors.disabledColor,
                       fieldTitle: "Address",
-                      hintText: "Plot 2393 Kabi drive, benue",
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 16.h,
                     ),
                     AppTextField(
+                      readOnly: true,
                       onTap: () {
                         Container(
                           padding: const EdgeInsets.all(13),
@@ -89,7 +97,7 @@ class OrderDetailsView extends StatelessWidget {
                                   AppConstants.borderRadius.large)),
                           height: 100,
                           child: Text(
-                            "Once you get to the house, meet the gateman and tell him you are looking for James John. He will open the door for you. Come to apartment 11.",
+                            order.additionalInformation ?? "N/A",
                             style: context.textTheme.bodyLarge
                                 ?.copyWith(fontSize: 15),
                           ),
@@ -98,25 +106,25 @@ class OrderDetailsView extends StatelessWidget {
                             backgroundColor: Colors.transparent);
                       },
                       fieldTitle: "Extra delivery instructions",
-                      hintText:
-                          "Once you get to the house, meet the gateman...",
+                      initialValue: order.additionalInformation ?? "N/A",
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 24.h,
                     ),
                     Text(
                       "Fees",
                       style: context.textTheme.titleMedium
                           ?.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
                     ),
-                    const SizedBox(
-                      height: 15,
+                    SizedBox(
+                      height: 8.h,
                     ),
                     ...[
-                      ("Meal Price", "₦12,000.00", null),
-                      ("Delivery Fee", "₦1,200.00", null),
-                      ("Service fee", "₦240 (2%)", null),
-                      ("Total", "₦13,440.00", null)
+                      ("Meal Price", amountFormatter(order.totalPrice), null),
+                      ("Delivery Fee", "N/A", null),
+                      ("Service fee", amountFormatter(order.serviceFee), null),
+                      ("Vat fee", amountFormatter(order.vatFee), null),
+                      ("Total", amountFormatter(order.totalAmount), null)
                     ].map((e) => Padding(
                           padding: const EdgeInsets.only(bottom: 15),
                           child: Row(

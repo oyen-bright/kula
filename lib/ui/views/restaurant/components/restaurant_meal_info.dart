@@ -62,12 +62,15 @@ class RestaurantMealCard extends StatelessWidget {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AutoSizeText(
-                  meal.name,
-                  maxLines: 1,
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                Hero(
+                  tag: "Meal-Image${meal.id}",
+                  child: AutoSizeText(
+                    meal.name,
+                    maxLines: 1,
+                    style: context.textTheme.bodyLarge?.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
                 SizedBox(

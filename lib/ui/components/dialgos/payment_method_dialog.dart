@@ -74,60 +74,60 @@ class PaymentMethodDialog extends StatelessWidget {
                       SizedBox(
                         height: 24.h,
                       ),
-                      InkWell(
-                        onTap: () => context.pop(PaymentMethod.transfer),
-                        child: Container(
-                          height: 136.h,
-                          width: 322.w,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 16.h),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                AppConstants.borderRadius.medium),
-                            border: Border.all(
-                                color: AppColors.cardStrokeColor, width: 2),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Pay with transfer",
-                                style: context.textTheme.bodyMedium
-                                    ?.copyWith(color: AppColors.slateGrey),
-                              ),
-                              Text(
-                                "UNITED BANK FOR AFRICA",
-                                style: context.textTheme.bodyMedium?.copyWith(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Text(
-                                "KULAHQ",
-                                style: context.textTheme.bodyMedium
-                                    ?.copyWith(color: Colors.black),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "4938375892",
-                                    style: context.textTheme.bodyMedium
-                                        ?.copyWith(
-                                            color: AppColors.primaryColor),
-                                  ),
-                                  SizedBox(
-                                    width: 8.w,
-                                  ),
-                                  Image.asset(
-                                    AppImages.copyIconSmall,
-                                    scale: 2,
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                      // InkWell(
+                      //   onTap: () => context.pop(PaymentMethod.transfer),
+                      //   child: Container(
+                      //     height: 136.h,
+                      //     width: 322.w,
+                      //     padding: EdgeInsets.symmetric(
+                      //         horizontal: 16.w, vertical: 16.h),
+                      //     decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(
+                      //           AppConstants.borderRadius.medium),
+                      //       border: Border.all(
+                      //           color: AppColors.cardStrokeColor, width: 2),
+                      //     ),
+                      //     child: Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.stretch,
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       children: [
+                      //         Text(
+                      //           "Pay with transfer",
+                      //           style: context.textTheme.bodyMedium
+                      //               ?.copyWith(color: AppColors.slateGrey),
+                      //         ),
+                      //         Text(
+                      //           "UNITED BANK FOR AFRICA",
+                      //           style: context.textTheme.bodyMedium?.copyWith(
+                      //             color: Colors.black,
+                      //           ),
+                      //         ),
+                      //         Text(
+                      //           "KULAHQ",
+                      //           style: context.textTheme.bodyMedium
+                      //               ?.copyWith(color: Colors.black),
+                      //         ),
+                      //         Row(
+                      //           children: [
+                      //             Text(
+                      //               "4938375892",
+                      //               style: context.textTheme.bodyMedium
+                      //                   ?.copyWith(
+                      //                       color: AppColors.primaryColor),
+                      //             ),
+                      //             SizedBox(
+                      //               width: 8.w,
+                      //             ),
+                      //             Image.asset(
+                      //               AppImages.copyIconSmall,
+                      //               scale: 2,
+                      //             )
+                      //           ],
+                      //         )
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 8.h,
                       ),

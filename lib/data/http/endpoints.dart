@@ -37,10 +37,13 @@ class Endpoint {
   static final updateCart = "$_baseUrl/cart/update";
   static final feedback = "$_baseUrl/feedback/create";
   static final profileUpdate = "$_baseUrl/profile/update";
+  static final profileDelete = "$_baseUrl/profile/delete";
   static final wallet = "$_baseUrl/wallet";
 
   static final createOrder = "$_baseUrl/order/create";
   static final getOrder = "$_baseUrl/order/history";
   static final getOrderDetails = "$_baseUrl/order/show";
   static final verifyTransaction = "$_baseUrl/payment/verify";
+  static final terms = "$_baseUrl/legal/terms";
+  static final policy = "$_baseUrl/legal/policy";
 }

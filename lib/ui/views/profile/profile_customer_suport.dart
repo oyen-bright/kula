@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
-import 'package:kula/router/app_router.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/headers/app_bar.dart';
 
@@ -46,7 +45,7 @@ class ProfileCustomerSupport extends StatelessWidget {
                     AppImages.forwardIcon,
                     scale: 1.9,
                   ),
-                  onTap: () => AppRouter.router.push(e.$3),
+                  // onTap: () => AppRouter.router.push(e.$3),
                   minLeadingWidth: 0,
                   titleAlignment: ListTileTitleAlignment.center,
                   horizontalTitleGap: 10,

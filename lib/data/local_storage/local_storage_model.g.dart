@@ -18,23 +18,20 @@ class LocalStorageModelAdapter extends TypeAdapter<LocalStorageModel> {
     };
     return LocalStorageModel()
       ..accessToken = fields[0] as ({String access, String refresh})?
-      ..userId = fields[1] as String?
-      ..recentlyViewedVehicles = (fields[2] as List?)?.cast<String>()
-      ..smartCarAccessToken = fields[3] as String?;
+      ..termsOfUse = fields[1] as String?
+      ..privacyPolicy = fields[2] as String?;
   }
 
   @override
   void write(BinaryWriter writer, LocalStorageModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.accessToken)
       ..writeByte(1)
-      ..write(obj.userId)
+      ..write(obj.termsOfUse)
       ..writeByte(2)
-      ..write(obj.recentlyViewedVehicles)
-      ..writeByte(3)
-      ..write(obj.smartCarAccessToken);
+      ..write(obj.privacyPolicy);
   }
 
   @override

@@ -94,14 +94,14 @@ class __$$DetailsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = null,
-    Object? wallet = freezed,
+    Object? wallet = null,
   }) {
     return _then(_$DetailsImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
-      wallet: freezed == wallet
+      wallet: null == wallet
           ? _value.wallet
           : wallet // ignore: cast_nullable_to_non_nullable
               as WalletData,
@@ -130,12 +130,11 @@ class _$DetailsImpl extends _Details {
         (other.runtimeType == runtimeType &&
             other is _$DetailsImpl &&
             (identical(other.user, user) || other.user == user) &&
-            const DeepCollectionEquality().equals(other.wallet, wallet));
+            (identical(other.wallet, wallet) || other.wallet == wallet));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, user, const DeepCollectionEquality().hash(wallet));
+  int get hashCode => Object.hash(runtimeType, user, wallet);
 
   @JsonKey(ignore: true)
   @override

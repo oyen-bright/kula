@@ -265,7 +265,7 @@ class HttpClient {
   static http.Response _processResponse(http.Response response) {
     var body = response.body;
 
-    log(body.toString(), name: "HTTP Request Response");
+    // log(body.toString(), name: "HTTP Request Response");
     switch (response.statusCode) {
       case 200:
       case 201:

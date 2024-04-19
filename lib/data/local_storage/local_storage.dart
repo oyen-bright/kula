@@ -44,6 +44,18 @@ class LocalStorage {
     await LocalStorage._save(data);
   }
 
+  static Future<void> saveTerms(String terms) async {
+    final data = LocalStorage._localStorageData;
+    data.termsOfUse = terms;
+    await LocalStorage._save(data);
+  }
+
+  static Future<void> savePrivacyPolicy(String privacyPolicy) async {
+    final data = LocalStorage._localStorageData;
+    data.privacyPolicy = privacyPolicy;
+    await LocalStorage._save(data);
+  }
+
   static Future<void> deleteAccessToken() async {
     final data = LocalStorage._localStorageData;
     data.accessToken = null;
@@ -56,5 +68,13 @@ class LocalStorage {
 
   static String? get refreshToken {
     return _localStorageData.accessToken?.refresh;
+  }
+
+  static String? get terms {
+    return _localStorageData.termsOfUse;
+  }
+
+  static String? get policy {
+    return _localStorageData.privacyPolicy;
   }
 }

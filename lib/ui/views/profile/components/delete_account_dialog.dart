@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_colors.dart';
@@ -56,10 +57,13 @@ class DeleteAccountDialog extends StatelessWidget {
                             const BoxConstraints(maxWidth: 155, minWidth: 0),
                         child: AppElevatedButton(
                           title: "Yes",
+                          textStyle:
+                              const TextStyle().copyWith(color: Colors.black),
                           elevation: 0,
-                          backgroundColor: AppColors.tertiaryColor,
+                          backgroundColor:
+                              const Color.fromRGBO(92, 246, 191, 0.44),
                           borderColor: AppColors.tertiaryColor,
-                          onPressed: () {},
+                          onPressed: () => context.pop(true),
                         )),
                   ),
                   const SizedBox(
@@ -74,7 +78,7 @@ class DeleteAccountDialog extends StatelessWidget {
                         backgroundColor: Colors.red,
                         borderColor: Colors.red,
                         title: "Cancel",
-                        onPressed: () {}),
+                        onPressed: () => context.pop(false)),
                   )),
                 ],
               ),

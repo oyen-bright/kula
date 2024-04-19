@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_routes.dart';
 import 'package:kula/cubits/address_cubit/address_cubit.dart';
+import 'package:kula/cubits/order_cubit/order_cubit.dart';
 import 'package:kula/cubits/restaurant_cubit/restaurant_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
 import 'package:kula/mixins/location.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/services/location_service.dart';
-import 'package:kula/services/user_service.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/ui/components/widgets/refresh_indicator.dart';
 import 'package:kula/ui/views/home/components/vendors.dart';
@@ -32,7 +32,6 @@ class _HomeViewState extends State<HomeView> with LocationMixin {
     super.initState();
     checkLocationPermission();
     shouldAddAddress();
-    context.read<UserService>().getWallet();
   }
 
   bool hasLocationPermission = false;
@@ -68,6 +67,8 @@ class _HomeViewState extends State<HomeView> with LocationMixin {
 
   @override
   Widget build(BuildContext context) {
+    context.read<OrderCubit>().getOrders();
+
     return Scaffold(
       body: !hasLocationPermission
           ? _buildLocationPermissionNotAvailable(context)

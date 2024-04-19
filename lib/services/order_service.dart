@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:kula/cubits/order_cubit/order_model.dart';
 import 'package:kula/data/http/http_repository.dart';
 
 abstract class _OrderService {
-  Future<OrderServiceResponse<String?>> getOrders();
+  Future<OrderServiceResponse<List<Order>?>> getOrders();
 
   Future<OrderServiceResponse<String?>> getOrderDetails(String orderNo);
 }
@@ -18,23 +19,25 @@ class OrderServiceResponse<T> {
 
 class OrderService implements _OrderService {
   static void logger(String error) {
-    log(error, name: "Payment Service ");
+    log(error, name: "Order Service ");
   }
 
   @override
-  Future<OrderServiceResponse<String?>> getOrders() async {
+  Future<OrderServiceResponse<List<Order>?>> getOrders() async {
     try {
       final response = await AppRepository.getOrders();
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
       log(data.toString());
 
-      final message = data['message'];
+      final orders =
+          (data['data'] as List).map((e) => Order.fromJson(e)).toList();
 
-      return OrderServiceResponse<String?>(error: null, data: message);
+      return OrderServiceResponse<List<Order>?>(error: null, data: orders);
     } catch (e) {
       OrderService.logger(e.toString());
-      return OrderServiceResponse<String?>(error: e.toString(), data: null);
+      return OrderServiceResponse<List<Order>?>(
+          error: e.toString(), data: null);
     }
   }
 

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:kula/data/local_storage/local_storage.dart';
 import 'package:kula/extensions/widget.dart';
+import 'package:kula/router/app_router.dart';
+import 'package:kula/services/user_service.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
 import 'package:kula/ui/components/headers/app_bar.dart';
+import 'package:kula/ui/components/overlays/loading_overlay.dart';
 
 class ProfilePrivacyPolicy extends StatelessWidget {
   const ProfilePrivacyPolicy({super.key});
@@ -40,32 +46,57 @@ class ProfilePrivacyPolicy extends StatelessWidget {
 6. Your Choices
    - Account Information: You can review and update your account information by logging into your Kula account.
    - Location Information: You can enable or disable location services through your device settings or''';
+
     return Scaffold(
       appBar: ViewAppBar(
         title: "Privacy Policy",
       ),
-      body: Column(
-        children: [
-          Expanded(
-              child: SingleChildScrollView(
-            child: const Text(
-              privacyPolicy,
-              textAlign: TextAlign.justify,
-            ).withHorViewPadding,
-          )),
-          const SizedBox(
-            height: 10,
-          ),
-          AppElevatedButton(
-            elevation: 0,
-            title: "I Accept",
-            onPressed: () {},
-          ).withHorViewPadding,
-          const SizedBox(
-            height: 10,
-          ),
-        ],
+      body: FutureBuilder(
+        future: context.read<UserService>().getPolicy(),
+        builder: (BuildContext context,
+            AsyncSnapshot<UserServiceResponse<({String data, String title})?>>
+                snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError || snapshot.data?.error != null) {
+              return Center(
+                child: Text(snapshot.data?.error ?? snapshot.error.toString()),
+              );
+            }
+
+            return _buildTerms(
+              snapshot.data!.data!.data,
+            );
+          }
+
+          if (LocalStorage.policy != null) {
+            return _buildTerms(LocalStorage.policy!);
+          }
+
+          return const LoadingOverlay();
+        },
       ),
+    );
+  }
+
+  Column _buildTerms(String terms) {
+    return Column(
+      children: [
+        Expanded(
+            child: SingleChildScrollView(
+          child: HtmlWidget(terms).withHorViewPadding,
+        )),
+        const SizedBox(
+          height: 10,
+        ),
+        AppElevatedButton(
+          elevation: 0,
+          title: "I Accept",
+          onPressed: () => AppRouter.router.pop(),
+        ).withHorViewPadding,
+        const SizedBox(
+          height: 10,
+        ),
+      ],
     );
   }
 }

@@ -121,12 +121,12 @@ class CartService implements _CartService {
       PaymentMethod paymentMethod, String amount) async {
     try {
       final response = await AppRepository.createOrder(
-          {"payment_method": "card", "payment_amount": 1000});
+          {"payment_method": "card", "payment_amount": amount});
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
-      final message = data['message'];
+      final orderNO = data['data']['order']['order_no'].toString();
 
-      return CartServiceResponse(error: null, data: message);
+      return CartServiceResponse(error: null, data: orderNO);
     } catch (e) {
       CartService.logger(e.toString());
       return CartServiceResponse(error: e.toString(), data: null);

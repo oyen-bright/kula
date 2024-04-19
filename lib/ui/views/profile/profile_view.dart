@@ -84,7 +84,7 @@ class ProfileView extends StatelessWidget {
             SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () => AppRouter.router.go(AppRoutes.login),
                   style: TextButton.styleFrom(
                       foregroundColor: Colors.red,
                       textStyle: const TextStyle(color: Colors.red)),

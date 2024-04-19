@@ -14,7 +14,7 @@ abstract class _PaymentService {
       String transactionId);
 
   Future<PaymentServiceResponse<String?>> makePayment(
-      BuildContext context, String amount, User user);
+      BuildContext context, String amount, User user, String txRef);
 }
 
 class PaymentServiceResponse<T> {
@@ -55,7 +55,7 @@ class PaymentService implements _PaymentService {
 
   @override
   Future<PaymentServiceResponse<String?>> makePayment(
-      BuildContext context, String amount, User user) async {
+      BuildContext context, String amount, User user, String txRef) async {
     try {
       final Customer customer = Customer(
           name: user.name, phoneNumber: user.phoneNumber, email: user.email);
@@ -64,7 +64,7 @@ class PaymentService implements _PaymentService {
           publicKey: AppConstants.flutterWaveKeys.publicKey,
           currency: AppConstants.flutterWaveKeys.currency.first,
           redirectUrl: "kula://payment",
-          txRef: _generateTxRef,
+          txRef: txRef,
           amount: amount,
           customer: customer,
           paymentOptions: "ussd, card, barter, payattitude",
@@ -74,13 +74,16 @@ class PaymentService implements _PaymentService {
 
       final ChargeResponse response = await flutterwave.charge();
 
-      if (response.success ?? false) {
-        return PaymentServiceResponse<String?>(
-            error: null, data: response.transactionId);
-      }
-
       if (response.transactionId == null) {
         return PaymentServiceResponse<String?>(error: null, data: null);
+      }
+
+      if (response.success ?? false) {
+        print(response.toJson());
+
+        return verifyTransaction(response.transactionId!);
+        return PaymentServiceResponse<String?>(
+            error: null, data: response.transactionId);
       }
 
       return PaymentServiceResponse<String?>(
