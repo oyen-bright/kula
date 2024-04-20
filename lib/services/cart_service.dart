@@ -14,7 +14,7 @@ abstract class _CartService {
 
   Future<CartServiceResponse<String?>> addToCart(AddToCartItem cartItem);
   Future<CartServiceResponse<String?>> deleteCartItem(String id);
-  Future<CartServiceResponse<String?>> createOrder(
+  Future<CartServiceResponse<(String, String)?>> createOrder(
       PaymentMethod paymentMethod, String amount);
 }
 
@@ -117,16 +117,18 @@ class CartService implements _CartService {
   }
 
   @override
-  Future<CartServiceResponse<String?>> createOrder(
+  Future<CartServiceResponse<(String, String)?>> createOrder(
       PaymentMethod paymentMethod, String amount) async {
     try {
       final response = await AppRepository.createOrder(
-          {"payment_method": "card", "payment_amount": amount});
+          {"payment_method": paymentMethod.value, "payment_amount": amount});
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
       final orderNO = data['data']['order']['order_no'].toString();
 
-      return CartServiceResponse(error: null, data: orderNO);
+      final message = data['message'];
+
+      return CartServiceResponse(error: null, data: (message, orderNO));
     } catch (e) {
       CartService.logger(e.toString());
       return CartServiceResponse(error: e.toString(), data: null);

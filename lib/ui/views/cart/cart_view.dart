@@ -277,6 +277,11 @@ class _OrderDetailsState extends State<OrderDetails> {
           context.showSnackBar(createOrderResponse.error);
           return;
         }
+
+        if (res == PaymentMethod.storeCredit) {
+          context.showSnackBar(createOrderResponse.data?.$1);
+          return;
+        }
         context.read<LoadingCubit>().loading(message: "Payment");
 
         final paymentResponse = await context
@@ -285,7 +290,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 context,
                 cartFees.total.toString(),
                 context.read<UserCubit>().state.user!,
-                createOrderResponse.data!);
+                createOrderResponse.data!.$2);
 
         if (!mounted || !context.mounted) {
           return;
