@@ -48,16 +48,17 @@ class RestaurantHeader extends StatelessWidget {
                           AppImages.roundBackButton,
                           scale: 2,
                         )),
-                    Hero(
-                      tag: "resturant-image${restaurant.id}",
-                      child: Text(
-                        restaurant.storeName,
-                        style: context.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: AppColors.milkyWhite),
-                      ),
+                    // Hero(
+                    // tag: "resturant-image${restaurant.id}",
+                    // child:
+                    Text(
+                      restaurant.storeName,
+                      style: context.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                          color: AppColors.milkyWhite),
                     ),
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

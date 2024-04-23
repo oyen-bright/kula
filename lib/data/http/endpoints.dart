@@ -38,6 +38,7 @@ class Endpoint {
   static final feedback = "$_baseUrl/feedback/create";
   static final profileUpdate = "$_baseUrl/profile/update";
   static final profileDelete = "$_baseUrl/profile/delete";
+  static final supportLink = "$_baseUrl/customer-care/links";
   static final wallet = "$_baseUrl/wallet";
 
   static final createOrder = "$_baseUrl/order/create";

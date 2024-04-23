@@ -11,6 +11,7 @@ abstract class _UserService {
   Future<UserServiceResponse<LegalData?>> getTermsOfUse();
   Future<UserServiceResponse<LegalData?>> getPolicy();
   Future<UserServiceResponse<String?>> deleteAccount();
+  Future<UserServiceResponse<List<Map>?>> customerSupportLink();
   Future<UserServiceResponse<String?>> updateProfile(
       {required String firstName, required String lastName});
 }
@@ -146,6 +147,31 @@ class UserService implements _UserService {
         e.toString(),
       );
       return UserServiceResponse<String?>(error: e.toString(), data: null);
+    }
+  }
+
+  @override
+  Future<UserServiceResponse<List<Map>?>> customerSupportLink() async {
+    try {
+      final response = await AppRepository.getCustomerSupportLink();
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
+      final data = body['data'] as List;
+
+      log(data.toString());
+
+      List<Map<String, dynamic>> mappedList = data.map((item) {
+        return {"key": item['key'].toString(), "value": item['value']};
+      }).toList();
+
+      LocalStorage.saveCustomerSupport(mappedList);
+
+      return UserServiceResponse<List<Map>?>(
+          error: null, data: List.from(mappedList));
+    } catch (e) {
+      UserService.logger(
+        e.toString(),
+      );
+      return UserServiceResponse<List<Map>?>(error: e.toString(), data: null);
     }
   }
 }

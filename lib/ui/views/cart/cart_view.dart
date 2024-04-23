@@ -256,6 +256,17 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget _buildOrderDetails(
       BuildContext cx, CartFees cartFees, Address? address) {
     onCompeteOrder() async {
+      if (address == null) {
+        context.showSnackBar(
+            "Please add a delivery address",
+            BarType.action,
+            SnackBarAction(
+                label: "Add Address",
+                onPressed: () => AppRouter.router
+                    .go(AppRoutes.profileManageAddress, extra: true)));
+        return;
+      }
+
       await (const PaymentMethodDialog().asDialog<PaymentMethod>(context))
           .then((res) async {
         if (res == null || !mounted) {
@@ -309,7 +320,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         context.showSnackBar(paymentResponse.data);
 
         //TODO:"remove clear cart"
-        // context.read<CartCubit>().clearCart();
+        context.read<CartCubit>().clearCart();
         // context.read<CartCubit>().getCart();
 
         return;

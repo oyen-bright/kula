@@ -25,7 +25,7 @@ enum HapticFeedbackType {
 }
 
 enum PaymentMethod {
-  card("cad"),
+  card("card"),
   transfer("transfer"),
   cashOnDelivery("cod"),
   storeCredit("store_credit");

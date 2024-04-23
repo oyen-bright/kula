@@ -188,6 +188,12 @@ class AppRepository {
     );
   }
 
+  static Future<Response> getCustomerSupportLink() async {
+    return await HttpClient.getRequest(
+      endpoint: Endpoint.supportLink,
+    );
+  }
+
   //REVIEW
   static Future<Response> giveReview(Map<String, dynamic> payload) async {
     return await HttpClient.postRequest(

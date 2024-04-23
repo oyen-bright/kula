@@ -15,7 +15,8 @@ import 'package:kula/ui/views/add_address/add_additional_address.dart';
 import 'package:kula/ui/views/authentication/sign_up/models/address_input.dart';
 
 class ProfileManageAddressView extends StatefulWidget {
-  const ProfileManageAddressView({super.key});
+  final bool? addAddress;
+  const ProfileManageAddressView({super.key, required this.addAddress});
 
   @override
   State<ProfileManageAddressView> createState() =>
@@ -27,6 +28,11 @@ class _ProfileManageAddressViewState extends State<ProfileManageAddressView> {
   void initState() {
     super.initState();
     context.read<AddressCubit>().getAddress();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.addAddress != null && widget.addAddress!) {
+        onAddAddress();
+      }
+    });
   }
 
   void onDeleteAddress(String id) {

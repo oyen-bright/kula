@@ -15,4 +15,6 @@ class LocalStorageModel {
 
   @HiveField(2)
   String? privacyPolicy;
+  @HiveField(3)
+  List<Map>? customerSupport;
 }

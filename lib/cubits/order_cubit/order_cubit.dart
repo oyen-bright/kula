@@ -20,11 +20,11 @@ class OrderCubit extends Cubit<OrderState> {
     }
 
     final completedOrder = response.data
-            ?.where((element) => element.status != "pending")
+            ?.where((element) => element.status == "completed")
             .toList() ??
         [];
     final pending = response.data
-            ?.where((element) => element.status == "pending")
+            ?.where((element) => element.status != "completed")
             .toList() ??
         [];
     final AllOrder allOrder = (completed: completedOrder, pending: pending);

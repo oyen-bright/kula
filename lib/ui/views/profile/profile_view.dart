@@ -7,7 +7,6 @@ import 'package:kula/config/app_routes.dart';
 import 'package:kula/cubits/user_cubit/user_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/router/app_router.dart';
-import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/widgets/refresh_indicator.dart';
 import 'package:kula/utils/amount_formatter.dart';
@@ -237,32 +236,32 @@ class _WalletInfoState extends State<WalletInfo> {
                         fontSize: 28,
                         fontWeight: FontWeight.w700),
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                        color: AppColors.limeGreen,
-                        borderRadius: BorderRadius.circular(48),
-                        border: Border.all(color: AppColors.goldenrodColor)),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Add funds: Wema 7992929140",
-                            style: context.textTheme.titleLarge?.copyWith(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500)),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        Image.asset(
-                          AppImages.copyIcon,
-                          scale: 2,
-                        )
-                      ],
-                    ),
-                  )
+                  // Container(
+                  //   padding:
+                  //       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  //   decoration: BoxDecoration(
+                  //       color: AppColors.limeGreen,
+                  //       borderRadius: BorderRadius.circular(48),
+                  //       border: Border.all(color: AppColors.goldenrodColor)),
+                  //   child: Row(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       Text("Add funds: Wema 7992929140",
+                  //           style: context.textTheme.titleLarge?.copyWith(
+                  //               color: Colors.white,
+                  //               fontSize: 14,
+                  //               fontWeight: FontWeight.w500)),
+                  //       const SizedBox(
+                  //         width: 4,
+                  //       ),
+                  //       Image.asset(
+                  //         AppImages.copyIcon,
+                  //         scale: 2,
+                  //       )
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             ),

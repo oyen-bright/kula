@@ -56,6 +56,12 @@ class LocalStorage {
     await LocalStorage._save(data);
   }
 
+  static Future<void> saveCustomerSupport(List<Map> customerSupport) async {
+    final data = LocalStorage._localStorageData;
+    data.customerSupport = customerSupport;
+    await LocalStorage._save(data);
+  }
+
   static Future<void> deleteAccessToken() async {
     final data = LocalStorage._localStorageData;
     data.accessToken = null;
@@ -76,5 +82,9 @@ class LocalStorage {
 
   static String? get policy {
     return _localStorageData.privacyPolicy;
+  }
+
+  static List<Map>? get customerSupport {
+    return _localStorageData.customerSupport;
   }
 }

@@ -27,7 +27,9 @@ class Profile {
             path: routeSubPath(AppRoutes.profileManageAddress),
             pageBuilder: (context, state) {
               return AppRouter.setupPage(
-                child: const ProfileManageAddressView(),
+                child: ProfileManageAddressView(
+                  addAddress: state.extra as bool?,
+                ),
                 state: state,
               );
             },

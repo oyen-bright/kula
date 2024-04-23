@@ -15,6 +15,7 @@ class OrdersView extends StatelessWidget {
         appBar: ViewAppBar(
           toolbarHeight: 100,
           title: "Orders",
+          actions: const [],
           bottom: const TabBar(tabs: [
             Tab(
               text: "Pending orders",

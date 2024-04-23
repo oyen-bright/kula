@@ -58,6 +58,8 @@ class RestaurantService implements _RestaurantService {
       final response = await AppRepository.getTodaySpecial();
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
+      log(data.toString(), name: "is special");
+
       final meals =
           List.from(data['data']).map(((e) => Meal.fromJson(e))).toList();
 
