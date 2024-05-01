@@ -180,7 +180,7 @@ List<Widget> _buildCompanyOptions() {
       )
       .toList()
       .animate()
-      .slide(duration: 400.ms);
+      .fade(duration: 500.ms);
 }
 
 class WalletInfo extends StatefulWidget {

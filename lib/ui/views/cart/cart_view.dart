@@ -19,6 +19,7 @@ import 'package:kula/services/payment_service.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
 import 'package:kula/ui/components/buttons/elevated_button.dart';
+import 'package:kula/ui/components/dialgos/order_sent_dialog.dart';
 import 'package:kula/ui/components/dialgos/payment_method_dialog.dart';
 import 'package:kula/ui/components/headers/app_bar.dart';
 import 'package:kula/ui/components/inputs/text_field_input.dart';
@@ -318,6 +319,8 @@ class _OrderDetailsState extends State<OrderDetails> {
           return;
         }
         context.showSnackBar(paymentResponse.data);
+
+        const OrderSentDialog().asDialog(context);
 
         //TODO:"remove clear cart"
         context.read<CartCubit>().clearCart();

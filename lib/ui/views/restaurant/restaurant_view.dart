@@ -154,7 +154,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                     return;
                   }
                   AppRouter.router.push(AppRoutes.restaurantMeal,
-                      extra: (restaurant: restaurant, meal: meals[index]));
+                      extra: (restaurant: restaurant.id, meal: meals[index]));
                 },
                 meal: meals[index],
               ),
@@ -173,6 +173,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                   padding: EdgeInsets.only(bottom: 10.h),
                   child: RestaurantMealCard(
                     meal: Meal.dummy,
+                    onTap: null,
                   ),
                 ))),
       ),

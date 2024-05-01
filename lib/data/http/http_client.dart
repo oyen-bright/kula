@@ -285,6 +285,14 @@ class HttpClient {
         throw UnAuthorizedException(
             jsonDecode(body)['message'] ?? body.toString(),
             response.statusCode);
+
+      case 422:
+        var data = jsonDecode(body)['data'];
+        var errorMessages = '';
+        data.forEach((key, value) {
+          errorMessages += '$key: ${value.join(', ')}\n';
+        });
+        throw UnAuthorizedException(errorMessages, response.statusCode);
       case 404:
         throw NotFoundException(jsonDecode(body)['message'] ?? body.toString(),
             response.statusCode);

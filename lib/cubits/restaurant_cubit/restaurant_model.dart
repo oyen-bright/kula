@@ -54,9 +54,43 @@ class Restaurant {
     required this.distanceInMeters,
   });
 
+  // bool get isOpen {
+  //   return openingHours[getDayOfWeek(DateTime.now().weekday).toLowerCase()] !=
+  //       "closed";
+  // }
+
   bool get isOpen {
-    return openingHours[getDayOfWeek(DateTime.now().weekday).toLowerCase()] !=
-        "closed";
+    var now = DateTime.now();
+    final weekDay = now.weekday;
+    var dayOfWeek = getDayOfWeek(weekDay).toLowerCase();
+
+    if (openingHours[getDayOfWeek(weekDay).toLowerCase()] == "closed") {
+      return false;
+    }
+
+    var openingTime = parseTime(openingHours[dayOfWeek]!.split(' - ')[0]);
+    var closingTime = parseTime(openingHours[dayOfWeek]!.split(' - ')[1]);
+
+    if (now.isAfter(openingTime) && now.isBefore(closingTime)) {
+      return true; // Store is open
+    } else {
+      return false; // Store is closed
+    }
+  }
+
+  DateTime parseTime(String timeString) {
+    var parts = timeString.split(':');
+    var hour = int.parse(parts[0]);
+    var minute = int.parse(parts[1].substring(0, 2)); // Extract minutes
+    var isPM = parts[1].toLowerCase().contains('pm');
+
+    // Adjust hour for PM format
+    if (isPM && hour != 12) {
+      hour += 12;
+    }
+
+    return DateTime(DateTime.now().year, DateTime.now().month,
+        DateTime.now().day, hour, minute);
   }
 
   Meal? getMealById(String id) {
@@ -161,5 +195,10 @@ class Restaurant {
       previewImage: previewImage ?? this.previewImage,
       distanceInMeters: distanceInMeters ?? this.distanceInMeters,
     );
+  }
+
+  @override
+  String toString() {
+    return 'Restaurant(id: $id, userId: $userId, storeName: $storeName, storeAddress: $storeAddress, storeEmail: $storeEmail, phoneNumber: $phoneNumber, phoneNumber2: $phoneNumber2, contactPerson: $contactPerson, minOrderAmount: $minOrderAmount, maxOrderAmount: $maxOrderAmount, openingHours: $openingHours, status: $status, meals: $meals, reviews: $reviews, shortDescription: $shortDescription, latitude: $latitude, longitude: $longitude, duration: $duration, averageRating: $averageRating, totalRatings: $totalRatings, previewImage: $previewImage, distanceInMeters: $distanceInMeters)';
   }
 }

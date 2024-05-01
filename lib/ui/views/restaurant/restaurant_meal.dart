@@ -6,7 +6,6 @@ import 'package:kula/config/app_constants.dart';
 import 'package:kula/cubits/cart_cubit/add_to_cart_model.dart';
 import 'package:kula/cubits/cart_cubit/cart_cubit.dart';
 import 'package:kula/cubits/restaurant_cubit/meal_model.dart';
-import 'package:kula/cubits/restaurant_cubit/restaurant_model.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/themes/app_images.dart';
@@ -15,10 +14,10 @@ import 'package:kula/ui/views/restaurant/components/restaurant_header.dart';
 import 'package:kula/utils/amount_formatter.dart';
 
 class RestaurantMeal extends StatefulWidget {
-  final Restaurant restaurant;
+  final String restaurantId;
   final Meal meal;
   const RestaurantMeal(
-      {super.key, required this.restaurant, required this.meal});
+      {super.key, required this.restaurantId, required this.meal});
 
   @override
   State<RestaurantMeal> createState() => _RestaurantMealState();
@@ -203,7 +202,7 @@ class _RestaurantMealState extends State<RestaurantMeal> {
                             title: "Add ${amountFormatter(item.itemPrice)}",
                             onPressed: () => context
                                 .read<CartCubit>()
-                                .addToCart(item, widget.restaurant.id),
+                                .addToCart(item, widget.restaurantId),
                           ),
                         )
                       ],

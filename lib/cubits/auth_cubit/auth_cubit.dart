@@ -65,7 +65,6 @@ class AuthCubit extends Cubit<AuthState> {
       firsName: data.firstName ?? "",
       lastName: data.lastName ?? "",
       phoneNumber: data.phoneNumber ?? "",
-      //TODO:remove this
       dob: DateFormat('yyyy-MM-dd').format(DateTime.now()),
       email: data.email ?? "",
       password: data.password ?? "",

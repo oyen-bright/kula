@@ -41,9 +41,8 @@ class RestaurantService implements _RestaurantService {
       final response = await AppRepository.getRestaurants(location);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
-      final restaurants = List.from(data['data']['data'])
-          .map(((e) => Restaurant.fromJson(e)))
-          .toList();
+      final restaurants =
+          List.from(data['data']).map(((e) => Restaurant.fromJson(e))).toList();
 
       return RestaurantServiceResponse(error: null, data: restaurants);
     } catch (e) {
@@ -81,7 +80,7 @@ class RestaurantService implements _RestaurantService {
       final response = await AppRepository.getRestaurantMeals(location, id);
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
-      final meals = List.from(data['data']['meals']['data'])
+      final meals = List.from(data['data']['meals'])
           .map(((e) => Meal.fromJson(e)))
           .toList();
 

@@ -53,6 +53,10 @@ class Meal {
     );
   }
 
+  bool get isDummy {
+    return id == "id";
+  }
+
   static Meal get dummy {
     return Meal(
         id: "id",

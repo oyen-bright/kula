@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
@@ -61,7 +62,7 @@ class Vendors extends StatelessWidget {
               restaurant: restaurants[index],
               backgroundColor:
                   buildDummy ? Colors.transparent : AppColors.cardColor,
-            );
+            ).animate(effects: [FadeEffect(duration: 500.ms)]);
           },
         ),
       ],

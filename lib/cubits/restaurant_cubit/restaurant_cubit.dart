@@ -50,9 +50,21 @@ class RestaurantCubit extends Cubit<RestaurantState> {
     emit(RestaurantState.loaded(
         restaurants: List.from(response[0].data ?? []),
         todaySpecials: List.from(response[1].data ?? [])));
+
+    _autoGetResturantMeals();
   }
 
-  Future<void> getRestaurantsMeal(String vendorID) async {
+  void _autoGetResturantMeals() async {
+    for (var element in state.restaurants) {
+      if (element.meals == null) {
+        await getRestaurantsMealAuto(element.id);
+      }
+    }
+  }
+
+  Future<void> getRestaurantsMeal(
+    String vendorID,
+  ) async {
     emit(RestaurantState.loading(
         restaurants: state.restaurants, todaySpecials: state.todaySpecials));
 
@@ -86,6 +98,34 @@ class RestaurantCubit extends Cubit<RestaurantState> {
         restaurants: newRestaurants, todaySpecials: state.todaySpecials));
   }
 
+  Future<void> getRestaurantsMealAuto(
+    String vendorID,
+  ) async {
+    final getUserLocationResponse = await locationService.getCurrentLocation();
+    if (getUserLocationResponse.error != null) {
+      return;
+    }
+    final Location usersLocation = (
+      latitude: getUserLocationResponse.position!.latitude,
+      longitude: getUserLocationResponse.position!.longitude
+    );
+
+    final response = await restaurantService.getRestaurantMeal(
+        location: usersLocation, id: vendorID);
+
+    if (response.error != null) {
+      return;
+    }
+
+    final newRestaurants = state.restaurants.map((e) {
+      if (e.id != vendorID) return e;
+      return e.copyWith(meals: response.data);
+    }).toList();
+
+    emit(RestaurantState.loaded(
+        restaurants: newRestaurants, todaySpecials: state.todaySpecials));
+  }
+
   void updateRestaurant(Restaurant restaurant) {
     final updatedRestaurant = state.restaurants.map((element) {
       if (element.id == restaurant.id) {
@@ -95,5 +135,20 @@ class RestaurantCubit extends Cubit<RestaurantState> {
     }).toList();
     emit(RestaurantState.loaded(
         restaurants: updatedRestaurant, todaySpecials: state.todaySpecials));
+  }
+
+  Restaurant? getResturantByMealId(
+    String mealId,
+  ) {
+    for (var restaurant in state.restaurants) {
+      var foundMeal = restaurant.meals?.firstWhere(
+        (meal) => meal.id == mealId,
+        orElse: () => Meal.dummy,
+      );
+      if (!foundMeal!.isDummy) {
+        return restaurant;
+      }
+    }
+    return null; // Return null if no restaurant with the specified mealId is found
   }
 }

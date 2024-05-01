@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_routes.dart';
 import 'package:kula/cubits/address_cubit/address_cubit.dart';
+import 'package:kula/cubits/cart_cubit/cart_cubit.dart';
 import 'package:kula/cubits/order_cubit/order_cubit.dart';
 import 'package:kula/cubits/restaurant_cubit/restaurant_cubit.dart';
 import 'package:kula/extensions/context.dart';
@@ -10,15 +11,14 @@ import 'package:kula/extensions/widget.dart';
 import 'package:kula/mixins/location.dart';
 import 'package:kula/router/app_router.dart';
 import 'package:kula/services/location_service.dart';
-import 'package:kula/services/user_service.dart';
 import 'package:kula/themes/app_colors.dart';
 import 'package:kula/ui/components/widgets/refresh_indicator.dart';
-import 'package:kula/ui/views/home/components/vendors.dart';
 import 'package:kula/utils/enums.dart';
 
 import 'components/app_bar.dart';
 import 'components/search_bar.dart';
 import 'components/todays_specials.dart';
+import 'components/vendors.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -31,7 +31,8 @@ class _HomeViewState extends State<HomeView> with LocationMixin {
   @override
   void initState() {
     super.initState();
-    context.read<UserService>().customerSupportLink();
+    context.read<OrderCubit>().getOrders();
+    context.read<CartCubit>().getCart();
     checkLocationPermission();
     shouldAddAddress();
   }

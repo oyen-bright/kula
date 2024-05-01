@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
-import 'package:kula/cubits/cart_cubit/add_to_cart_model.dart';
+import 'package:kula/config/app_routes.dart';
 import 'package:kula/cubits/restaurant_cubit/meal_model.dart';
 import 'package:kula/cubits/restaurant_cubit/restaurant_cubit.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/extensions/widget.dart';
+import 'package:kula/router/app_router.dart';
 import 'package:kula/ui/components/widgets/shimmer.dart';
 
 import 'specials_card.dart';
@@ -54,15 +55,13 @@ class TodaySpecials extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
               return SpecialMealCard(
-                onTap: !isDummy
-                    ? () {}
+                onTap: isDummy
+                    ? null
                     : () {
-                        late AddToCartItem item = AddToCartItem(
-                            price: todaySpecial[index].price,
-                            mealId: todaySpecial[index].id,
-                            quantity: 1,
-                            mealVarieties: [],
-                            mealExtra: []);
+                        AppRouter.router.push(AppRoutes.restaurantMeal, extra: (
+                          restaurant: todaySpecial[index].vendorId,
+                          meal: todaySpecial[index]
+                        ));
                       },
                 meal: todaySpecial[index],
               );

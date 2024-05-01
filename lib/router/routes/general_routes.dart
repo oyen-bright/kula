@@ -116,7 +116,7 @@ class General {
             pageBuilder: (context, state) {
               return AppRouter.setupPage(
                 child: RestaurantMeal(
-                  restaurant: (state.extra as ResMeal).restaurant,
+                  restaurantId: (state.extra as ResMeal).restaurant,
                   meal: (state.extra as ResMeal).meal,
                 ),
                 state: state,

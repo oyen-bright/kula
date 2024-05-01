@@ -62,9 +62,20 @@ class RestaurantMealCard extends StatelessWidget {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Hero(
-                  tag: "Meal-Image${meal.id}",
-                  child: AutoSizeText(
+                if (onTap != null)
+                  Hero(
+                    tag: "Meal-Image${meal.id}",
+                    child: AutoSizeText(
+                      meal.name,
+                      maxLines: 1,
+                      style: context.textTheme.bodyLarge?.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  )
+                else
+                  AutoSizeText(
                     meal.name,
                     maxLines: 1,
                     style: context.textTheme.bodyLarge?.copyWith(
@@ -72,7 +83,6 @@ class RestaurantMealCard extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                ),
                 SizedBox(
                   height: 4.h,
                 ),
