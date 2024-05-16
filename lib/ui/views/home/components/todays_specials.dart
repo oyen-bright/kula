@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
@@ -64,7 +65,7 @@ class TodaySpecials extends StatelessWidget {
                         ));
                       },
                 meal: todaySpecial[index],
-              );
+              ).animate(effects: [FadeEffect(duration: 500.ms)]);
             },
           ),
         ),

@@ -35,11 +35,12 @@ class VendorsCard extends StatelessWidget {
         width: double.infinity,
         height: 108.h,
         constraints: const BoxConstraints(
-            // minHeight: 108,
-            // maxHeight: 110,
-            // minWidth: 353,
-            ),
+          minHeight: 108,
+          maxHeight: 142,
+          maxWidth: 363,
+        ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: 84.h,

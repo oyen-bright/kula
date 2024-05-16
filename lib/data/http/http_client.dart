@@ -5,8 +5,10 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:kula/config/app_environment.dart';
+import 'package:kula/data/http/endpoints.dart';
 import 'package:kula/data/local_storage/local_storage.dart';
 import 'package:kula/utils/enums.dart';
+import 'package:kula/utils/types.dart';
 
 import 'http_exceptions.dart';
 
@@ -51,20 +53,26 @@ class HttpClient {
   /// The HTTP client instance.
   static late final http.Client? httpClient;
 
+  static late final void Function() _onExpiredToken;
+
   /// Default headers for HTTP requests.
   static Map<String, String> get defaultHeaders {
     return {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
       'X-API-KEY': AppEnvironment.apiKey,
-      if (LocalStorage.accessToken != null)
-        'Authorization': "Bearer ${LocalStorage.accessToken!}"
+      if (accessToken != null) 'Authorization': "Bearer ${accessToken!.access}"
     };
   }
 
+  static Token? get accessToken {
+    return LocalStorage.token;
+  }
+
   /// Initialize the HTTP client.
-  static void init() {
+  static void init(void Function() onExpiredToken) {
     httpClient = http.Client();
+    _onExpiredToken = onExpiredToken;
     log("HTTP Client Created", name: "HTTP");
   }
 
@@ -91,7 +99,20 @@ class HttpClient {
           .get(uri, headers: requestHeaders)
           .timeout(const Duration(seconds: timeOutDuration));
 
+      log(requestHeaders.toString());
+
       log("${response.statusCode} $endpoint", name: "HTTP GET REQUEST");
+
+      if (requestHeaders.containsKey("Authorization") && accessToken != null) {
+        if (response.statusCode == 403) {
+          if (await _refreshAccessToken(accessToken!)) {
+            return getRequest(
+                endpoint: endpoint,
+                queryParameters: queryParameters,
+                headers: headers);
+          }
+        }
+      }
 
       return _processResponse(response);
     } on TimeoutException {
@@ -194,6 +215,18 @@ class HttpClient {
 
       log("${response.statusCode} $endpoint", name: "HTTP PATCH REQUEST");
 
+      if (requestHeaders.containsKey("Authorization") && accessToken != null) {
+        if (response.statusCode == 403) {
+          if (await _refreshAccessToken(accessToken!)) {
+            return patchRequest(
+                endpoint: endpoint,
+                queryParameters: queryParameters,
+                payload: payload,
+                headers: headers);
+          }
+        }
+      }
+
       return _processResponse(response);
     } on TimeoutException {
       throw AppTimeoutException();
@@ -221,8 +254,21 @@ class HttpClient {
       final http.Response response = await client
           .post(uri, headers: requestHeaders, body: jsonEncode(payload))
           .timeout(const Duration(seconds: timeOutDuration));
+      _onExpiredToken.call();
 
       log("${response.statusCode} $endpoint", name: "HTTP POST REQUEST");
+
+      if (requestHeaders.containsKey("Authorization") && accessToken != null) {
+        if (response.statusCode == 403) {
+          if (await _refreshAccessToken(accessToken!)) {
+            return postRequest(
+                endpoint: endpoint,
+                queryParameters: queryParameters,
+                payload: payload,
+                headers: headers);
+          }
+        }
+      }
 
       return _processResponse(response);
     } on TimeoutException {
@@ -261,11 +307,47 @@ class HttpClient {
     }
   }
 
+  static Future<bool> _refreshAccessToken(Token token) async {
+    try {
+      // Define the URI for the refresh token endpoint
+      var uri = Uri.parse(Endpoint.refreshToken);
+
+      // Define the request body with the refresh token
+      var body = json.encode({"refresh": token.refresh});
+
+      final http.Response response = await client
+          .post(uri, headers: {...defaultHeaders}, body: body)
+          .timeout(const Duration(seconds: timeOutDuration));
+
+      log("REFRESH TOKEN ", name: response.statusCode.toString());
+
+      // If the response status code is 200 OK, update the access token and return true
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body) as Map<String, dynamic>;
+
+        // await box.write("Token",
+        //     {'refresh': token['refresh'], 'access': jsonData['access']});
+
+        //TODO ssave token
+
+        return true;
+      }
+
+      _onExpiredToken.call();
+
+      return false;
+    } on SocketException catch (_) {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Process the HTTP response and handle different status codes.
   static http.Response _processResponse(http.Response response) {
     var body = response.body;
 
-    // log(body.toString(), name: "HTTP Request Response");
+    log(body.toString(), name: "HTTP Request Response");
     switch (response.statusCode) {
       case 200:
       case 201:

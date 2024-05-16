@@ -76,6 +76,10 @@ class LocalStorage {
     return _localStorageData.accessToken?.refresh;
   }
 
+  static Token? get token {
+    return _localStorageData.accessToken;
+  }
+
   static String? get terms {
     return _localStorageData.termsOfUse;
   }

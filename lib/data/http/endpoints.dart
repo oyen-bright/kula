@@ -15,6 +15,8 @@ class Endpoint {
   static final login = "$_baseUrl/login";
   static final register = "$_baseUrl/register";
 
+  static final refreshToken = "$_baseUrl/login/refresh";
+
   static final emailOTP = "$_baseUrl/send-email-otp";
   static final emailOTPVerify = "$_baseUrl/email-otp/verify";
   static final phoneOTP = "$_baseUrl/send-otp-phone";

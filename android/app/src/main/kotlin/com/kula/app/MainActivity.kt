@@ -1,4 +1,4 @@
-package com.example.kula
+package com.kula.app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -21,6 +21,11 @@ class RestaurantHeader extends StatelessWidget {
     return Container(
       width: 393.w,
       height: 120.h,
+      constraints: const BoxConstraints(
+        minHeight: 120,
+        maxHeight: 142,
+        maxWidth: 363,
+      ),
       decoration: BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.cover,

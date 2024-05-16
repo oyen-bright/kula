@@ -42,9 +42,12 @@ class AuthService implements _AuthService {
           firsName, lastName, phoneNumber, dob, email, password);
       final body = jsonDecode(response.body) as Map<String, dynamic>;
       final User user = User.fromJson(body['data']['user']);
-      final Token token =
-          (access: body['data']['token']['access_token'], refresh: "");
+      final Token token = (
+        access: body['data']['token']['access_token'],
+        refresh: body['data']['token']['refresh_token']
+      );
       saveToken(token);
+
       return AuthServiceResponse(error: null, data: (token: token, user: user));
     } catch (e) {
       AuthService.logger(
@@ -61,8 +64,11 @@ class AuthService implements _AuthService {
       final response = await AppRepository.login(email, password);
       final body = jsonDecode(response.body) as Map<String, dynamic>;
       final User user = User.fromJson(body['data']['user']);
-      final Token token =
-          (access: body['data']['token']['access_token'], refresh: "");
+
+      final Token token = (
+        access: body['data']['token']['access_token'],
+        refresh: body['data']['token']['refresh_token']
+      );
       saveToken(token);
       return AuthServiceResponse(error: null, data: (token: token, user: user));
     } catch (e) {

@@ -58,6 +58,7 @@ class _RestaurantViewState extends State<RestaurantView> {
       return Scaffold(
         body: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               RestaurantHeader(
                 restaurant: restaurant,
