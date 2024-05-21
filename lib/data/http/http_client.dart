@@ -53,7 +53,10 @@ class HttpClient {
   /// The HTTP client instance.
   static late final http.Client? httpClient;
 
-  static late final void Function() _onExpiredToken;
+  static late final StreamController<bool> _expiredTokenStreamController;
+
+  static Stream<bool> get expiredTokenStream =>
+      _expiredTokenStreamController.stream;
 
   /// Default headers for HTTP requests.
   static Map<String, String> get defaultHeaders {
@@ -70,9 +73,9 @@ class HttpClient {
   }
 
   /// Initialize the HTTP client.
-  static void init(void Function() onExpiredToken) {
+  static void init() {
     httpClient = http.Client();
-    _onExpiredToken = onExpiredToken;
+    _expiredTokenStreamController = StreamController<bool>.broadcast();
     log("HTTP Client Created", name: "HTTP");
   }
 
@@ -254,7 +257,6 @@ class HttpClient {
       final http.Response response = await client
           .post(uri, headers: requestHeaders, body: jsonEncode(payload))
           .timeout(const Duration(seconds: timeOutDuration));
-      _onExpiredToken.call();
 
       log("${response.statusCode} $endpoint", name: "HTTP POST REQUEST");
 
@@ -325,15 +327,17 @@ class HttpClient {
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body) as Map<String, dynamic>;
 
-        // await box.write("Token",
-        //     {'refresh': token['refresh'], 'access': jsonData['access']});
+        final Token token = (
+          access: jsonData['data']['access_token'],
+          refresh: jsonData['data']['refresh_token']
+        );
 
-        //TODO ssave token
+        LocalStorage.saveAccessToken(token);
 
         return true;
       }
 
-      _onExpiredToken.call();
+      _expiredTokenStreamController.add(true);
 
       return false;
     } on SocketException catch (_) {

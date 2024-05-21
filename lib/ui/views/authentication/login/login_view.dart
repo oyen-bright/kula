@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kula/config/app_constants.dart';
 import 'package:kula/config/app_routes.dart';
 import 'package:kula/cubits/auth_cubit/auth_cubit.dart';
-import 'package:kula/data/http/http_client.dart';
 import 'package:kula/extensions/context.dart';
 import 'package:kula/mixins/validation.dart';
 import 'package:kula/router/app_router.dart';
@@ -28,30 +27,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> with ValidationMixin {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (HttpClient.httpClient != null) {
-        return;
-      }
-      HttpClient.init(() async {
-        await showAdaptiveDialog(
-            builder: (BuildContext context) => AlertDialog.adaptive(
-                    title: const Text('Session Expired'),
-                    content: const Text('Please login again to continue.'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('OK'),
-                      ),
-                    ]),
-            context: context);
-        AppRouter.router.go(AppRoutes.login);
-      });
-    });
-  }
-
   final _emailController = TextEditingController()
     ..text = "doligot841@storesr.com";
   final _passwordController = TextEditingController()..text = "Itsahahman1.";

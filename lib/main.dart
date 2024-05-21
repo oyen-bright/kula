@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:kula/config/app_config.dart';
 import 'package:kula/config/app_environment.dart';
+import 'package:kula/data/http/http_client.dart';
 import 'package:kula/data/local_storage/local_storage.dart';
 import 'package:kula/observer/bloc_observer.dart';
 import 'package:kula/router/app_router.dart';
@@ -25,7 +26,7 @@ void main() async {
     Environment.development,
   );
   await AppConfig.init();
-
+  HttpClient.init();
   await LocalStorage.init();
   runApp(const MyApp());
 
